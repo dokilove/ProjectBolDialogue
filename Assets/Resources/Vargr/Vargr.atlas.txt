@@ -1,0 +1,91 @@
+Vargr.png
+size:1964,237
+filter:Linear,Linear
+Arm Merged
+bounds:1669,93,142,99
+rotate:90
+Body Merged
+bounds:1046,51,140,184
+Ear Merged
+bounds:1071,5,44,57
+rotate:90
+Ear_left Merged
+bounds:1564,3,79,91
+rotate:90
+Ear_right_back Merged
+bounds:1770,124,111,109
+rotate:90
+Expression_02 Merged
+bounds:1391,2,138,74
+Expression_03 Merged
+bounds:1188,57,178,89
+rotate:90
+Expression_04 Merged
+bounds:1498,84,151,70
+offsets:0,1,151,71
+rotate:90
+Eye_closed Merged
+bounds:1130,18,174,31
+Eyebrow_angry Merged
+bounds:923,4,70,35
+Eyebrow_neutral Merged
+bounds:1836,97,93,25
+offsets:1,1,94,26
+Eyebrow_normal Merged
+bounds:1657,2,86,30
+rotate:90
+Eyebrow_sad Merged
+bounds:1750,2,89,31
+offsets:0,0,89,32
+rotate:90
+Foot_left Merged
+bounds:1306,3,54,83
+rotate:90
+Foot_right Merged
+bounds:1689,2,59,89
+HairAcc Merged
+bounds:1861,43,52,97
+rotate:90
+Hair_back Merged
+bounds:2,4,258,231
+Hair_front Merged
+bounds:682,21,214,98
+rotate:90
+Hair_left Merged
+bounds:1279,59,101,176
+Hair_right Merged
+bounds:923,41,121,194
+Head Merged
+bounds:488,15,220,192
+rotate:90
+Jacket_Arm_left Merged
+bounds:1570,90,97,145
+Jacket_Arm_right Merged
+bounds:1382,78,114,157
+Jacket_Body Merged
+bounds:262,5,230,224
+rotate:90
+Jacket_back Merged
+bounds:782,24,211,139
+rotate:90
+LeftEyeBall Merged
+bounds:995,5,34,33
+rotate:90
+LeftEye_down
+bounds:527,3,32,10
+LeftEye_up Merged
+bounds:1770,93,64,29
+Leg_left Merged
+bounds:1881,174,61,81
+rotate:90
+Leg_right Merged
+bounds:1783,4,76,87
+Mouth_normal
+bounds:561,5,33,8
+RightEyeBall Merged
+bounds:1030,7,39,32
+RightEye_down
+bounds:488,3,37,10
+RightEye_up Merged
+bounds:1531,2,80,31
+rotate:90
