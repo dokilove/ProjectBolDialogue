@@ -5,6 +5,6 @@ public class SampleScript : MonoBehaviour
 {
     void Start()
     {
-        DialogueManager.StartConversation("Event2-3");
+        DialogueManager.StartConversation("Event2-3_Main");
     }
 }
