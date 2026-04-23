@@ -1,19 +1,44 @@
 .panelBackground {
     background-color: rgb(50, 50, 50);
+    flex-direction: row;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+    border-bottom-left-radius: 50px;
+    width: 80%;
 }
 
 .subtitleButton {
-    color: rgb(229, 229, 229);
-    background-color: rgb(88, 88, 88);
+    position: absolute;
+    top: 0%;
+    bottom: 0%;
+    left: 0%;
+    right: 0%;
+    background-color: rgba(255, 241, 241, 0);
 }
 
 .subtitleText {
     color: rgb(210, 210, 210);
+    font-size: 20px;
+    white-space: normal;
+    text-overflow: ellipsis;
+    flex-shrink: 1;
+    flex-grow: 1;
 }
 
 .responseButton {
     color: rgb(229, 229, 229);
-    background-color: rgb(88, 88, 88);
+    background-color: rgba(88, 88, 88, 0);
+    position: absolute;
+    top: 0%;
+    left: 20%;
+    right: 0%;
+    bottom: 0%;
+    font-size: 20px;
+    white-space: normal;
+    text-overflow: ellipsis;
+    flex-grow: 1;
+    -unity-text-align: middle-left;
 }
 
 .timer {
