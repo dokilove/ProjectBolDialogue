@@ -306,6 +306,7 @@ GameObject:
   - component: {fileID: 357661494}
   - component: {fileID: 357661493}
   - component: {fileID: 357661492}
+  - component: {fileID: 357661497}
   m_Layer: 0
   m_Name: Janghwa
   m_TagString: Untagged
@@ -467,6 +468,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &357661497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 357661491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb23f0b6b9cfced4bb0a0964ab816304, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpineDualLayerController
+  skeletonAnimation: {fileID: 357661492}
+  currentBodyAnim: 
+  currentFaceAnim: 
 --- !u!1 &467679297
 GameObject:
   m_ObjectHideFlags: 0
@@ -480,6 +496,7 @@ GameObject:
   - component: {fileID: 467679300}
   - component: {fileID: 467679299}
   - component: {fileID: 467679298}
+  - component: {fileID: 467679303}
   m_Layer: 0
   m_Name: Vargr
   m_TagString: Untagged
@@ -641,6 +658,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &467679303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 467679297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb23f0b6b9cfced4bb0a0964ab816304, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpineDualLayerController
+  skeletonAnimation: {fileID: 467679298}
+  currentBodyAnim: 
+  currentFaceAnim: 
 --- !u!1001 &664499603
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -747,6 +779,30 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 357661497}
+          m_TargetAssemblyTypeName: SpineDualLayerController, Assembly-CSharp
+          m_MethodName: SetFaceAnimation
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Expression_Boastful
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 357661497}
+          m_TargetAssemblyTypeName: SpineDualLayerController, Assembly-CSharp
+          m_MethodName: SetBodyAnimation
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: idle_Body
+            m_BoolArgument: 0
+          m_CallState: 2
   - guid: 5e8aa57d-56bc-4a14-9f62-4e8152a1a7a7
     onExecute:
       m_PersistentCalls:
@@ -763,6 +819,30 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 752156077}
+          m_TargetAssemblyTypeName: SpineDualLayerController, Assembly-CSharp
+          m_MethodName: SetFaceAnimation
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Expression_Boastful
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 752156077}
+          m_TargetAssemblyTypeName: SpineDualLayerController, Assembly-CSharp
+          m_MethodName: SetBodyAnimation
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: idle_Body
+            m_BoolArgument: 0
+          m_CallState: 2
   - guid: fd2113f2-274b-422c-abd1-32ff38260d88
     onExecute:
       m_PersistentCalls:
@@ -777,6 +857,66 @@ MonoBehaviour:
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 1728249411}
+          m_TargetAssemblyTypeName: SpineDualLayerController, Assembly-CSharp
+          m_MethodName: SetFaceAnimation
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Expression_Panic
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 1728249411}
+          m_TargetAssemblyTypeName: SpineDualLayerController, Assembly-CSharp
+          m_MethodName: SetBodyAnimation
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Idle_Body
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 357661497}
+          m_TargetAssemblyTypeName: SpineDualLayerController, Assembly-CSharp
+          m_MethodName: ClearFaceAnimation
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 752156077}
+          m_TargetAssemblyTypeName: SpineDualLayerController, Assembly-CSharp
+          m_MethodName: SetFaceAnimation
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Expression_Default
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 752156077}
+          m_TargetAssemblyTypeName: SpineDualLayerController, Assembly-CSharp
+          m_MethodName: SetBodyAnimation
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: idle
             m_BoolArgument: 0
           m_CallState: 2
   - guid: 20e30e63-ccf7-4a70-980e-98289b9cd8d4
@@ -1047,6 +1187,7 @@ GameObject:
   - component: {fileID: 752156074}
   - component: {fileID: 752156073}
   - component: {fileID: 752156072}
+  - component: {fileID: 752156077}
   m_Layer: 0
   m_Name: Chona
   m_TagString: Untagged
@@ -1208,6 +1349,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &752156077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 752156071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb23f0b6b9cfced4bb0a0964ab816304, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpineDualLayerController
+  skeletonAnimation: {fileID: 752156072}
+  currentBodyAnim: 
+  currentFaceAnim: 
 --- !u!1 &797549502
 GameObject:
   m_ObjectHideFlags: 0
@@ -1849,6 +2005,7 @@ GameObject:
   - component: {fileID: 1728249408}
   - component: {fileID: 1728249407}
   - component: {fileID: 1728249406}
+  - component: {fileID: 1728249411}
   m_Layer: 0
   m_Name: Fafnir
   m_TagString: Untagged
@@ -2010,6 +2167,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1728249411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1728249405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb23f0b6b9cfced4bb0a0964ab816304, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpineDualLayerController
+  skeletonAnimation: {fileID: 1728249406}
+  currentBodyAnim: 
+  currentFaceAnim: 
 --- !u!1 &1896106016
 GameObject:
   m_ObjectHideFlags: 0
