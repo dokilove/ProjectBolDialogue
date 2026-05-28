@@ -9,6 +9,8 @@ public class SpineDualLayerController : MonoBehaviour
     [Header("Current Status")]
     [SerializeField] private string currentBodyAnim;
     [SerializeField] private string currentFaceAnim;
+    [SerializeField] private string prevBodyAnim;
+    [SerializeField] private string prevFaceAnim;
 
     private Spine.AnimationState animState;
 
@@ -18,30 +20,32 @@ public class SpineDualLayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// º£ÀÌ½º°¡ µÇ´Â ¸ö µ¿ÀÛÀ» º¯°æÇÕ´Ï´Ù (Track 0)
+    /// ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½Ç´ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½ (Track 0)
     /// </summary>
     public void SetBodyAnimation(string animName)
     {
         if (currentBodyAnim == animName) return;
 
+        prevBodyAnim = currentBodyAnim; // Save previous animation
         animState.SetAnimation(0, animName, true);
         currentBodyAnim = animName;
     }
 
     /// <summary>
-    /// À§¿¡ µ¤¾î¾º¿ï Ç¥Á¤ ¾Ö´Ï¸ŞÀÌ¼ÇÀ» º¯°æÇÕ´Ï´Ù (Track 1)
+    /// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½î¾ºï¿½ï¿½ Ç¥ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½ (Track 1)
     /// </summary>
     public void SetFaceAnimation(string animName)
     {
         if (currentFaceAnim == animName) return;
 
-        // Track 1¿¡ ¾Ö´Ï¸ŞÀÌ¼ÇÀ» Àç»ıÇÏ¸é Track 0ÀÇ ¾Ö´Ï¸ŞÀÌ¼Ç Áß 
-        // Ç¥Á¤°ú °ü·ÃµÈ Å°ÇÁ·¹ÀÓ¸¸ ½Ç½Ã°£À¸·Î µ¤¾î¾º¿ó´Ï´Ù.
+        // Track 1ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ Track 0ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ 
+        // Ç¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ãµï¿½ Å°ï¿½ï¿½ï¿½ï¿½ï¿½Ó¸ï¿½ ï¿½Ç½Ã°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½î¾ºï¿½ï¿½Ï´ï¿½.
         var entry = animState.SetAnimation(1, animName, true);
 
-        // Ç¥Á¤ÀÇ °æ¿ì ¹Í½Ì(ºÎµå·¯¿î ÀüÈ¯) ½Ã°£À» Âª°Ô ÁÖ´Â °ÍÀÌ Ç¥Á¤ º¯È­°¡ ºü¸´ÇÕ´Ï´Ù.
+        // Ç¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Í½ï¿½(ï¿½Îµå·¯ï¿½ï¿½ ï¿½ï¿½È¯) ï¿½Ã°ï¿½ï¿½ï¿½ Âªï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
         entry.MixDuration = 0.1f;
 
+        prevFaceAnim = currentFaceAnim; // Save previous animation
         currentFaceAnim = animName;
     }
 
@@ -58,12 +62,34 @@ public class SpineDualLayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// Ç¥Á¤ ¾Ö´Ï¸ŞÀÌ¼ÇÀ» Á¦°ÅÇÏ°í º£ÀÌ½º µ¿ÀÛÀÇ Ç¥Á¤À¸·Î µ¹¾Æ°©´Ï´Ù.
+    /// Ç¥ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½ï¿½Ï´ï¿½.
     /// </summary>
     public void ClearFaceAnimation()
     {
         animState.ClearTrack(1);
         currentFaceAnim = string.Empty;
+    }
+
+    /// <summary>
+    /// ì´ì „ ì–¼êµ´ ì• ë‹ˆë©”ì´ì…˜ì„ ì¬ìƒí•©ë‹ˆë‹¤.
+    /// </summary>
+    public void ReplayPrevFaceAnimation()
+    {
+        if (!string.IsNullOrEmpty(prevFaceAnim))
+        {
+            SetFaceAnimation(prevFaceAnim);
+        }
+    }
+
+    /// <summary>
+    /// ì´ì „ ëª¸ ì• ë‹ˆë©”ì´ì…˜ì„ ì¬ìƒí•©ë‹ˆë‹¤.
+    /// </summary>
+    public void ReplayPrevBodyAnimation()
+    {
+        if (!string.IsNullOrEmpty(prevBodyAnim))
+        {
+            SetBodyAnimation(prevBodyAnim);
+        }
     }
 
 }

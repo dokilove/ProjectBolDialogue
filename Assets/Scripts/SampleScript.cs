@@ -3,8 +3,10 @@ using PixelCrushers.DialogueSystem;
 
 public class SampleScript : MonoBehaviour
 {
+    public string StartDialogue;
+
     void Start()
     {
-        DialogueManager.StartConversation("Event2-3_Main");
+        DialogueManager.StartConversation(StartDialogue);
     }
 }
