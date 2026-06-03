@@ -89,9 +89,10 @@ public class Drag2DObject : MonoBehaviour
 
     void StartReturn()
     {
-        dragging = false;
+        if (dragging)
+            OnDragEndSuccess?.Invoke();
 
-        OnDragEndSuccess?.Invoke();
+        dragging = false;
 
         Vector3 returnTargetPosition = (referenceTransform != null) ? referenceTransform.position : startPosition;
         if (Vector3.Distance(transform.position, returnTargetPosition) > 0.01f)
