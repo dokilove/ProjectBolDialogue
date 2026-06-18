@@ -9,8 +9,10 @@ public class SpineDualLayerController : MonoBehaviour
     [Header("Current Status")]
     [SerializeField] private string currentBodyAnim;
     [SerializeField] private string currentFaceAnim;
+    [SerializeField] private string currentExtraAnim;
     [SerializeField] private string prevBodyAnim;
     [SerializeField] private string prevFaceAnim;
+    [SerializeField] private string prevExtraAnim;
 
     private Spine.AnimationState animState;
 
@@ -18,80 +20,71 @@ public class SpineDualLayerController : MonoBehaviour
     {
         animState = skeletonAnimation.AnimationState;
     }
-
-    /// <summary>
-    /// ���̽��� �Ǵ� �� ������ �����մϴ� (Track 0)
-    /// </summary>
-    public void SetBodyAnimation(string animName)
+    
+    private bool TryPlayAnimation(int trackIndex, string animName, string logTag, out Spine.TrackEntry entry)
     {
-        // 1. 애니메이션 이름 자체 검증
+        entry = null;
+
+        // 1. 이름 검증
         if (string.IsNullOrEmpty(animName))
         {
-            Debug.LogWarning("BodyAnimation: 애니메이션 이름이 비어있습니다.");
-            return;
+            Debug.LogWarning($"{logTag}: 애니메이션 이름이 비어있습니다.");
+            return false;
         }
 
-        if (currentBodyAnim == animName) return;
-
-        // 2. animState 초기화 여부 확인
+        // 2. animState 초기화 확인
         if (animState == null)
         {
-            Debug.LogError("BodyAnimation: animState(AnimationState)가 null입니다!");
-            return;
+            Debug.LogError($"{logTag}: animState가 null입니다!");
+            return false;
         }
 
-        // 애니메이션 설정
-        var entry = animState.SetAnimation(0, animName, true);
-
-        // 3. entry가 null인지 체크 (존재하지 않는 애니메이션 이름일 때 발생)
+        // 애니메이션 설정 및 3. entry null 체크
+        entry = animState.SetAnimation(trackIndex, animName, true);
         if (entry == null)
         {
-            Debug.LogError($"BodyAnimation 실패: '{animName}' 이름의 애니메이션을 Spine 스켈레톤에서 찾을 수 없습니다.");
-            return;
+            Debug.LogError($"{logTag} 실패: '{animName}'을 Spine 스켈레톤에서 찾을 수 없습니다.");
+            return false;
         }
 
-        // 여기까지 무사히 와야 에러 없이 실행됨
         entry.MixDuration = 0.1f;
+        return true;
+    }
 
-        prevBodyAnim = currentBodyAnim; // Save previous animation
-        currentBodyAnim = animName;
+    public void SetBodyAnimation(string animName)
+    {
+        if (currentBodyAnim == animName) return;
+
+        // 공통 함수 호출 성공 시, 문자열 업데이트
+        if (TryPlayAnimation(0, animName, "BodyAnimation", out var entry))
+        {
+            prevBodyAnim = currentBodyAnim;
+            currentBodyAnim = animName;
+        }
     }
 
     public void SetFaceAnimation(string animName)
     {
-        // 1. 애니메이션 이름 자체 검증
-        if (string.IsNullOrEmpty(animName))
-        {
-            Debug.LogWarning("FaceAnimation: 애니메이션 이름이 비어있습니다.");
-            return;
-        }
-
         if (currentFaceAnim == animName) return;
 
-        // 2. animState 초기화 여부 확인
-        if (animState == null)
+        // 공통 함수 호출 성공 시, 문자열 업데이트
+        if (TryPlayAnimation(1, animName, "FaceAnimation", out var entry))
         {
-            Debug.LogError("FaceAnimation: animState(AnimationState)가 null입니다!");
-            return;
+            prevFaceAnim = currentFaceAnim;
+            currentFaceAnim = animName;
         }
-
-        // 애니메이션 설정
-        var entry = animState.SetAnimation(1, animName, true);
-
-        // 3. entry가 null인지 체크 (존재하지 않는 애니메이션 이름일 때 발생)
-        if (entry == null)
-        {
-            Debug.LogError($"FaceAnimation 실패: '{animName}' 이름의 애니메이션을 Spine 스켈레톤에서 찾을 수 없습니다.");
-            return;
-        }
-
-        // 여기까지 무사히 와야 에러 없이 실행됨
-        entry.MixDuration = 0.1f;
-
-        prevFaceAnim = currentFaceAnim;
-        currentFaceAnim = animName;
     }
 
+    public void SetExtraAnimation(string animName)
+    {
+        if (currentExtraAnim == animName) return;
+
+        if (TryPlayAnimation(2, animName, "ExtraAnimation", out var entry))
+        {
+            prevExtraAnim = currentExtraAnim;
+            currentExtraAnim = animName;
+        }
+    }
     public void ClearFaceAndSetBodyAnimation(string animName)
     {
         animState.ClearTrack(0);
@@ -104,18 +97,18 @@ public class SpineDualLayerController : MonoBehaviour
         currentBodyAnim = animName;
     }
 
-    /// <summary>
-    /// ǥ�� �ִϸ��̼��� �����ϰ� ���̽� ������ ǥ������ ���ư��ϴ�.
-    /// </summary>
     public void ClearFaceAnimation()
     {
         animState.ClearTrack(1);
         currentFaceAnim = string.Empty;
     }
 
-    /// <summary>
-    /// 이전 얼굴 애니메이션을 재생합니다.
-    /// </summary>
+    public void ClearExtraAnimation()
+    {
+        animState.ClearTrack(2);
+        currentExtraAnim = string.Empty;
+    }
+
     public void ReplayPrevFaceAnimation()
     {
         if (!string.IsNullOrEmpty(prevFaceAnim))
@@ -124,9 +117,6 @@ public class SpineDualLayerController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 이전 몸 애니메이션을 재생합니다.
-    /// </summary>
     public void ReplayPrevBodyAnimation()
     {
         if (!string.IsNullOrEmpty(prevBodyAnim))
