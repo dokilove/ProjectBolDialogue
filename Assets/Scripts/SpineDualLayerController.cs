@@ -24,28 +24,71 @@ public class SpineDualLayerController : MonoBehaviour
     /// </summary>
     public void SetBodyAnimation(string animName)
     {
+        // 1. 애니메이션 이름 자체 검증
+        if (string.IsNullOrEmpty(animName))
+        {
+            Debug.LogWarning("BodyAnimation: 애니메이션 이름이 비어있습니다.");
+            return;
+        }
+
         if (currentBodyAnim == animName) return;
 
+        // 2. animState 초기화 여부 확인
+        if (animState == null)
+        {
+            Debug.LogError("BodyAnimation: animState(AnimationState)가 null입니다!");
+            return;
+        }
+
+        // 애니메이션 설정
+        var entry = animState.SetAnimation(0, animName, true);
+
+        // 3. entry가 null인지 체크 (존재하지 않는 애니메이션 이름일 때 발생)
+        if (entry == null)
+        {
+            Debug.LogError($"BodyAnimation 실패: '{animName}' 이름의 애니메이션을 Spine 스켈레톤에서 찾을 수 없습니다.");
+            return;
+        }
+
+        // 여기까지 무사히 와야 에러 없이 실행됨
+        entry.MixDuration = 0.1f;
+
         prevBodyAnim = currentBodyAnim; // Save previous animation
-        animState.SetAnimation(0, animName, true);
         currentBodyAnim = animName;
     }
 
-    /// <summary>
-    /// ���� ����� ǥ�� �ִϸ��̼��� �����մϴ� (Track 1)
-    /// </summary>
     public void SetFaceAnimation(string animName)
     {
+        // 1. 애니메이션 이름 자체 검증
+        if (string.IsNullOrEmpty(animName))
+        {
+            Debug.LogWarning("FaceAnimation: 애니메이션 이름이 비어있습니다.");
+            return;
+        }
+
         if (currentFaceAnim == animName) return;
 
-        // Track 1�� �ִϸ��̼��� ����ϸ� Track 0�� �ִϸ��̼� �� 
-        // ǥ���� ���õ� Ű�����Ӹ� �ǽð����� �����ϴ�.
+        // 2. animState 초기화 여부 확인
+        if (animState == null)
+        {
+            Debug.LogError("FaceAnimation: animState(AnimationState)가 null입니다!");
+            return;
+        }
+
+        // 애니메이션 설정
         var entry = animState.SetAnimation(1, animName, true);
 
-        // ǥ���� ��� �ͽ�(�ε巯�� ��ȯ) �ð��� ª�� �ִ� ���� ǥ�� ��ȭ�� �����մϴ�.
+        // 3. entry가 null인지 체크 (존재하지 않는 애니메이션 이름일 때 발생)
+        if (entry == null)
+        {
+            Debug.LogError($"FaceAnimation 실패: '{animName}' 이름의 애니메이션을 Spine 스켈레톤에서 찾을 수 없습니다.");
+            return;
+        }
+
+        // 여기까지 무사히 와야 에러 없이 실행됨
         entry.MixDuration = 0.1f;
 
-        prevFaceAnim = currentFaceAnim; // Save previous animation
+        prevFaceAnim = currentFaceAnim;
         currentFaceAnim = animName;
     }
 
