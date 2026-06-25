@@ -109,6 +109,13 @@ public class SpineDualLayerController : MonoBehaviour
         currentExtraAnim = string.Empty;
     }
 
+    public void HoldExtraAnimation()
+    {
+        animState.ClearTrack(2);
+        prevExtraAnim = currentExtraAnim;
+        currentExtraAnim = string.Empty;
+    }
+
     public void ReplayPrevFaceAnimation()
     {
         if (!string.IsNullOrEmpty(prevFaceAnim))
@@ -122,6 +129,14 @@ public class SpineDualLayerController : MonoBehaviour
         if (!string.IsNullOrEmpty(prevBodyAnim))
         {
             SetBodyAnimation(prevBodyAnim);
+        }
+    }
+
+    public void ReplayPrevExtraAnimation()
+    {
+        if (!string.IsNullOrEmpty(prevExtraAnim))
+        {
+            SetExtraAnimation(prevExtraAnim);
         }
     }
 

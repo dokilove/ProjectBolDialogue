@@ -190,12 +190,36 @@ MonoBehaviour:
           m_StringArgument: Expression_Cheekpull
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 6985897200802927753}
+        m_TargetAssemblyTypeName: SpineDualLayerController, Assembly-CSharp
+        m_MethodName: SetBodyAnimation
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Body_Angry
+          m_BoolArgument: 0
+        m_CallState: 2
   OnDragEndSuccess:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6985897200802927753}
         m_TargetAssemblyTypeName: SpineDualLayerController, Assembly-CSharp
         m_MethodName: ReplayPrevFaceAnimation
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6985897200802927753}
+        m_TargetAssemblyTypeName: SpineDualLayerController, Assembly-CSharp
+        m_MethodName: ReplayPrevBodyAnimation
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -836,8 +860,10 @@ MonoBehaviour:
   skeletonAnimation: {fileID: 4361092470342370053}
   currentBodyAnim: 
   currentFaceAnim: 
+  currentExtraAnim: 
   prevBodyAnim: 
   prevFaceAnim: 
+  prevExtraAnim: 
 --- !u!114 &1802580476129105206
 MonoBehaviour:
   m_ObjectHideFlags: 0
