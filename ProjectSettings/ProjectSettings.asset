@@ -824,9 +824,9 @@ PlayerSettings:
   webWasm2023: 0
   webEnableSubmoduleStrippingCompatibility: 0
   scriptingDefineSymbols:
-    Android: TMP_PRESENT;USE_NEW_INPUT
-    Standalone: TMP_PRESENT;USE_NEW_INPUT
-    WebGL: TMP_PRESENT;USE_NEW_INPUT
+    Android: TMP_PRESENT;USE_NEW_INPUT;USE_CINEMACHINE_3
+    Standalone: TMP_PRESENT;USE_NEW_INPUT;USE_CINEMACHINE_3
+    WebGL: TMP_PRESENT;USE_NEW_INPUT;USE_CINEMACHINE_3
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
