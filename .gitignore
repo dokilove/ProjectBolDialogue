@@ -71,3 +71,6 @@ crashlytics-build.properties
 # Addressables
 /[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*.*.bin*
 /[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/[Aa]nalyzer/*
+
+
+/[Pp]lugins
