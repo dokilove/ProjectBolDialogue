@@ -15,10 +15,15 @@ public class SpineDualLayerController : MonoBehaviour
     [SerializeField] private string prevExtraAnim;
 
     private Spine.AnimationState animState;
+    private Color originalColor;
 
     void Awake()
     {
         animState = skeletonAnimation.AnimationState;
+        if (skeletonAnimation != null)
+        {
+            originalColor = skeletonAnimation.skeleton.GetColor();
+        }
     }
     
     private bool TryPlayAnimation(int trackIndex, string animName, string logTag, out Spine.TrackEntry entry)
@@ -140,4 +145,22 @@ public class SpineDualLayerController : MonoBehaviour
         }
     }
 
+    public void SetColor(Color color)
+    {
+        if (skeletonAnimation != null)
+        {
+            skeletonAnimation.skeleton.SetColor(color);
+        }
+    }
+
+    public void Unfocus()
+    {
+        SetColor(new Color(0.5f, 0.5f, 0.5f, 1f));
+    }
+
+    public void Focus()
+    {
+        SetColor(originalColor);
+    }
 }
+
