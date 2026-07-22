@@ -1,44 +1,65 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq; // For .Where()
 
 public class SpineCharacterGroupManager : MonoBehaviour
 {
     public static SpineCharacterGroupManager Instance { get; private set; }
 
-    [Header("¾ÀÀÇ ¸ğµç Ä³¸¯ÅÍ µî·Ï")]
-    public List<SpineDualLayerController> characters = new List<SpineDualLayerController>();
+    [Header("ê´€ë¦¬í•  ìºë¦­í„° ëª©ë¡")]
+    public List<SpineVisualContainerController> characters = new List<SpineVisualContainerController>();
 
     void Awake()
     {
-        Instance = this;
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+        }
     }
 
-    // target¸¸ focus, ³ª¸ÓÁö´Â ÀüºÎ unfocus
-    public void FocusOnly(SpineDualLayerController target)
+    // targetì„ focus (ìƒ‰ìƒ, sortingOrder), ë‚˜ë¨¸ì§€ëŠ” unfocus (ìƒ‰ìƒ, sortingOrder)
+    public void FocusOnly(SpineVisualContainerController target, int focusedSortingOrder = 100, int unfocusedSortingOrder = 0)
     {
         foreach (var c in characters)
         {
             if (c == null) continue;
-            if (c == target) c.Focus();
-            else c.Unfocus();
+
+            if (c == target)
+            {
+                if (c.modelController != null) c.modelController.Focus();
+                c.SetDepth(1f, 0f, focusedSortingOrder, 0f, null); // Scale 1, Offset 0, Instant
+            }
+            else
+            {
+                if (c.modelController != null) c.modelController.Unfocus();
+                c.SetDepth(1f, 0f, unfocusedSortingOrder, 0f, null); // Scale 1, Offset 0, Instant
+            }
         }
     }
 
-    // ÀüºÎ unfocus
-    public void UnfocusAll()
+    // ëª¨ë“  ìºë¦­í„° unfocus (ìƒ‰ìƒ, sortingOrder)
+    public void UnfocusAll(int unfocusedSortingOrder = 0)
     {
         foreach (var c in characters)
         {
-            if (c != null) c.Unfocus();
+            if (c == null) continue;
+            if (c.modelController != null) c.modelController.Unfocus();
+            c.SetDepth(1f, 0f, unfocusedSortingOrder, 0f, null); // Scale 1, Offset 0, Instant
         }
     }
 
-    // ÀüºÎ focus (¿ø·¡ »öÀ¸·Î º¹±Í)
-    public void FocusAll()
+    // ëª¨ë“  ìºë¦­í„° focus (ìƒ‰ìƒ, sortingOrder)
+    public void FocusAll(int focusedSortingOrder = 100)
     {
         foreach (var c in characters)
         {
-            if (c != null) c.Focus();
+            if (c == null) continue;
+            if (c.modelController != null) c.modelController.Focus();
+            c.SetDepth(1f, 0f, focusedSortingOrder, 0f, null); // Scale 1, Offset 0, Instant
         }
     }
 }

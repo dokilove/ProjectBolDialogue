@@ -11,8 +11,8 @@ public class Drag2DObject : MonoBehaviour
     [Header("Reference Transform")]
     public Transform referenceTransform; // 참조할 GameObject의 Transform (null이면 자신의 위치 기준)
 
-    [Header("Directional Bounds (World Space)")]
-    // 초기 위치(startPosition)를 기준으로 허용되는 최대 이동 거리
+    [Header("Directional Bounds (Local Space)")]
+    // 초기 로컬 위치(startLocalPosition)를 기준으로 허용되는 최대 이동 거리
     public float maxDistanceLeft = 3f;  // 왼쪽으로 최대 이동 거리 (X-)
     public float maxDistanceRight = 3f; // 오른쪽으로 최대 이동 거리 (X+)
     public float maxDistanceUp = 3f;    // 위쪽으로 최대 이동 거리 (Y+)
@@ -27,17 +27,17 @@ public class Drag2DObject : MonoBehaviour
 
     private bool dragging = false;
     private bool isReturning = false;
-    private Vector3 startPosition;    // 오브젝트의 초기 시작 위치
+    private Vector3 startLocalPosition;    // 오브젝트의 초기 시작 로컬 위치
 
     private Camera cam;
-    private Vector3 offset;
+    private Vector3 localOffset; // 로컬 오프셋
 
     void Awake()
     {
         cam = Camera.main;
-        // referenceTransform이 할당되어 있으면 해당 Transform의 위치를 기준으로,
-        // 그렇지 않으면 자신의 현재 위치를 기준으로 startPosition을 설정합니다.
-        startPosition = (referenceTransform != null) ? referenceTransform.position : transform.position;
+        // startLocalPosition은 Awake에서 자신의 현재 로컬 위치로 설정됩니다.
+        // referenceTransform은 드래그 경계 및 복귀 위치 계산에 사용됩니다.
+        startLocalPosition = transform.localPosition;
     }
 
     void OnEnable()
@@ -56,8 +56,6 @@ public class Drag2DObject : MonoBehaviour
 
     private void HandleClick(InputAction.CallbackContext context)
     {
-        // PassThrough 액션은 값이 변경될 때 'performed'를 호출합니다.
-        // 마우스 버튼의 경우, 눌렀을 때 1, 뗐을 때 0을 전달합니다.
         if (context.ReadValue<float>() > 0.5f) // 버튼을 눌렀을 때
         {
             TryStartDrag();
@@ -71,17 +69,20 @@ public class Drag2DObject : MonoBehaviour
     void TryStartDrag()
     {
         Vector2 mousePos = pointAction.action.ReadValue<Vector2>();
-        float z = cam.WorldToScreenPoint(transform.position).z;
-        Vector3 world = cam.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, z));
+        float z = cam.WorldToScreenPoint(transform.position).z; // 오브젝트의 월드 Z 깊이
+        Vector3 mouseWorldPos = cam.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, z));
 
-        // OverlapPoint를 사용해 현재 마우스 위치에 오브젝트가 있는지 확인
-        Collider2D hitCollider = Physics2D.OverlapPoint(world);
+        // 마우스 월드 위치를 부모를 기준으로 한 로컬 위치로 변환
+        Vector3 mouseLocalPos = transform.parent.InverseTransformPoint(mouseWorldPos);
+
+        // OverlapPoint는 월드 좌표를 사용하므로, 현재 오브젝트의 월드 위치를 사용
+        Collider2D hitCollider = Physics2D.OverlapPoint(mouseWorldPos);
 
         if (hitCollider != null && hitCollider.gameObject == this.gameObject)
         {
             dragging = true;
             isReturning = false;
-            offset = transform.position - world;
+            localOffset = transform.localPosition - mouseLocalPos; // 로컬 오프셋 계산
 
             OnDragStartSuccess?.Invoke();
         }
@@ -94,8 +95,11 @@ public class Drag2DObject : MonoBehaviour
 
         dragging = false;
 
-        Vector3 returnTargetPosition = (referenceTransform != null) ? referenceTransform.position : startPosition;
-        if (Vector3.Distance(transform.position, returnTargetPosition) > 0.01f)
+        Vector3 returnTargetLocalPosition = (referenceTransform != null && transform.parent != null && referenceTransform.parent == transform.parent)
+                                            ? referenceTransform.localPosition
+                                            : startLocalPosition;
+        
+        if (Vector3.Distance(transform.localPosition, returnTargetLocalPosition) > 0.01f)
         {
             isReturning = true;
         }
@@ -105,41 +109,53 @@ public class Drag2DObject : MonoBehaviour
     {
         if (dragging)
         {
-            // 1. 마우스의 현재 좌표 값과 오프셋을 사용
             Vector2 mousePos = pointAction.action.ReadValue<Vector2>();
             float z = cam.WorldToScreenPoint(transform.position).z;
-            Vector3 world = cam.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, z));
+            Vector3 mouseWorldPos = cam.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, z));
+            Vector3 mouseLocalPos = transform.parent.InverseTransformPoint(mouseWorldPos);
 
-            // 드래그 중인 임시 목표 위치
-            Vector3 targetWorldPosition = world + offset;
+            // 드래그 중인 임시 목표 로컬 위치
+            Vector3 targetLocalPosition = mouseLocalPos + localOffset;
 
-            // 2. 클램핑 경계 계산 (referenceTransform 또는 startPosition 기준)
-            Vector3 basePosition = (referenceTransform != null) ? referenceTransform.position : startPosition;
-            float minX = basePosition.x - maxDistanceLeft;  // 왼쪽 경계 (X축 최소)
-            float maxX = basePosition.x + maxDistanceRight; // 오른쪽 경계 (X축 최대)
-            float minY = basePosition.y - maxDistanceDown;  // 아래쪽 경계 (Y축 최소)
-            float maxY = basePosition.y + maxDistanceUp;    // 위쪽 경계 (Y축 최대)
+            // 2. 클램핑 경계 계산 (referenceTransform 또는 startLocalPosition 기준)
+            Vector3 baseLocalPosition;
+            if (referenceTransform != null && transform.parent != null && referenceTransform.parent == transform.parent)
+            {
+                baseLocalPosition = referenceTransform.localPosition;
+            }
+            else
+            {
+                baseLocalPosition = startLocalPosition;
+            }
+            
+            float minX = baseLocalPosition.x - maxDistanceLeft;  // 왼쪽 경계 (X축 최소)
+            float maxX = baseLocalPosition.x + maxDistanceRight; // 오른쪽 경계 (X축 최대)
+            float minY = baseLocalPosition.y - maxDistanceDown;  // 아래쪽 경계 (Y축 최소)
+            float maxY = baseLocalPosition.y + maxDistanceUp;    // 위쪽 경계 (Y축 최대)
 
             // 3. X, Y좌표를 경계 내에서 클램핑
-            targetWorldPosition.x = Mathf.Clamp(targetWorldPosition.x, minX, maxX);
-            targetWorldPosition.y = Mathf.Clamp(targetWorldPosition.y, minY, maxY);
+            targetLocalPosition.x = Mathf.Clamp(targetLocalPosition.x, minX, maxX);
+            targetLocalPosition.y = Mathf.Clamp(targetLocalPosition.y, minY, maxY);
 
-            // 4. 오브젝트 위치 업데이트
-            transform.position = targetWorldPosition;
+            // 4. 오브젝트 로컬 위치 업데이트
+            transform.localPosition = targetLocalPosition;
         }
         else if (isReturning)
         {
-            // 원래 위치로 복귀
-            Vector3 returnTargetPosition = (referenceTransform != null) ? referenceTransform.position : startPosition;
-            transform.position = Vector3.Lerp(
-                transform.position,
-                returnTargetPosition,
+            // 원래 로컬 위치로 복귀
+            Vector3 returnTargetLocalPosition = (referenceTransform != null && transform.parent != null && referenceTransform.parent == transform.parent)
+                                                ? referenceTransform.localPosition
+                                                : startLocalPosition;
+            
+            transform.localPosition = Vector3.Lerp(
+                transform.localPosition,
+                returnTargetLocalPosition,
                 Time.deltaTime * returnSpeed
             );
 
-            if (Vector3.Distance(transform.position, returnTargetPosition) < 0.01f)
+            if (Vector3.Distance(transform.localPosition, returnTargetLocalPosition) < 0.01f)
             {
-                transform.position = returnTargetPosition;
+                transform.localPosition = returnTargetLocalPosition;
                 isReturning = false;
             }
         }

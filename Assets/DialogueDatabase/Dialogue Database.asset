@@ -1132,22 +1132,34 @@ MonoBehaviour:
           SpineTrack(Vargr,
           body, Body_Idle);
 
+
+
           SpineFocus(Janghwa);
 
           CinemachineFocus(Janghwa_Cam);
 
-          CinemachineTarget(Janghwa_Cam,
-          Janghwa);
+          SpineDepth(Janghwa,
+          0.6, 2, 0);
 
-          SpineMoveTo(Janghwa, -10, 0, 1, 0.02, true);
+          SpineDepth(Chona, 0.6, 2, 0);
+
+          SpineDepth(Vargr,
+          0.6, 2, 0);
+
+
+          CinemachineTarget(Janghwa_Cam, Janghwa);
 
           SpineMoveTo(Janghwa,
-          -5, 0, 1, 0.02,);
+          -10, 0, 1, 0.2, true, 0.06, 0.5);
 
-          SpineMoveTo(Janghwa, -10, 0, 1, 0.02);
+          SpineMoveTo(Janghwa, -5, 0,
+          1, 0.2, true, 0.06, 0.5);
 
-          SpineMoveTo(Janghwa,
-          -1, 0, 1, 0.02);'
+          SpineMoveTo(Janghwa, -10, 0, 1, 0.2,
+          true, 0.06, 0.5);
+
+          SpineMoveTo(Janghwa, -1, 0, 1, 0.2, true,
+          0.06, 0.5);'
         type: 0
         typeString: 
       - title: EventGuid
@@ -1191,8 +1203,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 238.18027
-        y: 128.89807
+        x: 241.01215
+        y: 124.65027
         width: 160
         height: 30
     - id: 5
@@ -1268,8 +1280,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 236.70041
-        y: 219.62604
+        x: 238.11636
+        y: 212.54639
         width: 160
         height: 30
     - id: 6
@@ -1301,7 +1313,12 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: SpineFocus(Fafnir);
+        value: 'SpineFocus(Fafnir);
+
+          CinemachineFocus(Fafnir_Cam);
+
+          SpineDepth(Fafnir,
+          1.6, -3, 0);'
         type: 0
         typeString: CustomFieldType_Text
       - title: EventGuid
@@ -1348,7 +1365,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 240.81299
-        y: 296.68994
+        y: 295.982
         width: 160
         height: 30
     - id: 7
@@ -1425,7 +1442,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 243.97748
-        y: 378.61514
+        y: 377.90717
         width: 160
         height: 30
     - id: 8
@@ -1457,7 +1474,12 @@ MonoBehaviour:
       - title: Sequence
         value: 'SpineTrack(Chona, face, Expression_Smile);
 
-          SpineFocus(Chona);'
+          SpineFocus(Chona);
+
+          CinemachineFocus(Chona_Cam);
+
+          SpineDepth(Chona,
+          1.2, -1, 0.5);'
         type: 0
         typeString: CustomFieldType_Text
       - title: EventGuid
@@ -1502,7 +1524,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 240.94116
-        y: 468.477
+        y: 467.76898
         width: 160
         height: 30
     - id: 9
@@ -1534,7 +1556,12 @@ MonoBehaviour:
       - title: Sequence
         value: 'SpineTrack(Fafnir, face, Expression_Annoyed);
 
-          SpineFocus(Fafnir);'
+          SpineFocus(Fafnir);
+
+          CinemachineFocus(Fafnir_Cam);
+
+          SpineDepth(Fafnir,
+          1.6, -3, 0);'
         type: 0
         typeString: 
       - title: ko
@@ -1575,7 +1602,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 468.40256
-        y: 129.78949
+        y: 129.04182
         width: 160
         height: 30
     - id: 10
@@ -4303,8 +4330,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 45.607483}
-    canvasZoom: 1.0699995
+    canvasScrollPosition: {x: 34.057198, y: 56.696495}
+    canvasZoom: 1.1299994
   - id: 3
     fields:
     - title: Title

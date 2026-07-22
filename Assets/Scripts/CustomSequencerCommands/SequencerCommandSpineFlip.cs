@@ -1,25 +1,43 @@
-// SequencerCommandSpineFlip.cs
-// 사용법: SpineFlip(actor, right) 또는 SpineFlip(actor, left)
+// Syntax: SpineFlip(actor, right, [duration]) or SpineFlip(actor, left, [duration])
+// duration: 0 or omitted for instant flip. Otherwise, smoothly flips over the specified duration.
+using System.Collections;
 using UnityEngine;
 using PixelCrushers.DialogueSystem;
 using PixelCrushers.DialogueSystem.SequencerCommands;
 
 public class SequencerCommandSpineFlip : SequencerCommand
 {
-    void Start()
+    IEnumerator Start()
     {
         Transform actorTransform = GetSubject(0);
-        bool faceRight = GetParameter(1).Equals("right", System.StringComparison.OrdinalIgnoreCase);
-
-        var controller = actorTransform != null ? actorTransform.GetComponentInChildren<SpineDualLayerController>() : null;
-        if (controller == null)
+        if (actorTransform == null)
         {
-            if (DialogueDebug.logWarnings) Debug.LogWarning($"SpineFlip: '{actorTransform}'에서 컨트롤러를 찾을 수 없습니다.");
+            if (DialogueDebug.logWarnings) Debug.LogWarning($"SpineFlip: Subject '{GetParameter(0)}' not found.");
             Stop();
-            return;
+            yield break;
         }
 
-        controller.SetFacing(faceRight);
-        Stop();
+        var controller = actorTransform.GetComponent<CharacterRootController>();
+        if (controller == null)
+        {
+            if (DialogueDebug.logWarnings) Debug.LogWarning($"SpineFlip: CharacterRootController not found on subject '{actorTransform.name}'.");
+            Stop();
+            yield break;
+        }
+
+        bool faceRight = GetParameter(1).Equals("right", System.StringComparison.OrdinalIgnoreCase);
+        float duration = GetParameterAsFloat(2, 0f);
+
+        if (duration <= 0f)
+        {
+            controller.SetFacing(faceRight);
+            Stop();
+        }
+        else
+        {
+            controller.SetFacingOverTime(faceRight, duration);
+            yield return new WaitForSeconds(duration);
+            Stop();
+        }
     }
 }
