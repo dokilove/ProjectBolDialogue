@@ -216,10 +216,10 @@ MonoBehaviour:
   pointAction: {fileID: -1654692200621890270, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   clickAction: {fileID: 3001919216989983466, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   referenceTransform: {fileID: 3621769297152768468}
-  maxDistanceLeft: 0.5
-  maxDistanceRight: 0.2
-  maxDistanceUp: 0.1
-  maxDistanceDown: 0.1
+  maxDistanceLeft: 0.1
+  maxDistanceRight: 0.1
+  maxDistanceUp: 0.5
+  maxDistanceDown: 0.2
   returnSpeed: 5
   OnDragStartSuccess:
     m_PersistentCalls:

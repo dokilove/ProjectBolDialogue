@@ -3,7 +3,8 @@ using UnityEngine;
 using PixelCrushers.DialogueSystem;
 using PixelCrushers.DialogueSystem.SequencerCommands;
 
-// Syntax: SpineDepth(actor, scale, offsetY, duration, [sortingOrder])
+// Syntax: SpineDepth(actor, scale, offsetY, duration)
+// This command only changes depth (scale and Y-offset), not sorting order.
 public class SequencerCommandSpineDepth : SequencerCommand
 {
     private bool isDone = false;
@@ -26,19 +27,28 @@ public class SequencerCommandSpineDepth : SequencerCommand
             return;
         }
 
+        // Get the MeshRenderer to find the current sorting order, which will be preserved.
+        var meshRenderer = controller.modelController != null ? controller.modelController.GetComponent<MeshRenderer>() : null;
+        if (meshRenderer == null)
+        {
+            if (DialogueDebug.logWarnings) Debug.LogWarning($"SpineDepth: No MeshRenderer found on '{controller.modelController.name}'. Cannot proceed.");
+            Stop();
+            return;
+        }
+
         float targetScale = GetParameterAsFloat(1, 1f);
         float targetOffsetY = GetParameterAsFloat(2, 0f);
         float duration = GetParameterAsFloat(3, 0f);
-        int targetSortingOrder = GetParameterAsInt(4, 0); // Default to 0 if not specified
+        int currentSortingOrder = meshRenderer.sortingOrder; // Preserve current sorting order.
 
         if (duration <= 0)
         {
-            controller.SetDepth(targetScale, targetOffsetY, targetSortingOrder, 0, null);
+            controller.SetDepth(targetScale, targetOffsetY, currentSortingOrder, 0, null);
             Stop();
         }
         else
         {
-            controller.SetDepth(targetScale, targetOffsetY, targetSortingOrder, duration, () => isDone = true);
+            controller.SetDepth(targetScale, targetOffsetY, currentSortingOrder, duration, () => isDone = true);
         }
     }
 

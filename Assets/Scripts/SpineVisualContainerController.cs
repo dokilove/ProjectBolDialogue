@@ -38,20 +38,22 @@ public class SpineVisualContainerController : MonoBehaviour
     {
         // This script controls its own transform's scale and Y position
         Transform t = this.transform;
-        
-        // Get SkeletonRenderer from the child modelController for sortingOrder
-        Renderer renderer = modelController != null ? modelController.skeletonAnimation.GetComponent<Renderer>() : null;
 
-        if (renderer == null)
+        // Get the MeshRenderer from the modelController's GameObject, which controls the sorting order.
+        var meshRenderer = (modelController != null)
+            ? modelController.GetComponent<MeshRenderer>()
+            : null;
+
+        if (meshRenderer == null)
         {
-            Debug.LogError("Renderer component not found on child SpineDualLayerController's skeletonAnimation object!");
+            Debug.LogError("MeshRenderer component not found on the SpineDualLayerController's GameObject!");
             onComplete?.Invoke();
             yield break;
         }
 
         float startDepthScale = depthScaleFactor;
         float startPosY = t.localPosition.y; // Use localPosition
-        int startSortingOrder = renderer.sortingOrder;
+        int startSortingOrder = meshRenderer.sortingOrder;
         float targetPosY = originalY + targetOffsetY + ExternalOffsetY; // Combine internal and external Y offsets
 
         if (duration <= 0f)
@@ -59,7 +61,7 @@ public class SpineVisualContainerController : MonoBehaviour
             depthScaleFactor = targetDepthScale;
             t.localScale = new Vector3(targetDepthScale, targetDepthScale, t.localScale.z); // Apply uniform scale
             t.localPosition = new Vector3(t.localPosition.x, targetPosY, t.localPosition.z); // Use localPosition
-            renderer.sortingOrder = targetSortingOrder;
+            meshRenderer.sortingOrder = targetSortingOrder;
             if (modelController != null) modelController.ApplyScale(); // Re-apply model's internal scale
             onComplete?.Invoke();
             activeDepthCoroutine = null;
@@ -78,7 +80,7 @@ public class SpineVisualContainerController : MonoBehaviour
             float newPosY = Mathf.Lerp(startPosY, targetPosY, ratio);
             t.localPosition = new Vector3(t.localPosition.x, newPosY, t.localPosition.z); // Use localPosition
 
-            renderer.sortingOrder = Mathf.RoundToInt(Mathf.Lerp(startSortingOrder, targetSortingOrder, ratio));
+            meshRenderer.sortingOrder = Mathf.RoundToInt(Mathf.Lerp(startSortingOrder, targetSortingOrder, ratio));
 
             if (modelController != null) modelController.ApplyScale(); // Re-apply model's internal scale
             yield return null;
@@ -87,7 +89,7 @@ public class SpineVisualContainerController : MonoBehaviour
         depthScaleFactor = targetDepthScale;
         t.localScale = new Vector3(depthScaleFactor, depthScaleFactor, t.localScale.z); // Apply uniform scale
         t.localPosition = new Vector3(t.localPosition.x, targetPosY, t.localPosition.z); // Use localPosition
-        renderer.sortingOrder = targetSortingOrder;
+        meshRenderer.sortingOrder = targetSortingOrder;
         if (modelController != null) modelController.ApplyScale(); // Re-apply model's internal scale
         onComplete?.Invoke();
         activeDepthCoroutine = null;
