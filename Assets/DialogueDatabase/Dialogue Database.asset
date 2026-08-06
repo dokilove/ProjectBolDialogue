@@ -1162,33 +1162,22 @@ MonoBehaviour:
           0.06, 0.5);
 
 
-          SpineRotate(Janghwa, 90, 1.0, 0.5, 0.5, "EaseOut");
+          SpineRotate(Janghwa, 90, 0.5, 0.5, 0.5, "EaseOut");
 
           SpineRotate(Janghwa,
-          180, 1.0, 0.5, 0.5, "EaseIn");
+          180, 0.5, 0.5, 0.5, "EaseIn");
 
-          SpineRotate(Janghwa, 270, 1.0,
+          SpineRotate(Janghwa, 270, 0.5,
           0.5, 0.5, "EaseOut");
 
-          SpineRotate(Janghwa, 0, 1.0, 0.5, 0.5,
-          "EaseIn");
-
-          SpineRotate(Janghwa, 90, 1.0, 0.5, 0.5, "EaseOut");
-
-          SpineRotate(Janghwa,
-          180, 1.0, 0.5, 0.5, "EaseIn");
-
-          SpineRotate(Janghwa, -360, 1.0,
-          0.5, 0.5, "EaseOut");
-
-          SpineRotate(Janghwa, -360, 1.0, 0.5, 0.5,
+          SpineRotate(Janghwa, 0, 0.5, 0.5, 0.5,
           "EaseIn");
 
 
 
           CinemachineZoom(1.0, 3.0);
 
-          CinemachineZoom(3.5,
+          CinemachineZoom(3.0,
           3.0);'
         type: 0
         typeString: 
@@ -1233,8 +1222,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 241.72012
-        y: 121.818405
+        x: 243.13602
+        y: 121.11043
         width: 160
         height: 30
     - id: 5
@@ -1429,7 +1418,8 @@ MonoBehaviour:
 
           SpineFocus(Fafnir);
 
-          CinemachineZoom(8.5,
+
+          CinemachineZoom(5,
           1.0);'
         type: 0
         typeString: CustomFieldType_Text
@@ -1600,7 +1590,7 @@ MonoBehaviour:
           1.6, -3, 0);
 
 
-          CinemachineZoom(8.5, 1.0);'
+          CinemachineZoom(5, 1.0);'
         type: 0
         typeString: 
       - title: ko

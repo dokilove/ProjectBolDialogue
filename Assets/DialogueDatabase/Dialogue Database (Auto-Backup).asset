@@ -976,7 +976,7 @@ MonoBehaviour:
       type: 0
       typeString: CustomFieldType_Text
     - title: Actor
-      value: -1
+      value: 1
       type: 5
       typeString: CustomFieldType_Actor
     - title: Conversant
@@ -1025,11 +1025,11 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Actor
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -1081,8 +1081,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 240
-        y: 49.390244
+        x: 31.683136
+        y: 123.053635
         width: 160
         height: 30
     - id: 4
@@ -1100,7 +1100,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -1132,7 +1132,64 @@ MonoBehaviour:
           SpineTrack(Vargr,
           body, Body_Idle);
 
-          SpineFocus(Janghwa)'
+
+
+          SpineFocus(Janghwa);
+
+          CinemachineFocus(Janghwa_Cam);
+
+          SpineDepth(Janghwa,
+          0.6, 2, 0);
+
+          SpineDepth(Chona, 0.6, 2, 0);
+
+          SpineDepth(Vargr,
+          0.6, 2, 0);
+
+
+          CinemachineTarget(Janghwa_Cam, Janghwa_Focus);
+
+          SpineMoveTo(Janghwa,
+          -10, 0, 1, 0.2, true, 0.06, 0.5);
+
+          SpineMoveTo(Janghwa, -5, 0,
+          1, 0.2, true, 0.06, 0.5);
+
+          SpineMoveTo(Janghwa, -10, 0, 1, 0.2,
+          true, 0.06, 0.5);
+
+          SpineMoveTo(Janghwa, -5, 0, 1, 0.2, true,
+          0.06, 0.5);
+
+
+          SpineRotate(Janghwa, 90, 1.0, 0.5, 0.5, "EaseOut");
+
+          SpineRotate(Janghwa,
+          180, 1.0, 0.5, 0.5, "EaseIn");
+
+          SpineRotate(Janghwa, 270, 1.0,
+          0.5, 0.5, "EaseOut");
+
+          SpineRotate(Janghwa, 0, 1.0, 0.5, 0.5,
+          "EaseIn");
+
+          SpineRotate(Janghwa, 90, 1.0, 0.5, 0.5, "EaseOut");
+
+          SpineRotate(Janghwa,
+          180, 1.0, 0.5, 0.5, "EaseIn");
+
+          SpineRotate(Janghwa, -360, 1.0,
+          0.5, 0.5, "EaseOut");
+
+          SpineRotate(Janghwa, -360, 1.0, 0.5, 0.5,
+          "EaseIn");
+
+
+
+          CinemachineZoom(1.0, 3.0);
+
+          CinemachineZoom(3.5,
+          3.0);'
         type: 0
         typeString: 
       - title: EventGuid
@@ -1176,8 +1233,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 237.27274
-        y: 128.01495
+        x: 241.72012
+        y: 121.818405
         width: 160
         height: 30
     - id: 5
@@ -1195,7 +1252,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -1207,9 +1264,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: '
+        value: 'SpineFocus(Chona);
 
-          SpineFocus(Chona)'
+          CinemachineFocus(Chona_Cam);'
         type: 0
         typeString: 
       - title: EventGuid
@@ -1253,8 +1310,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 236.70041
-        y: 219.62604
+        x: 238.11636
+        y: 209.00659
         width: 160
         height: 30
     - id: 6
@@ -1272,7 +1329,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -1286,9 +1343,12 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: '
+        value: 'SpineFocus(Fafnir);
 
-          SpineFocus(Fafnir)'
+          CinemachineFocus(Fafnir_Cam);
+
+          SpineDepth(Fafnir,
+          1.6, -3, 0);'
         type: 0
         typeString: CustomFieldType_Text
       - title: EventGuid
@@ -1334,8 +1394,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 240.81299
-        y: 296.68994
+        x: 241.52094
+        y: 295.27402
         width: 160
         height: 30
     - id: 7
@@ -1353,7 +1413,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -1367,7 +1427,10 @@ MonoBehaviour:
       - title: Sequence
         value: 'SpineTrack(Fafnir, face, Expression_Embarrassed);
 
-          SpineFocus(Fafnir)'
+          SpineFocus(Fafnir);
+
+          CinemachineZoom(8.5,
+          1.0);'
         type: 0
         typeString: CustomFieldType_Text
       - title: EventGuid
@@ -1412,7 +1475,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 243.97748
-        y: 380.11047
+        y: 377.1992
         width: 160
         height: 30
     - id: 8
@@ -1430,7 +1493,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -1444,7 +1507,15 @@ MonoBehaviour:
       - title: Sequence
         value: 'SpineTrack(Chona, face, Expression_Smile);
 
-          SpineFocus(Chona)'
+          SpineFocus(Chona);
+
+          CinemachineFocus(Chona_Cam);
+
+          SpineDepth(Chona,
+          1.2, -1, 0.5);
+
+
+          CinemachineZoom(3.5, 1.0);'
         type: 0
         typeString: CustomFieldType_Text
       - title: EventGuid
@@ -1488,8 +1559,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 240.94116
-        y: 468.477
+        x: 240.23322
+        y: 467.76898
         width: 160
         height: 30
     - id: 9
@@ -1507,7 +1578,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -1521,7 +1592,15 @@ MonoBehaviour:
       - title: Sequence
         value: 'SpineTrack(Fafnir, face, Expression_Annoyed);
 
-          SpineFocus(Fafnir)'
+          SpineFocus(Fafnir);
+
+          CinemachineFocus(Fafnir_Cam);
+
+          SpineDepth(Fafnir,
+          1.6, -3, 0);
+
+
+          CinemachineZoom(8.5, 1.0);'
         type: 0
         typeString: 
       - title: ko
@@ -1561,8 +1640,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 236.07373
-        y: 554.99506
+        x: 468.40256
+        y: 129.04182
         width: 160
         height: 30
     - id: 10
@@ -1580,7 +1659,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -1595,7 +1674,7 @@ MonoBehaviour:
       - title: Sequence
         value: 'SpineTrack(Janghwa, face, Expression_Smile);
 
-          SpineFocus(Janghwa)'
+          SpineFocus(Janghwa);'
         type: 0
         typeString: CustomFieldType_Text
       - title: ko
@@ -1636,8 +1715,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 240
-        y: 637.2857
+        x: 467.94528
+        y: 212.08014
         width: 160
         height: 30
     - id: 11
@@ -1655,7 +1734,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -1669,7 +1748,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: SpineFocus(Fafnir)
+        value: SpineFocus(Fafnir);
         type: 0
         typeString: 
       - title: ko
@@ -1711,8 +1790,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 241.19403
-        y: 720.80597
+        x: 469.13925
+        y: 295.6004
         width: 160
         height: 30
     - id: 12
@@ -1730,7 +1809,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -1745,7 +1824,7 @@ MonoBehaviour:
       - title: Sequence
         value: 'SpineTrack(Chona, face, Expression_Curious);
 
-          SpineFocus(Chona)'
+          SpineFocus(Chona);'
         type: 0
         typeString: 
       - title: ko
@@ -1786,8 +1865,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 240
-        y: 806
+        x: 467.94528
+        y: 380.79443
         width: 160
         height: 30
     - id: 13
@@ -1805,7 +1884,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -1861,8 +1940,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 239.02441
-        y: 890
+        x: 466.9697
+        y: 464.79443
         width: 160
         height: 30
     - id: 14
@@ -1880,7 +1959,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -1934,8 +2013,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 240
-        y: 974
+        x: 705.1504
+        y: 128.39459
         width: 160
         height: 30
     - id: 15
@@ -1953,7 +2032,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -1965,7 +2044,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 'SpineTrack(Chona, face, Expression_Nuetral);
+        value: 'SpineTrack(Chona, face, Expression_Neutral);
 
           SpineFocus(Chona)'
         type: 0
@@ -2007,8 +2086,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 240
-        y: 1058
+        x: 705.1504
+        y: 212.39459
         width: 160
         height: 30
     - id: 16
@@ -2026,7 +2105,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -2080,8 +2159,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 240
-        y: 1140.1962
+        x: 704.6134
+        y: 294.59076
         width: 160
         height: 30
     - id: 17
@@ -2099,7 +2178,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -2157,8 +2236,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 240
-        y: 1224.8059
+        x: 705.1504
+        y: 378.66348
         width: 160
         height: 30
     - id: 18
@@ -2176,7 +2255,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -2230,8 +2309,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 240
-        y: 1308.9042
+        x: 705.1504
+        y: 463.2987
         width: 160
         height: 30
     - id: 19
@@ -2249,7 +2328,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -2303,8 +2382,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 240
-        y: 1394
+        x: 871.2358
+        y: 210.24359
         width: 160
         height: 30
     - id: 20
@@ -2322,7 +2401,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -2374,8 +2453,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 240
-        y: 1478
+        x: 943.44824
+        y: 217.07523
         width: 160
         height: 30
     - id: 21
@@ -2393,7 +2472,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -2449,8 +2528,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 238.94736
-        y: 1560.9473
+        x: 942.3956
+        y: 300.0225
         width: 160
         height: 30
     - id: 22
@@ -2468,7 +2547,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -2522,8 +2601,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 240.60977
-        y: 1646
+        x: 944.05804
+        y: 385.07523
         width: 160
         height: 30
     - id: 23
@@ -2541,7 +2620,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -2597,8 +2676,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 240
-        y: 1730
+        x: 943.44824
+        y: 469.07523
         width: 160
         height: 30
     - id: 24
@@ -2616,7 +2695,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -2668,8 +2747,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 240
-        y: 1814
+        x: 1174.9376
+        y: 132.64966
         width: 160
         height: 30
     - id: 25
@@ -2687,7 +2766,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -2747,8 +2826,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 240
-        y: 1896.1704
+        x: 1174.9376
+        y: 213.82004
         width: 160
         height: 30
     - id: 26
@@ -2766,7 +2845,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -2824,8 +2903,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 241.21954
-        y: 1980.5544
+        x: 1176.1573
+        y: 299.2041
         width: 160
         height: 30
     - id: 27
@@ -2843,7 +2922,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -2901,8 +2980,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 240
-        y: 2064.4617
+        x: 1174.9376
+        y: 383.11133
         width: 160
         height: 30
     - id: 28
@@ -2920,7 +2999,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -2978,8 +3057,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 240
-        y: 2148.4902
+        x: 1174.9376
+        y: 467.13965
         width: 160
         height: 30
     - id: 29
@@ -2997,7 +3076,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -3053,8 +3132,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 240
-        y: 2233.3672
+        x: 1401.3208
+        y: 136.69737
         width: 160
         height: 30
     - id: 30
@@ -3072,7 +3151,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -3130,8 +3209,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 240
-        y: 2318
+        x: 1399.9124
+        y: 206.2465
         width: 160
         height: 30
     - id: 31
@@ -3149,7 +3228,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -3207,8 +3286,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 240
-        y: 2402
+        x: 1399.9124
+        y: 290.24652
         width: 160
         height: 30
     - id: 32
@@ -3226,7 +3305,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -3278,8 +3357,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 240
-        y: 2484.904
+        x: 1399.9124
+        y: 373.15057
         width: 160
         height: 30
     - id: 33
@@ -3297,7 +3376,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -3351,8 +3430,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 240
-        y: 2569.3672
+        x: 1399.9124
+        y: 459.1203
         width: 160
         height: 30
     - id: 34
@@ -3370,7 +3449,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -3426,8 +3505,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 240
-        y: 2654
+        x: 1593.955
+        y: 140.67761
         width: 160
         height: 30
     - id: 35
@@ -3445,7 +3524,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -3459,7 +3538,10 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: '
+        value: 'SpineTrack(Chona, face, Expression_SilentLaugh);
+
+          SpineTrack(Chona,
+          extra, Extra_FingerCount_1);
 
           SpineFocus(none)'
         type: 0
@@ -3507,8 +3589,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 240
-        y: 2738
+        x: 1593.955
+        y: 225.36745
         width: 160
         height: 30
     - id: 36
@@ -3526,7 +3608,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -3539,7 +3621,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'SpineTrack(Fafnir, face, Expression_Smug);
+
+          SpineFocus(Fafnir)'
         type: 0
         typeString: 
       - title: EventGuid
@@ -3584,8 +3668,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 240
-        y: 2821.0476
+        x: 1593.955
+        y: 309.29437
         width: 160
         height: 30
     - id: 37
@@ -3603,7 +3687,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -3616,7 +3700,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'SpineTrack(Vargr, face, Expression_EyeClosed);
+
+          SpineFocus(Vargr)'
         type: 0
         typeString: 
       - title: ko
@@ -3657,8 +3743,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 240
-        y: 2906
+        x: 1593.955
+        y: 393.2343
         width: 160
         height: 30
     - id: 39
@@ -3676,7 +3762,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -3690,7 +3776,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'SpineTrack(Chona, extra, Extra_FingerCount_2);
+
+          SpineFocus(none)'
         type: 0
         typeString: 
       - title: EventGuid
@@ -3736,8 +3824,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 240
-        y: 2988.0103
+        x: 1593.955
+        y: 476.25732
         width: 160
         height: 30
     - id: 40
@@ -3755,7 +3843,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -3770,7 +3858,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: SpineFocus(Fafnir)
         type: 0
         typeString: 
       - title: EventGuid
@@ -3817,8 +3905,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 240
-        y: 3074
+        x: 1806.721
+        y: 151.02168
         width: 160
         height: 30
     - id: 41
@@ -3836,7 +3924,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -3850,7 +3938,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'SpineTrack(Vargr, face, Expression_Dignified);
+
+          SpineFocus(Vargr)'
         type: 0
         typeString: 
       - title: ko
@@ -3892,8 +3982,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 240
-        y: 3158
+        x: 1806.721
+        y: 236.03389
         width: 160
         height: 30
     - id: 42
@@ -3911,7 +4001,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -3925,7 +4015,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'SpineTrack(Chona, extra, Extra_FingerCount_3);
+
+          SpineFocus(none)'
         type: 0
         typeString: 
       - title: EventGuid
@@ -3971,8 +4063,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 240
-        y: 3242
+        x: 1807.4105
+        y: 319.1247
         width: 160
         height: 30
     - id: 43
@@ -3990,7 +4082,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -4002,7 +4094,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: SpineFocus(Fafnir)
         type: 0
         typeString: 
       - title: EventGuid
@@ -4046,8 +4138,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 240
-        y: 3326
+        x: 1806.721
+        y: 404.03363
         width: 160
         height: 30
     - id: 44
@@ -4065,7 +4157,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -4077,7 +4169,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'SpineTrack(Vargr, face, Expression_Angry);
+
+          SpineFocus(Vargr)'
         type: 0
         typeString: 
       - title: EventGuid
@@ -4121,8 +4215,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 240
-        y: 3410
+        x: 1806.721
+        y: 488.0335
         width: 160
         height: 30
     - id: 45
@@ -4140,7 +4234,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -4154,7 +4248,12 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'SpineTrack(Chona, face, Expression_Enlightened);
+
+          SpineTrack(Chona,
+          extra, Extra_Enlightened);
+
+          SpineFocus(none)'
         type: 0
         typeString: 
       - title: EventGuid
@@ -4200,8 +4299,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 239.2857
-        y: 3494
+        x: 2002.727
+        y: 155.73888
         width: 160
         height: 30
     - id: 46
@@ -4215,7 +4314,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Actor
-        value: -1
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
@@ -4265,13 +4364,13 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 240
-        y: 3578
+        x: 2002.4658
+        y: 240.71434
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 190.83206, y: 2189.2683}
-    canvasZoom: 0.9099997
+    canvasScrollPosition: {x: 34.057198, y: 56.696495}
+    canvasZoom: 1.1299994
   - id: 3
     fields:
     - title: Title
@@ -4768,7 +4867,13 @@ MonoBehaviour:
       delaySimStatus: 0
       falseConditionAction: Block
       conditionPriority: 2
-      outgoingLinks: []
+      outgoingLinks:
+      - originConversationID: 3
+        originDialogueID: 17
+        destinationConversationID: 3
+        destinationDialogueID: 18
+        isConnector: 0
+        priority: 2
       conditionsString: 
       userScript: 
       onExecute:
@@ -4780,9 +4885,129 @@ MonoBehaviour:
         y: 372.87253
         width: 160
         height: 30
+    - id: 18
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 2
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 6
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: sadasd
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: ko
+        value: 
+        type: 4
+        typeString: CustomFieldType_Localization
+      - title: ja
+        value: 
+        type: 4
+        typeString: CustomFieldType_Localization
+      conversationID: 3
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 3
+        originDialogueID: 18
+        destinationConversationID: 3
+        destinationDialogueID: 19
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 617.8936
+        y: 422.87253
+        width: 160
+        height: 30
+    - id: 19
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 5
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 2
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: dasdsa
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: ko
+        value: 
+        type: 4
+        typeString: CustomFieldType_Localization
+      - title: ja
+        value: 
+        type: 4
+        typeString: CustomFieldType_Localization
+      conversationID: 3
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks: []
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 617.8936
+        y: 472.87253
+        width: 160
+        height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 89.74466, y: 103.32413}
-    canvasZoom: 1.1499999
+    canvasScrollPosition: {x: 43.8826, y: 41.207478}
+    canvasZoom: 0.8800002
   syncInfo:
     syncActors: 0
     syncItems: 0
