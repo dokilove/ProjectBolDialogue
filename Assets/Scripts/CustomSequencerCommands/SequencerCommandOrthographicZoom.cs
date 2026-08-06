@@ -1,0 +1,10 @@
+// Syntax: OrthographicZoom(targetSize, [duration], [vcamName])
+// This is an alias for CinemachineZoom command.
+
+using System.Collections;
+using UnityEngine;
+
+public class SequencerCommandOrthographicZoom : SequencerCommandCinemachineZoom
+{
+    // Inherits all logic from SequencerCommandCinemachineZoom
+}

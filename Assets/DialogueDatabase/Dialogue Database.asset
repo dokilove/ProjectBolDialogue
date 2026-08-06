@@ -1147,7 +1147,7 @@ MonoBehaviour:
           0.6, 2, 0);
 
 
-          CinemachineTarget(Janghwa_Cam, Janghwa);
+          CinemachineTarget(Janghwa_Cam, Janghwa_Focus);
 
           SpineMoveTo(Janghwa,
           -10, 0, 1, 0.2, true, 0.06, 0.5);
@@ -1158,8 +1158,38 @@ MonoBehaviour:
           SpineMoveTo(Janghwa, -10, 0, 1, 0.2,
           true, 0.06, 0.5);
 
-          SpineMoveTo(Janghwa, -1, 0, 1, 0.2, true,
-          0.06, 0.5);'
+          SpineMoveTo(Janghwa, -5, 0, 1, 0.2, true,
+          0.06, 0.5);
+
+
+          SpineRotate(Janghwa, 90, 1.0, 0.5, 0.5, "EaseOut");
+
+          SpineRotate(Janghwa,
+          180, 1.0, 0.5, 0.5, "EaseIn");
+
+          SpineRotate(Janghwa, 270, 1.0,
+          0.5, 0.5, "EaseOut");
+
+          SpineRotate(Janghwa, 0, 1.0, 0.5, 0.5,
+          "EaseIn");
+
+          SpineRotate(Janghwa, 90, 1.0, 0.5, 0.5, "EaseOut");
+
+          SpineRotate(Janghwa,
+          180, 1.0, 0.5, 0.5, "EaseIn");
+
+          SpineRotate(Janghwa, -360, 1.0,
+          0.5, 0.5, "EaseOut");
+
+          SpineRotate(Janghwa, -360, 1.0, 0.5, 0.5,
+          "EaseIn");
+
+
+
+          CinemachineZoom(1.0, 3.0);
+
+          CinemachineZoom(3.5,
+          3.0);'
         type: 0
         typeString: 
       - title: EventGuid
@@ -1203,8 +1233,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 241.01215
-        y: 123.94232
+        x: 241.72012
+        y: 121.818405
         width: 160
         height: 30
     - id: 5
@@ -1281,7 +1311,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 238.11636
-        y: 212.54639
+        y: 209.00659
         width: 160
         height: 30
     - id: 6
@@ -1364,8 +1394,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 240.81299
-        y: 295.982
+        x: 241.52094
+        y: 295.27402
         width: 160
         height: 30
     - id: 7
@@ -1397,7 +1427,10 @@ MonoBehaviour:
       - title: Sequence
         value: 'SpineTrack(Fafnir, face, Expression_Embarrassed);
 
-          SpineFocus(Fafnir);'
+          SpineFocus(Fafnir);
+
+          CinemachineZoom(8.5,
+          1.0);'
         type: 0
         typeString: CustomFieldType_Text
       - title: EventGuid
@@ -1442,7 +1475,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 243.97748
-        y: 377.90717
+        y: 377.1992
         width: 160
         height: 30
     - id: 8
@@ -1479,7 +1512,10 @@ MonoBehaviour:
           CinemachineFocus(Chona_Cam);
 
           SpineDepth(Chona,
-          1.2, -1, 0.5);'
+          1.2, -1, 0.5);
+
+
+          CinemachineZoom(3.5, 1.0);'
         type: 0
         typeString: CustomFieldType_Text
       - title: EventGuid
@@ -1523,7 +1559,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 240.94116
+        x: 240.23322
         y: 467.76898
         width: 160
         height: 30
@@ -1561,7 +1597,10 @@ MonoBehaviour:
           CinemachineFocus(Fafnir_Cam);
 
           SpineDepth(Fafnir,
-          1.6, -3, 0);'
+          1.6, -3, 0);
+
+
+          CinemachineZoom(8.5, 1.0);'
         type: 0
         typeString: 
       - title: ko
@@ -2343,8 +2382,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 943.44824
-        y: 133.0754
+        x: 871.2358
+        y: 210.24359
         width: 160
         height: 30
     - id: 20
@@ -4967,8 +5006,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 89.74466, y: 103.32413}
-    canvasZoom: 1.1499999
+    canvasScrollPosition: {x: 43.8826, y: 41.207478}
+    canvasZoom: 0.8800002
   syncInfo:
     syncActors: 0
     syncItems: 0

@@ -8,15 +8,16 @@ public class CharacterRootController : MonoBehaviour
     [Header("Components")]
     [SerializeField] private SpineVisualContainerController visualContainerController;
 
-    // --- Fields for movement and flip ---
+    // --- Unified Action Queue for Movement & Rotation ---
     private Vector3? lastQueuedTarget = null;
     private bool lastQueuedAutoFlip = true;
+    private (float angle, Vector2 pivot)? lastQueuedRotate = null;
     private float spinFactor = 1f;
 
-    private Queue<(IEnumerator routine, Action onComplete)> moveQueue = new Queue<(IEnumerator, Action)>();
-    private bool isProcessingQueue = false;
-    private Coroutine queueCoroutine;
-    private Coroutine activeMoveCoroutine;
+    private Queue<(IEnumerator routine, Action onComplete)> actionQueue = new Queue<(IEnumerator, Action)>();
+    private bool isProcessingActionQueue = false;
+    private Coroutine actionQueueCoroutine;
+    private Coroutine activeActionCoroutine;
     private Coroutine activeFlipCoroutine;
 
     void Awake()
@@ -86,33 +87,74 @@ public class CharacterRootController : MonoBehaviour
         activeFlipCoroutine = null;
     }
 
-    // ===================== Movement Queue Logic =====================
+    // ===================== Unified Action Queue Logic =====================
 
     public void EnqueueMove(Vector3 target, float duration, float bounceHeight, float squash, bool autoFlip, float flipDuration = 0f, Action onComplete = null)
     {
         lastQueuedTarget = target;
         lastQueuedAutoFlip = autoFlip;
 
-        moveQueue.Enqueue((MoveRoutine(target, duration, bounceHeight, squash, autoFlip, flipDuration), onComplete));
-        if (!isProcessingQueue)
+        actionQueue.Enqueue((MoveRoutine(target, duration, bounceHeight, squash, autoFlip, flipDuration), onComplete));
+        if (!isProcessingActionQueue)
         {
-            queueCoroutine = StartCoroutine(ProcessMoveQueue());
+            actionQueueCoroutine = StartCoroutine(ProcessActionQueue());
         }
     }
 
-    public void SkipAllMoves()
+    public void EnqueueRotate(float targetAngle, float duration, Vector2 normalizedPivot, Action onComplete = null, EaseType easeType = EaseType.EaseInOut)
     {
-        if (moveQueue.Count == 0 && !isProcessingQueue) return;
+        lastQueuedRotate = (targetAngle, normalizedPivot);
 
-        if (queueCoroutine != null) StopCoroutine(queueCoroutine);
-        if (activeMoveCoroutine != null) StopCoroutine(activeMoveCoroutine);
+        if (duration <= 0f)
+        {
+            actionQueue.Enqueue((InstantRotateWrapper(targetAngle, normalizedPivot), onComplete));
+        }
+        else
+        {
+            actionQueue.Enqueue((RotateRoutine(targetAngle, duration, normalizedPivot, easeType), onComplete));
+        }
+
+        if (!isProcessingActionQueue)
+        {
+            actionQueueCoroutine = StartCoroutine(ProcessActionQueue());
+        }
+    }
+
+    private IEnumerator InstantRotateWrapper(float targetAngle, Vector2 normalizedPivot)
+    {
+        ApplyRotationInstant(targetAngle, normalizedPivot);
+        yield break;
+    }
+
+    private IEnumerator ProcessActionQueue()
+    {
+        isProcessingActionQueue = true;
+        while (actionQueue.Count > 0)
+        {
+            var (routine, onComplete) = actionQueue.Dequeue();
+            activeActionCoroutine = StartCoroutine(routine);
+            yield return activeActionCoroutine;
+            activeActionCoroutine = null;
+            onComplete?.Invoke();
+        }
+        isProcessingActionQueue = false;
+        lastQueuedTarget = null;
+        lastQueuedRotate = null;
+    }
+
+    public void SkipAllActions()
+    {
+        if (actionQueue.Count == 0 && !isProcessingActionQueue) return;
+
+        if (actionQueueCoroutine != null) StopCoroutine(actionQueueCoroutine);
+        if (activeActionCoroutine != null) StopCoroutine(activeActionCoroutine);
         if (activeFlipCoroutine != null) StopCoroutine(activeFlipCoroutine);
-        queueCoroutine = null;
-        activeMoveCoroutine = null;
+        actionQueueCoroutine = null;
+        activeActionCoroutine = null;
         activeFlipCoroutine = null;
 
-        moveQueue.Clear();
-        isProcessingQueue = false;
+        actionQueue.Clear();
+        isProcessingActionQueue = false;
 
         if (lastQueuedTarget.HasValue)
         {
@@ -127,25 +169,20 @@ public class CharacterRootController : MonoBehaviour
             }
         }
 
-        lastQueuedTarget = null;
-    }
-
-    public void ClearMoveQueue() => SkipAllMoves();
-
-    IEnumerator ProcessMoveQueue()
-    {
-        isProcessingQueue = true;
-        while (moveQueue.Count > 0)
+        if (lastQueuedRotate.HasValue)
         {
-            var (routine, onComplete) = moveQueue.Dequeue();
-            activeMoveCoroutine = StartCoroutine(routine);
-            yield return activeMoveCoroutine;
-            activeMoveCoroutine = null;
-            onComplete?.Invoke();
+            ApplyRotationInstant(lastQueuedRotate.Value.angle, lastQueuedRotate.Value.pivot);
         }
-        isProcessingQueue = false;
+
         lastQueuedTarget = null;
+        lastQueuedRotate = null;
     }
+
+    public void SkipAllMoves() => SkipAllActions();
+    public void ClearMoveQueue() => SkipAllActions();
+    public void SkipAllRotations() => SkipAllActions();
+    public void ClearRotateQueue() => SkipAllActions();
+    public void StopRotation() => SkipAllActions();
 
     IEnumerator MoveRoutine(Vector3 target, float duration, float bounceHeight, float squash, bool autoFlip, float flipDuration)
     {
@@ -193,4 +230,119 @@ public class CharacterRootController : MonoBehaviour
             visualContainerController.modelController.ResetSquashAndStretch();
         }
     }
+
+    // ===================== Rotation Helpers =====================
+
+    private Transform TargetVisualTransform
+    {
+        get
+        {
+            if (visualContainerController != null)
+                return visualContainerController.transform;
+            return transform;
+        }
+    }
+
+    public Vector3 GetPivotWorldPoint(Vector2 normalizedPivot)
+    {
+        MeshRenderer meshRenderer = GetComponentInChildren<MeshRenderer>();
+        if (meshRenderer != null)
+        {
+            Bounds bounds = meshRenderer.bounds;
+            float px = Mathf.Lerp(bounds.min.x, bounds.max.x, normalizedPivot.x);
+            float py = Mathf.Lerp(bounds.min.y, bounds.max.y, normalizedPivot.y);
+            return new Vector3(px, py, TargetVisualTransform.position.z);
+        }
+        return TargetVisualTransform.position;
+    }
+
+    public void RotateTo(float targetAngle, float duration, Vector2 normalizedPivot, Action onComplete = null, EaseType easeType = EaseType.EaseInOut)
+    {
+        SkipAllActions();
+        EnqueueRotate(targetAngle, duration, normalizedPivot, onComplete, easeType);
+    }
+
+    private void ApplyRotationInstant(float targetAngle, Vector2 normalizedPivot)
+    {
+        Vector3 pivotWorldPoint = GetPivotWorldPoint(normalizedPivot);
+        Transform t = TargetVisualTransform;
+
+        float startAngle = t.eulerAngles.z;
+        float deltaAngle = (Mathf.Abs(targetAngle) >= 360f) ? (targetAngle - startAngle) : Mathf.DeltaAngle(startAngle, targetAngle);
+
+        Vector3 offset = t.position - pivotWorldPoint;
+        Vector3 rotatedOffset = Quaternion.Euler(0, 0, deltaAngle) * offset;
+
+        t.position = pivotWorldPoint + rotatedOffset;
+        t.rotation = Quaternion.Euler(t.eulerAngles.x, t.eulerAngles.y, targetAngle);
+    }
+
+    private IEnumerator RotateRoutine(float targetAngle, float duration, Vector2 normalizedPivot, EaseType easeType = EaseType.EaseInOut)
+    {
+        Transform t = TargetVisualTransform;
+        Vector3 pivotWorldPoint = GetPivotWorldPoint(normalizedPivot);
+
+        float startAngle = t.eulerAngles.z;
+        float deltaAngle = (Mathf.Abs(targetAngle) >= 360f) ? (targetAngle - startAngle) : Mathf.DeltaAngle(startAngle, targetAngle);
+        Vector3 startPos = t.position;
+        Vector3 startOffset = startPos - pivotWorldPoint;
+        Quaternion startRotation = t.rotation;
+
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float ratio = Mathf.Clamp01(elapsed / duration);
+            float easedRatio = EvaluateEase(easeType, ratio);
+
+            float currentDelta = deltaAngle * easedRatio;
+            Vector3 rotatedOffset = Quaternion.Euler(0, 0, currentDelta) * startOffset;
+
+            t.position = pivotWorldPoint + rotatedOffset;
+            t.rotation = Quaternion.Euler(startRotation.eulerAngles.x, startRotation.eulerAngles.y, startAngle + currentDelta);
+
+            yield return null;
+        }
+
+        Vector3 finalOffset = Quaternion.Euler(0, 0, deltaAngle) * startOffset;
+        t.position = pivotWorldPoint + finalOffset;
+        t.rotation = Quaternion.Euler(startRotation.eulerAngles.x, startRotation.eulerAngles.y, targetAngle);
+    }
+
+    public static float EvaluateEase(EaseType easeType, float t)
+    {
+        t = Mathf.Clamp01(t);
+        switch (easeType)
+        {
+            case EaseType.Linear:
+                return t;
+            case EaseType.EaseIn:
+                return t * t * t; // Cubic EaseIn: Very slow start, fast snappy finish
+            case EaseType.EaseOut:
+                float f = 1f - t;
+                return 1f - f * f * f; // Cubic EaseOut: Explosive fast start, smooth soft stop
+            case EaseType.EaseInOut:
+                return (t < 0.5f) ? (4f * t * t * t) : (1f - Mathf.Pow(-2f * t + 2f, 3f) / 2f);
+            case EaseType.EaseOutBack:
+                float c1 = 1.70158f;
+                float c3 = c1 + 1f;
+                return 1f + c3 * Mathf.Pow(t - 1f, 3) + c1 * Mathf.Pow(t - 1f, 2);
+            case EaseType.EaseInBack:
+                float c2 = 1.70158f;
+                return (c2 + 1f) * t * t * t - c2 * t * t;
+            default:
+                float f2 = 1f - t;
+                return 1f - f2 * f2 * f2;
+        }
+    }
+}
+
+public enum EaseType
+{
+    Linear,
+    EaseInOut,
+    EaseIn,
+    EaseOut,
+    EaseOutBack,
+    EaseInBack
 }
