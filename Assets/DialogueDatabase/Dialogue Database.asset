@@ -141,7 +141,7 @@ MonoBehaviour:
       value: Fafnir
       type: 0
       typeString: CustomFieldType_Text
-    portrait: {fileID: 0}
+    portrait: {fileID: 2800000, guid: f53d50070a24d494581dc684482138c1, type: 3}
     spritePortrait: {fileID: 0}
     alternatePortraits: []
     spritePortraits: []
@@ -179,7 +179,7 @@ MonoBehaviour:
       value: Janghwa
       type: 0
       typeString: CustomFieldType_Text
-    portrait: {fileID: 0}
+    portrait: {fileID: 2800000, guid: cfc06174efe937a4790a55fba6f639fd, type: 3}
     spritePortrait: {fileID: 0}
     alternatePortraits: []
     spritePortraits: []
@@ -217,7 +217,7 @@ MonoBehaviour:
       value: Chona
       type: 0
       typeString: CustomFieldType_Text
-    portrait: {fileID: 0}
+    portrait: {fileID: 2800000, guid: a4454d1cc8601f74f8344380b8b9d18a, type: 3}
     spritePortrait: {fileID: 0}
     alternatePortraits: []
     spritePortraits: []
@@ -255,7 +255,7 @@ MonoBehaviour:
       value: Vargr
       type: 0
       typeString: CustomFieldType_Text
-    portrait: {fileID: 0}
+    portrait: {fileID: 2800000, guid: 83ca75eb185bcbf4cbfad0ea5e5e770f, type: 3}
     spritePortrait: {fileID: 0}
     alternatePortraits: []
     spritePortraits: []
@@ -1090,11 +1090,11 @@ MonoBehaviour:
       - title: Title
         value: 
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Description
         value: 
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Actor
         value: 3
         type: 5
@@ -1106,11 +1106,11 @@ MonoBehaviour:
       - title: Menu Text
         value: 
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Dialogue Text
         value: ......
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Sequence
         value: 'SpineTrack(Janghwa, face, Expression_ProudClosed);
 
@@ -1180,11 +1180,11 @@ MonoBehaviour:
           CinemachineZoom(3.0,
           3.0);'
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: EventGuid
         value: 0e3e6267-5764-4fac-89ac-c883bf1b640d
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: ko
         value: ......
         type: 4
@@ -1222,7 +1222,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 243.13602
+        x: 242.42804
         y: 121.11043
         width: 160
         height: 30
@@ -4359,8 +4359,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 34.057198, y: 56.696495}
-    canvasZoom: 1.1299994
+    canvasScrollPosition: {x: 19.537497, y: 49.996563}
+    canvasZoom: 1.0999994
   - id: 3
     fields:
     - title: Title
@@ -4999,7 +4999,7 @@ MonoBehaviour:
     canvasScrollPosition: {x: 43.8826, y: 41.207478}
     canvasZoom: 0.8800002
   syncInfo:
-    syncActors: 0
+    syncActors: 1
     syncItems: 0
     syncLocations: 0
     syncVariables: 0
