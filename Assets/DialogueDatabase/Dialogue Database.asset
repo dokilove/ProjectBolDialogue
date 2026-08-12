@@ -1138,13 +1138,18 @@ MonoBehaviour:
 
           CinemachineFocus(Janghwa_Cam);
 
-          SpineDepth(Janghwa,
+          //SpineDepth(Janghwa,
           0.6, 2, 0);
 
-          SpineDepth(Chona, 0.6, 2, 0);
+          //SpineDepth(Chona, 0.6, 2, 0);
 
-          SpineDepth(Vargr,
+          //SpineDepth(Vargr,
           0.6, 2, 0);
+
+          SpineDepth(Fafnir, 1.6, -3, 0);
+
+          SpineFocus(Fafnir,
+          150);
 
 
           CinemachineTarget(Janghwa_Cam, Janghwa_Focus);
@@ -1223,7 +1228,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 242.42804
-        y: 121.11043
+        y: 120.38316
         width: 160
         height: 30
     - id: 5
@@ -1253,7 +1258,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 'SpineFocus(Chona);
+        value: 'SpineFocus(Chona, keep);
 
           CinemachineFocus(Chona_Cam);'
         type: 0
@@ -1300,7 +1305,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 238.11636
-        y: 209.00659
+        y: 208.2793
         width: 160
         height: 30
     - id: 6
@@ -1334,10 +1339,7 @@ MonoBehaviour:
       - title: Sequence
         value: 'SpineFocus(Fafnir);
 
-          CinemachineFocus(Fafnir_Cam);
-
-          SpineDepth(Fafnir,
-          1.6, -3, 0);'
+          CinemachineFocus(Fafnir_Cam);'
         type: 0
         typeString: CustomFieldType_Text
       - title: EventGuid
@@ -1464,7 +1466,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 243.97748
+        x: 244.70474
         y: 377.1992
         width: 160
         height: 30
@@ -1497,7 +1499,8 @@ MonoBehaviour:
       - title: Sequence
         value: 'SpineTrack(Chona, face, Expression_Smile);
 
-          SpineFocus(Chona);
+          SpineFocus(Chona,
+          keep);
 
           CinemachineFocus(Chona_Cam);
 
@@ -1631,7 +1634,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 468.40256
-        y: 129.04182
+        y: 128.31454
         width: 160
         height: 30
     - id: 10
@@ -2036,7 +2039,8 @@ MonoBehaviour:
       - title: Sequence
         value: 'SpineTrack(Chona, face, Expression_Neutral);
 
-          SpineFocus(Chona)'
+          SpineFocus(Chona,
+          keep)'
         type: 0
         typeString: 
       - title: ko
