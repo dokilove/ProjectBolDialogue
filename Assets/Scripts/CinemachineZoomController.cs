@@ -6,6 +6,8 @@ using Unity.Cinemachine;
 
 public class CinemachineZoomController : MonoBehaviour
 {
+    public const float REFERENCE_ASPECT_RATIO = 4f / 3f;
+
     private static CinemachineZoomController instance;
     public static CinemachineZoomController Instance
     {
@@ -72,7 +74,6 @@ public class CinemachineZoomController : MonoBehaviour
     {
         lastScreenWidth = Screen.width;
         lastScreenHeight = Screen.height;
-        float aspect = GetCurrentAspectRatio();
 
         // Remove destroyed camera references
         var keysToRemove = new List<CinemachineCamera>();
@@ -91,13 +92,13 @@ public class CinemachineZoomController : MonoBehaviour
             if (vcam == null) continue;
             if (!cameraTargetHalfWidths.ContainsKey(vcam))
             {
-                cameraTargetHalfWidths[vcam] = vcam.Lens.OrthographicSize * aspect;
+                cameraTargetHalfWidths[vcam] = vcam.Lens.OrthographicSize * REFERENCE_ASPECT_RATIO;
             }
         }
 
         if (Camera.main != null && Camera.main.orthographic && !mainCameraTargetHalfWidth.HasValue)
         {
-            mainCameraTargetHalfWidth = Camera.main.orthographicSize * aspect;
+            mainCameraTargetHalfWidth = Camera.main.orthographicSize * REFERENCE_ASPECT_RATIO;
         }
     }
 
@@ -114,12 +115,13 @@ public class CinemachineZoomController : MonoBehaviour
     public static float GetCurrentAspectRatio()
     {
         float height = Screen.height;
-        if (height <= 0f) return 16f / 9f;
+        if (height <= 0f) return REFERENCE_ASPECT_RATIO;
         return (float)Screen.width / height;
     }
 
-    public void EnqueueZoom(float targetHalfWidth, float duration, string vcamName, EaseType easeType, Action onComplete)
+    public void EnqueueZoom(float referenceOrthoSize, float duration, string vcamName, EaseType easeType, Action onComplete)
     {
+        float targetHalfWidth = referenceOrthoSize * REFERENCE_ASPECT_RATIO;
         lastQueuedZoom = (targetHalfWidth, vcamName);
 
         zoomQueue.Enqueue(new ZoomTask

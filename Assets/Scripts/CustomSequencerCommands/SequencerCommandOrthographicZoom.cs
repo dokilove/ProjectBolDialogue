@@ -1,4 +1,4 @@
-// Syntax: OrthographicZoom(targetHalfWidth, [duration], [vcamName])
+// Syntax: OrthographicZoom(targetOrthoSizeAt4x3, [duration], [vcamName])
 // This is an alias for CinemachineZoom command.
 
 using System.Collections;
