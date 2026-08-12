@@ -24,12 +24,12 @@ public class CinemachineZoomController : MonoBehaviour
     private class ZoomTracker
     {
         public CinemachineCamera vcam;
-        public float startSize;
+        public float startHalfWidth;
     }
 
     private class ZoomTask
     {
-        public float targetSize;
+        public float targetHalfWidth;
         public float duration;
         public string vcamName;
         public EaseType easeType;
@@ -39,15 +39,92 @@ public class CinemachineZoomController : MonoBehaviour
     private Queue<ZoomTask> zoomQueue = new Queue<ZoomTask>();
     private bool isProcessingQueue = false;
     private Coroutine activeZoomCoroutine;
-    private (float targetSize, string vcamName)? lastQueuedZoom = null;
+    private (float targetHalfWidth, string vcamName)? lastQueuedZoom = null;
 
-    public void EnqueueZoom(float targetSize, float duration, string vcamName, EaseType easeType, Action onComplete)
+    private Dictionary<CinemachineCamera, float> cameraTargetHalfWidths = new Dictionary<CinemachineCamera, float>();
+    private float? mainCameraTargetHalfWidth = null;
+
+    private int lastScreenWidth = -1;
+    private int lastScreenHeight = -1;
+
+    private void Awake()
     {
-        lastQueuedZoom = (targetSize, vcamName);
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
+    private void Start()
+    {
+        InitializeCameraTracking();
+    }
+
+    private void Update()
+    {
+        CheckScreenResolutionChange();
+    }
+
+    private void InitializeCameraTracking()
+    {
+        lastScreenWidth = Screen.width;
+        lastScreenHeight = Screen.height;
+        float aspect = GetCurrentAspectRatio();
+
+        // Remove destroyed camera references
+        var keysToRemove = new List<CinemachineCamera>();
+        foreach (var key in cameraTargetHalfWidths.Keys)
+        {
+            if (key == null) keysToRemove.Add(key);
+        }
+        foreach (var key in keysToRemove)
+        {
+            cameraTargetHalfWidths.Remove(key);
+        }
+
+        var allVcams = GameObject.FindObjectsByType<CinemachineCamera>(FindObjectsSortMode.None);
+        foreach (var vcam in allVcams)
+        {
+            if (vcam == null) continue;
+            if (!cameraTargetHalfWidths.ContainsKey(vcam))
+            {
+                cameraTargetHalfWidths[vcam] = vcam.Lens.OrthographicSize * aspect;
+            }
+        }
+
+        if (Camera.main != null && Camera.main.orthographic && !mainCameraTargetHalfWidth.HasValue)
+        {
+            mainCameraTargetHalfWidth = Camera.main.orthographicSize * aspect;
+        }
+    }
+
+    private void CheckScreenResolutionChange()
+    {
+        if (Screen.width != lastScreenWidth || Screen.height != lastScreenHeight)
+        {
+            lastScreenWidth = Screen.width;
+            lastScreenHeight = Screen.height;
+            ReapplyCurrentZoom();
+        }
+    }
+
+    public static float GetCurrentAspectRatio()
+    {
+        float height = Screen.height;
+        if (height <= 0f) return 16f / 9f;
+        return (float)Screen.width / height;
+    }
+
+    public void EnqueueZoom(float targetHalfWidth, float duration, string vcamName, EaseType easeType, Action onComplete)
+    {
+        lastQueuedZoom = (targetHalfWidth, vcamName);
 
         zoomQueue.Enqueue(new ZoomTask
         {
-            targetSize = targetSize,
+            targetHalfWidth = targetHalfWidth,
             duration = duration,
             vcamName = vcamName,
             easeType = easeType,
@@ -67,7 +144,7 @@ public class CinemachineZoomController : MonoBehaviour
         while (zoomQueue.Count > 0)
         {
             var task = zoomQueue.Dequeue();
-            activeZoomCoroutine = StartCoroutine(ZoomRoutine(task.targetSize, task.duration, task.vcamName, task.easeType));
+            activeZoomCoroutine = StartCoroutine(ZoomRoutine(task.targetHalfWidth, task.duration, task.vcamName, task.easeType));
             yield return activeZoomCoroutine;
             activeZoomCoroutine = null;
             task.onComplete?.Invoke();
@@ -77,7 +154,7 @@ public class CinemachineZoomController : MonoBehaviour
         lastQueuedZoom = null;
     }
 
-    private IEnumerator ZoomRoutine(float targetSize, float duration, string vcamName, EaseType easeType)
+    private IEnumerator ZoomRoutine(float targetHalfWidth, float duration, string vcamName, EaseType easeType)
     {
         List<ZoomTracker> targets = GetTargetCameras(vcamName);
 
@@ -86,33 +163,47 @@ public class CinemachineZoomController : MonoBehaviour
             // Fallback for main camera
             if (Camera.main != null && Camera.main.orthographic)
             {
+                mainCameraTargetHalfWidth = targetHalfWidth;
                 if (duration <= 0f)
                 {
-                    Camera.main.orthographicSize = targetSize;
+                    ApplyZoomToMainCamera(targetHalfWidth);
                 }
                 else
                 {
-                    float startSize = Camera.main.orthographicSize;
+                    float aspect = GetCurrentAspectRatio();
+                    float startHalfWidth = Camera.main.orthographicSize * aspect;
                     float elapsed = 0f;
                     while (elapsed < duration)
                     {
                         elapsed += Time.deltaTime;
                         float ratio = Mathf.Clamp01(elapsed / duration);
                         float easedRatio = CharacterRootController.EvaluateEase(easeType, ratio);
-                        Camera.main.orthographicSize = Mathf.Lerp(startSize, targetSize, easedRatio);
+                        float currentHalfWidth = Mathf.Lerp(startHalfWidth, targetHalfWidth, easedRatio);
+                        ApplyZoomToMainCamera(currentHalfWidth);
                         yield return null;
                     }
-                    Camera.main.orthographicSize = targetSize;
+                    ApplyZoomToMainCamera(targetHalfWidth);
                 }
             }
             yield break;
+        }
+
+        foreach (var t in targets)
+        {
+            if (t.vcam != null)
+            {
+                cameraTargetHalfWidths[t.vcam] = targetHalfWidth;
+            }
         }
 
         if (duration <= 0f)
         {
             foreach (var t in targets)
             {
-                ApplyZoom(t.vcam, targetSize);
+                if (t.vcam != null)
+                {
+                    ApplyZoom(t.vcam, targetHalfWidth);
+                }
             }
             yield break;
         }
@@ -128,8 +219,8 @@ public class CinemachineZoomController : MonoBehaviour
             {
                 if (t.vcam != null)
                 {
-                    float currentSize = Mathf.Lerp(t.startSize, targetSize, easedRatio);
-                    ApplyZoom(t.vcam, currentSize);
+                    float currentHalfWidth = Mathf.Lerp(t.startHalfWidth, targetHalfWidth, easedRatio);
+                    ApplyZoom(t.vcam, currentHalfWidth);
                 }
             }
 
@@ -140,7 +231,7 @@ public class CinemachineZoomController : MonoBehaviour
         {
             if (t.vcam != null)
             {
-                ApplyZoom(t.vcam, targetSize);
+                ApplyZoom(t.vcam, targetHalfWidth);
             }
         }
     }
@@ -161,12 +252,17 @@ public class CinemachineZoomController : MonoBehaviour
             {
                 foreach (var t in targets)
                 {
-                    if (t.vcam != null) ApplyZoom(t.vcam, lastQueuedZoom.Value.targetSize);
+                    if (t.vcam != null)
+                    {
+                        cameraTargetHalfWidths[t.vcam] = lastQueuedZoom.Value.targetHalfWidth;
+                        ApplyZoom(t.vcam, lastQueuedZoom.Value.targetHalfWidth);
+                    }
                 }
             }
             else if (Camera.main != null && Camera.main.orthographic)
             {
-                Camera.main.orthographicSize = lastQueuedZoom.Value.targetSize;
+                mainCameraTargetHalfWidth = lastQueuedZoom.Value.targetHalfWidth;
+                ApplyZoomToMainCamera(lastQueuedZoom.Value.targetHalfWidth);
             }
         }
 
@@ -176,6 +272,7 @@ public class CinemachineZoomController : MonoBehaviour
     private List<ZoomTracker> GetTargetCameras(string vcamName)
     {
         List<ZoomTracker> targets = new List<ZoomTracker>();
+        float aspect = GetCurrentAspectRatio();
         var allVcams = GameObject.FindObjectsByType<CinemachineCamera>(FindObjectsSortMode.None);
         foreach (var vcam in allVcams)
         {
@@ -183,20 +280,53 @@ public class CinemachineZoomController : MonoBehaviour
             bool isMatch = string.IsNullOrEmpty(vcamName) || vcam.gameObject.name.Equals(vcamName, StringComparison.OrdinalIgnoreCase);
             if (isMatch)
             {
+                float startHalfWidth = cameraTargetHalfWidths.TryGetValue(vcam, out float storedHalfWidth)
+                    ? storedHalfWidth
+                    : vcam.Lens.OrthographicSize * aspect;
+
                 targets.Add(new ZoomTracker
                 {
                     vcam = vcam,
-                    startSize = vcam.Lens.OrthographicSize
+                    startHalfWidth = startHalfWidth
                 });
             }
         }
         return targets;
     }
 
-    private void ApplyZoom(CinemachineCamera vcam, float size)
+    private void ApplyZoom(CinemachineCamera vcam, float targetHalfWidth)
     {
+        if (vcam == null) return;
+        float aspect = GetCurrentAspectRatio();
         var lens = vcam.Lens;
-        lens.OrthographicSize = size;
+        lens.OrthographicSize = targetHalfWidth / aspect;
         vcam.Lens = lens;
+    }
+
+    private void ApplyZoomToMainCamera(float targetHalfWidth)
+    {
+        if (Camera.main != null && Camera.main.orthographic)
+        {
+            float aspect = GetCurrentAspectRatio();
+            Camera.main.orthographicSize = targetHalfWidth / aspect;
+        }
+    }
+
+    private void ReapplyCurrentZoom()
+    {
+        InitializeCameraTracking();
+
+        foreach (var kvp in cameraTargetHalfWidths)
+        {
+            if (kvp.Key != null)
+            {
+                ApplyZoom(kvp.Key, kvp.Value);
+            }
+        }
+
+        if (mainCameraTargetHalfWidth.HasValue)
+        {
+            ApplyZoomToMainCamera(mainCameraTargetHalfWidth.Value);
+        }
     }
 }

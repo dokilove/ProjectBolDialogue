@@ -1,7 +1,7 @@
-// Syntax: CinemachineZoom(targetSize, [duration], [vcamName], [easeType])
-// Syntax: CinemachineZoom(targetSize, [duration], [easeType])
-// Syntax: OrthographicZoom(targetSize, [duration], [vcamName], [easeType])
-// targetSize: Target Orthographic Size (Smaller = Zoom In, Larger = Zoom Out)
+// Syntax: CinemachineZoom(targetHalfWidth, [duration], [vcamName], [easeType])
+// Syntax: CinemachineZoom(targetHalfWidth, [duration], [easeType])
+// Syntax: OrthographicZoom(targetHalfWidth, [duration], [vcamName], [easeType])
+// targetHalfWidth: Target Orthographic Half Width (Horizontal half width; Smaller = Zoom In, Larger = Zoom Out)
 // duration: Time in seconds to interpolate zoom (default 0 = instant)
 // vcamName: Name of target CinemachineCamera (optional; if omitted, applies to all active Cinemachine cameras)
 // easeType: Linear, EaseIn, EaseOut, EaseInOut, EaseOutBack, EaseInBack (default EaseInOut)
@@ -18,7 +18,7 @@ public class SequencerCommandCinemachineZoom : SequencerCommand
 
     void Start()
     {
-        float targetSize = GetParameterAsFloat(0, 5f);
+        float targetHalfWidth = GetParameterAsFloat(0, 5f);
         float duration = GetParameterAsFloat(1, 0f);
 
         string vcamName = string.Empty;
@@ -40,7 +40,7 @@ public class SequencerCommandCinemachineZoom : SequencerCommand
             }
         }
 
-        CinemachineZoomController.Instance.EnqueueZoom(targetSize, duration, vcamName, easeType, () => isDone = true);
+        CinemachineZoomController.Instance.EnqueueZoom(targetHalfWidth, duration, vcamName, easeType, () => isDone = true);
     }
 
     void Update()
