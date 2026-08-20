@@ -1275,7 +1275,7 @@ GameObject:
   - component: {fileID: 6647249457166164264}
   m_Layer: 0
   m_Name: Fafnir
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2511,6 +2511,9 @@ MonoBehaviour:
   maxDistanceRight: 0.1
   maxDistanceUp: 0.5
   maxDistanceDown: 0.2
+  useElasticReturn: 1
+  stiffness: 150
+  damping: 8
   returnSpeed: 10
   OnDragStartSuccess:
     m_PersistentCalls:

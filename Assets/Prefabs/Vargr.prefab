@@ -2444,6 +2444,9 @@ MonoBehaviour:
   maxDistanceRight: 0.1
   maxDistanceUp: 0.5
   maxDistanceDown: 0.2
+  useElasticReturn: 1
+  stiffness: 150
+  damping: 8
   returnSpeed: 10
   OnDragStartSuccess:
     m_PersistentCalls:
@@ -3968,7 +3971,7 @@ GameObject:
   - component: {fileID: 8418930065894841042}
   m_Layer: 0
   m_Name: Vargr
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

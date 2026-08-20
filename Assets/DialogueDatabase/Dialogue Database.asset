@@ -54,7 +54,7 @@ MonoBehaviour:
       type: 2
       typeString: CustomFieldType_Boolean
     - title: NodeColor
-      value: '#aec9ffff'
+      value: '#fbad25ff'
       type: 0
       typeString: CustomFieldType_Text
     - title: Display Name ko
@@ -92,7 +92,7 @@ MonoBehaviour:
       type: 2
       typeString: CustomFieldType_Boolean
     - title: NodeColor
-      value: Blue
+      value: '#fbad25ff'
       type: 0
       typeString: CustomFieldType_Text
     - title: Display Name
@@ -130,7 +130,7 @@ MonoBehaviour:
       type: 2
       typeString: CustomFieldType_Boolean
     - title: NodeColor
-      value: '#3fbfffff'
+      value: '#3c86fdff'
       type: 0
       typeString: CustomFieldType_Text
     - title: Display Name ko
@@ -168,7 +168,7 @@ MonoBehaviour:
       type: 2
       typeString: CustomFieldType_Boolean
     - title: NodeColor
-      value: '#ff517fff'
+      value: '#f06d9bff'
       type: 0
       typeString: CustomFieldType_Text
     - title: Display Name ko
@@ -206,7 +206,7 @@ MonoBehaviour:
       type: 2
       typeString: CustomFieldType_Boolean
     - title: NodeColor
-      value: '#da5dfbff'
+      value: '#8f68bcff'
       type: 0
       typeString: CustomFieldType_Text
     - title: Display Name ko
@@ -244,7 +244,7 @@ MonoBehaviour:
       type: 2
       typeString: CustomFieldType_Boolean
     - title: NodeColor
-      value: '#656565ff'
+      value: '#9d9592ff'
       type: 0
       typeString: CustomFieldType_Text
     - title: Display Name ko
@@ -384,6 +384,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 1
       isRoot: 1
       isGroup: 0
@@ -461,6 +465,10 @@ MonoBehaviour:
         type: 1
         typeString: CustomFieldType_Number
       - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
         value: 
         type: 0
         typeString: CustomFieldType_Text
@@ -543,6 +551,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 1
       isRoot: 0
       isGroup: 0
@@ -622,6 +634,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 1
       isRoot: 0
       isGroup: 0
@@ -698,6 +714,10 @@ MonoBehaviour:
         type: 1
         typeString: CustomFieldType_Number
       - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
         value: 
         type: 0
         typeString: CustomFieldType_Text
@@ -781,6 +801,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 1
       isRoot: 0
       isGroup: 0
@@ -857,6 +881,10 @@ MonoBehaviour:
         type: 1
         typeString: CustomFieldType_Number
       - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
         value: 
         type: 0
         typeString: CustomFieldType_Text
@@ -940,6 +968,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 1
       isRoot: 0
       isGroup: 0
@@ -1016,6 +1048,10 @@ MonoBehaviour:
         type: 1
         typeString: CustomFieldType_Number
       - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
         value: 
         type: 0
         typeString: CustomFieldType_Text
@@ -1144,6 +1180,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 1
       isGroup: 0
@@ -1236,35 +1276,17 @@ MonoBehaviour:
           CinemachineTarget(Janghwa_Cam,
           Janghwa_Focus);
 
-          SpineMoveTo(Janghwa, -10, 0, 1, 0.2, true, 0.06,
+          SpineMoveTo(Janghwa, -7, 0, 1, 0.2, true, 0.06,
           0.5);
 
           SpineMoveTo(Janghwa, -5, 0, 1, 0.2, true, 0.06, 0.5);
 
-          SpineMoveTo(Janghwa,
-          -10, 0, 1, 0.2, true, 0.06, 0.5);
-
-          SpineMoveTo(Janghwa, -5, 0,
-          1, 0.2, true, 0.06, 0.5);
 
 
-          SpineRotate(Janghwa, 90, 0.5, 0.5,
-          0.5, "EaseOut");
+          //CinemachineZoom(1.0,
+          3.0);
 
-          SpineRotate(Janghwa, 180, 0.5, 0.5, 0.5, "EaseIn");
-
-          SpineRotate(Janghwa,
-          270, 0.5, 0.5, 0.5, "EaseOut");
-
-          SpineRotate(Janghwa, 0, 0.5,
-          0.5, 0.5, "EaseIn");
-
-
-
-          CinemachineZoom(1.0, 3.0);
-
-          CinemachineZoom(3.0,
-          3.0);'
+          //CinemachineZoom(3.0, 3.0);'
         type: 0
         typeString: CustomFieldType_Text
       - title: EventGuid
@@ -1291,6 +1313,10 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -1312,8 +1338,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 242.42804
-        y: 116.785416
+        x: 245.28519
+        y: 116.785446
         width: 160
         height: 30
     - id: 5
@@ -1372,6 +1398,10 @@ MonoBehaviour:
         value: 0
         type: 1
         typeString: CustomFieldType_Number
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -1457,6 +1487,10 @@ MonoBehaviour:
         value: 0
         type: 1
         typeString: CustomFieldType_Number
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -1479,7 +1513,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 241.52094
-        y: 294.566
+        y: 295.99457
         width: 160
         height: 30
     - id: 7
@@ -1542,6 +1576,10 @@ MonoBehaviour:
         value: 2
         type: 1
         typeString: CustomFieldType_Number
+      - title: NamePosition
+        value: Right
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -1563,7 +1601,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 245.41272
+        x: 243.98416
         y: 376.49124
         width: 160
         height: 30
@@ -1632,6 +1670,10 @@ MonoBehaviour:
         value: 0
         type: 1
         typeString: CustomFieldType_Number
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -1653,7 +1695,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 240.23322
+        x: 241.66177
         y: 467.76898
         width: 160
         height: 30
@@ -1714,11 +1756,15 @@ MonoBehaviour:
         type: 4
         typeString: CustomFieldType_Localization
       - title: SubtitlePanel
-        value: 0
+        value: 2
         type: 1
         typeString: CustomFieldType_Number
       - title: EventGuid
         value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: Right
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 2
@@ -1743,7 +1789,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 468.40256
-        y: 128.31454
+        y: 126.885956
         width: 160
         height: 30
     - id: 10
@@ -1801,6 +1847,10 @@ MonoBehaviour:
         type: 1
         typeString: CustomFieldType_Number
       - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
         value: 
         type: 0
         typeString: CustomFieldType_Text
@@ -1880,11 +1930,15 @@ MonoBehaviour:
         type: 4
         typeString: CustomFieldType_Localization
       - title: SubtitlePanel
-        value: 0
+        value: 2
         type: 1
         typeString: CustomFieldType_Number
       - title: EventGuid
         value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: Right
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 2
@@ -1967,6 +2021,10 @@ MonoBehaviour:
         type: 1
         typeString: CustomFieldType_Number
       - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
         value: 
         type: 0
         typeString: CustomFieldType_Text
@@ -2053,6 +2111,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -2131,6 +2193,10 @@ MonoBehaviour:
         type: 1
         typeString: CustomFieldType_Number
       - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
         value: 
         type: 0
         typeString: CustomFieldType_Text
@@ -2216,6 +2282,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -2297,6 +2367,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -2375,11 +2449,15 @@ MonoBehaviour:
         type: 4
         typeString: CustomFieldType_Localization
       - title: SubtitlePanel
-        value: 0
+        value: 2
         type: 1
         typeString: CustomFieldType_Number
       - title: EventGuid
         value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: Right
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 2
@@ -2456,11 +2534,15 @@ MonoBehaviour:
         type: 4
         typeString: CustomFieldType_Localization
       - title: SubtitlePanel
-        value: 0
+        value: 2
         type: 1
         typeString: CustomFieldType_Number
       - title: EventGuid
         value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: Right
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 2
@@ -2516,7 +2598,11 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: SpineFocus(Chona)
+        value: 'SpineFocus(Chona);
+
+          CinemachineFocus(Chona_Cam);
+
+'
         type: 0
         typeString: 
       - title: ko
@@ -2544,6 +2630,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -2565,8 +2655,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 952.69037
-        y: 112.06172
+        x: 954.11884
+        y: 109.20456
         width: 160
         height: 30
     - id: 20
@@ -2616,11 +2706,15 @@ MonoBehaviour:
         type: 4
         typeString: CustomFieldType_Localization
       - title: SubtitlePanel
-        value: 0
+        value: 2
         type: 1
         typeString: CustomFieldType_Number
       - title: EventGuid
         value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: Right
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 2
@@ -2678,7 +2772,10 @@ MonoBehaviour:
       - title: Sequence
         value: 'SpineTrack(Janghwa, face, Expression_Irritated);
 
-          SpineFocus(Janghwa)'
+          SpineFocus(Janghwa);
+
+
+          CinemachineFocus(Janghwa_Cam);'
         type: 0
         typeString: 
       - title: ko
@@ -2706,6 +2803,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -2728,7 +2829,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 942.3956
-        y: 300.0225
+        y: 298.5939
         width: 160
         height: 30
     - id: 22
@@ -2787,6 +2888,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -2841,7 +2946,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: SpineFocus(none)
+        value: 'SpineFocus(none);
+
+          CinemachineFocus(Wide_Cam);'
         type: 0
         typeString: 
       - title: ko
@@ -2863,10 +2970,14 @@ MonoBehaviour:
         type: 4
         typeString: CustomFieldType_Localization
       - title: SubtitlePanel
-        value: 0
+        value: 3
         type: 1
         typeString: CustomFieldType_Number
       - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
         value: 
         type: 0
         typeString: CustomFieldType_Text
@@ -2942,10 +3053,14 @@ MonoBehaviour:
         type: 4
         typeString: CustomFieldType_Localization
       - title: SubtitlePanel
-        value: 0
+        value: 3
         type: 1
         typeString: CustomFieldType_Number
       - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
         value: 
         type: 0
         typeString: CustomFieldType_Text
@@ -3032,6 +3147,10 @@ MonoBehaviour:
         value: 0
         type: 1
         typeString: CustomFieldType_Number
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -3110,9 +3229,13 @@ MonoBehaviour:
         type: 4
         typeString: CustomFieldType_Localization
       - title: SubtitlePanel
-        value: 0
+        value: 3
         type: 1
         typeString: CustomFieldType_Number
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -3194,6 +3317,10 @@ MonoBehaviour:
         value: 0
         type: 1
         typeString: CustomFieldType_Number
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -3272,9 +3399,13 @@ MonoBehaviour:
         type: 4
         typeString: CustomFieldType_Localization
       - title: SubtitlePanel
-        value: 0
+        value: 3
         type: 1
         typeString: CustomFieldType_Number
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -3351,10 +3482,14 @@ MonoBehaviour:
         type: 4
         typeString: CustomFieldType_Localization
       - title: SubtitlePanel
-        value: 0
+        value: 3
         type: 1
         typeString: CustomFieldType_Number
       - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
         value: 
         type: 0
         typeString: CustomFieldType_Text
@@ -3439,6 +3574,10 @@ MonoBehaviour:
         value: 0
         type: 1
         typeString: CustomFieldType_Number
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -3517,9 +3656,13 @@ MonoBehaviour:
         type: 4
         typeString: CustomFieldType_Localization
       - title: SubtitlePanel
-        value: 0
+        value: 3
         type: 1
         typeString: CustomFieldType_Number
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -3592,10 +3735,14 @@ MonoBehaviour:
         type: 4
         typeString: CustomFieldType_Localization
       - title: SubtitlePanel
-        value: 0
+        value: 3
         type: 1
         typeString: CustomFieldType_Number
       - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
         value: 
         type: 0
         typeString: CustomFieldType_Text
@@ -3680,6 +3827,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -3760,6 +3911,10 @@ MonoBehaviour:
         type: 1
         typeString: CustomFieldType_Number
       - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
         value: 
         type: 0
         typeString: CustomFieldType_Text
@@ -3848,9 +4003,13 @@ MonoBehaviour:
         type: 4
         typeString: CustomFieldType_Localization
       - title: SubtitlePanel
-        value: 0
+        value: 3
         type: 1
         typeString: CustomFieldType_Number
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -3934,6 +4093,10 @@ MonoBehaviour:
         value: 0
         type: 1
         typeString: CustomFieldType_Number
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -4014,6 +4177,10 @@ MonoBehaviour:
         type: 1
         typeString: CustomFieldType_Number
       - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
         value: 
         type: 0
         typeString: CustomFieldType_Text
@@ -4099,9 +4266,13 @@ MonoBehaviour:
         type: 4
         typeString: CustomFieldType_Localization
       - title: SubtitlePanel
-        value: 0
+        value: 3
         type: 1
         typeString: CustomFieldType_Number
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -4187,6 +4358,10 @@ MonoBehaviour:
         value: 0
         type: 1
         typeString: CustomFieldType_Number
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -4272,6 +4447,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -4354,9 +4533,13 @@ MonoBehaviour:
         type: 4
         typeString: CustomFieldType_Localization
       - title: SubtitlePanel
-        value: 0
+        value: 3
         type: 1
         typeString: CustomFieldType_Number
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -4436,6 +4619,10 @@ MonoBehaviour:
         value: 0
         type: 1
         typeString: CustomFieldType_Number
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -4517,6 +4704,10 @@ MonoBehaviour:
         value: 0
         type: 1
         typeString: CustomFieldType_Number
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -4602,9 +4793,13 @@ MonoBehaviour:
         type: 4
         typeString: CustomFieldType_Localization
       - title: SubtitlePanel
-        value: 0
+        value: 3
         type: 1
         typeString: CustomFieldType_Number
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -4684,6 +4879,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -4704,8 +4903,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 754.31055, y: 44.859833}
-    canvasZoom: 1.0699995
+    canvasScrollPosition: {x: 55.200073, y: 20.742859}
+    canvasZoom: 0.55999964
   - id: 3
     fields:
     - title: Title
@@ -4809,6 +5008,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 3
       isRoot: 1
       isGroup: 0
@@ -4888,6 +5091,10 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 3
       isRoot: 0
       isGroup: 0
@@ -4967,6 +5174,10 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 3
       isRoot: 0
       isGroup: 0
@@ -5046,6 +5257,10 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 3
       isRoot: 0
       isGroup: 0
@@ -5125,6 +5340,10 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 3
       isRoot: 0
       isGroup: 0
@@ -5204,6 +5423,10 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 3
       isRoot: 0
       isGroup: 0
@@ -5283,6 +5506,10 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 3
       isRoot: 0
       isGroup: 0
@@ -5359,6 +5586,10 @@ MonoBehaviour:
         type: 4
         typeString: CustomFieldType_Localization
       - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
         value: 
         type: 0
         typeString: CustomFieldType_Text
@@ -5441,6 +5672,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 3
       isRoot: 0
       isGroup: 0
@@ -5484,4 +5719,4 @@ MonoBehaviour:
     Text","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Dialogue
     Text","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"SubtitlePanel","value":"0","type":1,"typeString":"CustomFieldType_Number"},{"title":"ko","value":"","type":4,"typeString":"CustomFieldType_Localization"},{"title":"ja","value":"","type":4,"typeString":"CustomFieldType_Localization"},{"title":"Sequence","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Menu
     Text ko","value":"","type":4,"typeString":"CustomFieldType_Localization"},{"title":"Menu
-    Text ja","value":"","type":4,"typeString":"CustomFieldType_Localization"},{"title":"EventGuid","value":"","type":0,"typeString":"CustomFieldType_Text"}],"actorPrimaryFieldTitles":[],"itemPrimaryFieldTitles":[],"questPrimaryFieldTitles":[],"locationPrimaryFieldTitles":[],"variablePrimaryFieldTitles":[],"conversationPrimaryFieldTitles":[],"dialogueEntryPrimaryFieldTitles":["SubtitlePanel"],"npcLineColor":{"r":1.0,"g":0.0,"b":0.0,"a":1.0},"pcLineColor":{"r":0.0,"g":0.0,"b":1.0,"a":1.0},"repeatLineColor":{"r":0.5,"g":0.5,"b":0.5,"a":1.0}}'
+    Text ja","value":"","type":4,"typeString":"CustomFieldType_Localization"},{"title":"EventGuid","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"NamePosition","value":"","type":0,"typeString":"CustomFieldType_Text"}],"actorPrimaryFieldTitles":[],"itemPrimaryFieldTitles":[],"questPrimaryFieldTitles":[],"locationPrimaryFieldTitles":[],"variablePrimaryFieldTitles":[],"conversationPrimaryFieldTitles":[],"dialogueEntryPrimaryFieldTitles":["SubtitlePanel","AlignName","NamePosition"],"npcLineColor":{"r":1.0,"g":0.0,"b":0.0,"a":1.0},"pcLineColor":{"r":0.0,"g":0.0,"b":1.0,"a":1.0},"repeatLineColor":{"r":0.5,"g":0.5,"b":0.5,"a":1.0}}'

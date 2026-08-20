@@ -19,6 +19,12 @@ public class Drag2DObject : MonoBehaviour
     public float maxDistanceDown = 3f;  // 아래쪽으로 최대 이동 거리 (Y-)
 
     [Header("Return Settings")]
+    public bool useElasticReturn = true; // 탄성 복귀 사용 여부
+    [Tooltip("탄성 계수 (클수록 빨리 복원하고 진동수가 빨라짐)")]
+    public float stiffness = 150f;
+    [Tooltip("감쇠 계수 (작을수록 띠용띠용 더 흔들리고, 클수록 튕김 없이 조용히 멈춤)")]
+    public float damping = 12f;
+    [Tooltip("탄성 복귀를 안 쓸 때의 기본 Lerp 복구 속도")]
     public float returnSpeed = 5f;
 
     [Header("Event Hooks")]
@@ -28,6 +34,7 @@ public class Drag2DObject : MonoBehaviour
     private bool dragging = false;
     private bool isReturning = false;
     private Vector3 startLocalPosition;    // 오브젝트의 초기 시작 로컬 위치
+    private Vector3 currentVelocity = Vector3.zero; // 물리 연산용 현재 속도
 
     private Camera cam;
     private Vector3 localOffset; // 로컬 오프셋
@@ -82,6 +89,7 @@ public class Drag2DObject : MonoBehaviour
         {
             dragging = true;
             isReturning = false;
+            currentVelocity = Vector3.zero; // 복귀 속도 초기화
             localOffset = transform.localPosition - mouseLocalPos; // 로컬 오프셋 계산
 
             OnDragStartSuccess?.Invoke();
@@ -147,16 +155,38 @@ public class Drag2DObject : MonoBehaviour
                                                 ? referenceTransform.localPosition
                                                 : startLocalPosition;
             
-            transform.localPosition = Vector3.Lerp(
-                transform.localPosition,
-                returnTargetLocalPosition,
-                Time.deltaTime * returnSpeed
-            );
-
-            if (Vector3.Distance(transform.localPosition, returnTargetLocalPosition) < 0.01f)
+            if (useElasticReturn)
             {
-                transform.localPosition = returnTargetLocalPosition;
-                isReturning = false;
+                // 스프링-댐퍼 물리 연산 (Damped Harmonic Oscillator)
+                Vector3 displacement = transform.localPosition - returnTargetLocalPosition;
+                Vector3 springForce = -stiffness * displacement;
+                Vector3 dampingForce = -damping * currentVelocity;
+                Vector3 acceleration = springForce + dampingForce; // 질량은 1로 가정
+
+                currentVelocity += acceleration * Time.deltaTime;
+                transform.localPosition += currentVelocity * Time.deltaTime;
+
+                // 속도와 남은 거리가 충분히 0에 수렴하면 완전히 복귀 처리
+                if (currentVelocity.magnitude < 0.01f && displacement.magnitude < 0.01f)
+                {
+                    transform.localPosition = returnTargetLocalPosition;
+                    currentVelocity = Vector3.zero;
+                    isReturning = false;
+                }
+            }
+            else
+            {
+                transform.localPosition = Vector3.Lerp(
+                    transform.localPosition,
+                    returnTargetLocalPosition,
+                    Time.deltaTime * returnSpeed
+                );
+
+                if (Vector3.Distance(transform.localPosition, returnTargetLocalPosition) < 0.01f)
+                {
+                    transform.localPosition = returnTargetLocalPosition;
+                    isReturning = false;
+                }
             }
         }
     }
