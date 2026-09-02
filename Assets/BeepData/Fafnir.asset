@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de612efdd68513b4f9097f4ee6ffc2da, type: 3}
+  m_Name: Fafnir
+  m_EditorClassIdentifier: Assembly-CSharp::BeepSync.DialogueBeepData
+  characterName: Fafnir
+  beepClips:
+  - {fileID: 8300000, guid: efc70779555805144b27141068963b7a, type: 3}
+  - {fileID: 8300000, guid: 3cd48f82f12568c4b848493fd3816a84, type: 3}
+  - {fileID: 8300000, guid: 28d90c2cf78876b40950b3f43ab0e6dd, type: 3}
+  basePitch: 1
+  pitchRandomness: 0.08
+  charDelay: 0.045
+  punctuationPause: 0.2
+  volume: 0.8
+  playOnWhitespace: 0
+  soundFrequency: 1

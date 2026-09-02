@@ -69,10 +69,6 @@ MonoBehaviour:
       value: 
       type: 0
       typeString: CustomFieldType_Text
-    - title: TypewriterSound
-      value: 
-      type: 0
-      typeString: CustomFieldType_Text
     portrait: {fileID: 0}
     spritePortrait: {fileID: 0}
     alternatePortraits: []
@@ -109,10 +105,6 @@ MonoBehaviour:
       typeString: CustomFieldType_Text
     - title: Display Name
       value: Player
-      type: 0
-      typeString: CustomFieldType_Text
-    - title: TypewriterSound
-      value: 
       type: 0
       typeString: CustomFieldType_Text
     portrait: {fileID: 0}
@@ -153,10 +145,6 @@ MonoBehaviour:
       value: Fafnir
       type: 0
       typeString: CustomFieldType_Text
-    - title: TypewriterSound
-      value: 
-      type: 0
-      typeString: CustomFieldType_Text
     portrait: {fileID: 2800000, guid: f53d50070a24d494581dc684482138c1, type: 3}
     spritePortrait: {fileID: 0}
     alternatePortraits: []
@@ -193,10 +181,6 @@ MonoBehaviour:
       typeString: CustomFieldType_Text
     - title: Display Name
       value: Janghwa
-      type: 0
-      typeString: CustomFieldType_Text
-    - title: TypewriterSound
-      value: 
       type: 0
       typeString: CustomFieldType_Text
     portrait: {fileID: 2800000, guid: cfc06174efe937a4790a55fba6f639fd, type: 3}
@@ -237,10 +221,6 @@ MonoBehaviour:
       value: Chona
       type: 0
       typeString: CustomFieldType_Text
-    - title: TypewriterSound
-      value: 
-      type: 0
-      typeString: CustomFieldType_Text
     portrait: {fileID: 2800000, guid: a4454d1cc8601f74f8344380b8b9d18a, type: 3}
     spritePortrait: {fileID: 0}
     alternatePortraits: []
@@ -277,10 +257,6 @@ MonoBehaviour:
       typeString: CustomFieldType_Text
     - title: Display Name
       value: Vargr
-      type: 0
-      typeString: CustomFieldType_Text
-    - title: TypewriterSound
-      value: 
       type: 0
       typeString: CustomFieldType_Text
     portrait: {fileID: 2800000, guid: 83ca75eb185bcbf4cbfad0ea5e5e770f, type: 3}
@@ -1943,9 +1919,9 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: CharsPerSecond
-        value: 
+        value: 0
         type: 1
-        typeString: 
+        typeString: CustomFieldType_Number
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -2305,9 +2281,9 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: CharsPerSecond
-        value: 
+        value: 0
         type: 1
-        typeString: 
+        typeString: CustomFieldType_Number
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -2577,9 +2553,9 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: CharsPerSecond
-        value: 
+        value: 0
         type: 1
-        typeString: 
+        typeString: CustomFieldType_Number
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -2846,9 +2822,9 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: CharsPerSecond
-        value: 
+        value: 0
         type: 1
-        typeString: 
+        typeString: CustomFieldType_Number
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -2871,7 +2847,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 943.44824
-        y: 217.07523
+        y: 215.64667
         width: 160
         height: 30
     - id: 21
@@ -3209,9 +3185,9 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: CharsPerSecond
-        value: 
+        value: 0
         type: 1
-        typeString: 
+        typeString: CustomFieldType_Number
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -3300,9 +3276,9 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: CharsPerSecond
-        value: 
+        value: 0
         type: 1
-        typeString: 
+        typeString: CustomFieldType_Number
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -3747,9 +3723,9 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: CharsPerSecond
-        value: 
+        value: 0
         type: 1
-        typeString: 
+        typeString: CustomFieldType_Number
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -3923,9 +3899,9 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: CharsPerSecond
-        value: 
+        value: 0
         type: 1
-        typeString: 
+        typeString: CustomFieldType_Number
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -3948,7 +3924,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 1399.9124
-        y: 373.15057
+        y: 371.72202
         width: 160
         height: 30
     - id: 33
@@ -4012,9 +3988,9 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: CharsPerSecond
-        value: 
+        value: 0
         type: 1
-        typeString: 
+        typeString: CustomFieldType_Number
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -4103,9 +4079,9 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: CharsPerSecond
-        value: 
+        value: 0
         type: 1
-        typeString: 
+        typeString: CustomFieldType_Number
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -4199,9 +4175,9 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: CharsPerSecond
-        value: 
+        value: 0
         type: 1
-        typeString: 
+        typeString: CustomFieldType_Number
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -4223,7 +4199,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1593.955
+        x: 1595.3834
         y: 225.36745
         width: 160
         height: 30
@@ -4290,9 +4266,9 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: CharsPerSecond
-        value: 
+        value: 0
         type: 1
-        typeString: 
+        typeString: CustomFieldType_Number
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -4381,9 +4357,9 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: CharsPerSecond
-        value: 
+        value: 0
         type: 1
-        typeString: 
+        typeString: CustomFieldType_Number
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -4474,9 +4450,9 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: CharsPerSecond
-        value: 
+        value: 0
         type: 1
-        typeString: 
+        typeString: CustomFieldType_Number
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -4526,9 +4502,7 @@ MonoBehaviour:
         typeString: 
       - title: Dialogue Text
         value: "\uB108\uB294 \uAE30\uAECF\uD574\uC57C \uC774 \uC131\uACA9 \uB354\uB7EC\uC6B4
-          \uC560\uB4E4\uC774\uB098 \uC774\uB04C\uC9C0\uB9CC \uB098\uB294 \uD6E8\uC52C
-          \uB9CE\uC740 \uBD80\uD558\uC5D0 \uBCF4\uBB3C\uC774\uB791, \uC6A9\uC758
-          \uB465\uC9C0\uB3C4 \uAC00\uC9C0\uACE0 \uC788\uB2E4\uACE0."
+          \uC560\uB4E4\uC774\uB098 \uC774\uB04C\uC9C0\uB9CC "
         type: 0
         typeString: 
       - title: SubtitlePanel
@@ -4537,13 +4511,11 @@ MonoBehaviour:
         typeString: CustomFieldType_Number
       - title: ko
         value: "\uB108\uB294 \uAE30\uAECF\uD574\uC57C \uC774 \uC131\uACA9 \uB354\uB7EC\uC6B4
-          \uC560\uB4E4\uC774\uB098 \uC774\uB04C\uC9C0\uB9CC \uB098\uB294 \uD6E8\uC52C
-          \uB9CE\uC740 \uBD80\uD558\uC5D0 \uBCF4\uBB3C\uC774\uB791, \uC6A9\uC758
-          \uB465\uC9C0\uB3C4 \uAC00\uC9C0\uACE0 \uC788\uB2E4\uACE0."
+          \uC560\uB4E4\uC774\uB098 \uC774\uB04C\uC9C0\uB9CC "
         type: 4
         typeString: CustomFieldType_Localization
       - title: ja
-        value: "\u304A\u524D\u306F\u307E\u3041\u305B\u3044\u305C\u3044\u305D\u3053\u306E\u6027\u683C\u304C\u304A\u308F\u3063\u3066\u308B\u731F\u72AC\u305F\u3061\u306E\u30EA\u30FC\u30C0\u30FC\u3060\u3051\u3069\u3001\n\u79C1\u306F\u9065\u304B\u306B\u305F\u304F\u3055\u3093\u306E\u90E8\u4E0B\u3092\u7387\u3044\u308B\u30EA\u30FC\u30C0\u30FC\uFF01\u3057\u304B\u3082\u304A\u5B9D\u3082\u9F8D\u306E\u5DE3\u3082\u6301\u3063\u3066\u308B\u308F\uFF01"
+        value: "\u304A\u524D\u306F\u307E\u3041\u305B\u3044\u305C\u3044\u305D\u3053\u306E\u6027\u683C\u304C\u304A\u308F\u3063\u3066\u308B\u731F\u72AC\u305F\u3061\u306E\u30EA\u30FC\u30C0\u30FC\u3060\u3051\u3069\u3001"
         type: 4
         typeString: CustomFieldType_Localization
       - title: Sequence
@@ -4567,9 +4539,9 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: CharsPerSecond
-        value: 
+        value: 0
         type: 1
-        typeString: 
+        typeString: CustomFieldType_Number
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -4581,7 +4553,7 @@ MonoBehaviour:
       - originConversationID: 2
         originDialogueID: 40
         destinationConversationID: 2
-        destinationDialogueID: 41
+        destinationDialogueID: 47
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -4591,8 +4563,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1806.721
-        y: 151.02168
+        x: 1807.5374
+        y: 149.38902
         width: 160
         height: 30
     - id: 41
@@ -4660,9 +4632,9 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: CharsPerSecond
-        value: 
+        value: 0
         type: 1
-        typeString: 
+        typeString: CustomFieldType_Number
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -4684,8 +4656,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1806.721
-        y: 236.03389
+        x: 1819.7825
+        y: 298.0747
         width: 160
         height: 30
     - id: 42
@@ -4753,9 +4725,9 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: CharsPerSecond
-        value: 
+        value: 0
         type: 1
-        typeString: 
+        typeString: CustomFieldType_Number
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -4777,8 +4749,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1807.4105
-        y: 319.1247
+        x: 1825.3699
+        y: 373.81857
         width: 160
         height: 30
     - id: 43
@@ -4840,9 +4812,9 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: CharsPerSecond
-        value: 
+        value: 0
         type: 1
-        typeString: 
+        typeString: CustomFieldType_Number
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -4864,8 +4836,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1806.721
-        y: 404.03363
+        x: 1812.4352
+        y: 458.7275
         width: 160
         height: 30
     - id: 44
@@ -4929,9 +4901,9 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: CharsPerSecond
-        value: 
+        value: 0
         type: 1
-        typeString: 
+        typeString: CustomFieldType_Number
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -4953,8 +4925,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1806.721
-        y: 488.0335
+        x: 2018.966
+        y: 152.52309
         width: 160
         height: 30
     - id: 45
@@ -5049,8 +5021,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 2002.727
-        y: 155.73888
+        x: 2022.3191
+        y: 265.12668
         width: 160
         height: 30
     - id: 46
@@ -5130,13 +5102,102 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 2002.4658
-        y: 240.71434
+        x: 2022.0579
+        y: 350.10214
+        width: 160
+        height: 30
+    - id: 47
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 2
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: "\uB098\uB294 \uD6E8\uC52C \uB9CE\uC740 \uBD80\uD558\uC5D0 \uBCF4\uBB3C\uC774\uB791,
+          \uC6A9\uC758 \uB465\uC9C0\uB3C4 \uAC00\uC9C0\uACE0 \uC788\uB2E4\uACE0."
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
+      - title: ko
+        value: "\uB098\uB294 \uD6E8\uC52C \uB9CE\uC740 \uBD80\uD558\uC5D0 \uBCF4\uBB3C\uC774\uB791,
+          \uC6A9\uC758 \uB465\uC9C0\uB3C4 \uAC00\uC9C0\uACE0 \uC788\uB2E4\uACE0."
+        type: 4
+        typeString: CustomFieldType_Localization
+      - title: ja
+        value: "\u79C1\u306F\u9065\u304B\u306B\u305F\u304F\u3055\u3093\u306E\u90E8\u4E0B\u3092\u7387\u3044\u308B\u30EA\u30FC\u30C0\u30FC\uFF01\u3057\u304B\u3082\u304A\u5B9D\u3082\u9F8D\u306E\u5DE3\u3082\u6301\u3063\u3066\u308B\u308F\uFF01"
+        type: 4
+        typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: SpineFocus(Fafnir)
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Menu Text ko
+        value: 
+        type: 4
+        typeString: CustomFieldType_Localization
+      - title: Menu Text ja
+        value: 
+        type: 4
+        typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: -1
+        type: 1
+        typeString: CustomFieldType_Number
+      conversationID: 2
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 2
+        originDialogueID: 47
+        destinationConversationID: 2
+        destinationDialogueID: 41
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 1824.6803
+        y: 229.59314
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 55.200073, y: 20.742859}
-    canvasZoom: 0.55999964
+    canvasScrollPosition: {x: 1215.586, y: 77.67698}
+    canvasZoom: 0.9799994
   - id: 3
     fields:
     - title: Title
@@ -5978,7 +6039,7 @@ MonoBehaviour:
   templateJson: '{"treatItemsAsQuests":true,"actorFields":[{"title":"Name","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Pictures","value":"[]","type":3,"typeString":"CustomFieldType_Files"},{"title":"Description","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"IsPlayer","value":"False","type":2,"typeString":"CustomFieldType_Boolean"},{"title":"Display
     Name ko","value":"","type":4,"typeString":"CustomFieldType_Localization"},{"title":"Display
     Name ja","value":"","type":4,"typeString":"CustomFieldType_Localization"},{"title":"NodeColor","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Display
-    Name","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"TypewriterSound","value":"","type":0,"typeString":"CustomFieldType_Text"}],"itemFields":[{"title":"Name","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Pictures","value":"[]","type":3,"typeString":"CustomFieldType_Files"},{"title":"Description","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Is
+    Name","value":"","type":0,"typeString":"CustomFieldType_Text"}],"itemFields":[{"title":"Name","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Pictures","value":"[]","type":3,"typeString":"CustomFieldType_Files"},{"title":"Description","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Is
     Item","value":"True","type":2,"typeString":"CustomFieldType_Boolean"}],"questFields":[{"title":"Name","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Pictures","value":"[]","type":3,"typeString":"CustomFieldType_Files"},{"title":"Description","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Success
     Description","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Failure
     Description","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"State","value":"unassigned","type":0,"typeString":"CustomFieldType_QuestState"},{"title":"Is
@@ -5987,4 +6048,4 @@ MonoBehaviour:
     Text","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Dialogue
     Text","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"SubtitlePanel","value":"0","type":1,"typeString":"CustomFieldType_Number"},{"title":"ko","value":"","type":4,"typeString":"CustomFieldType_Localization"},{"title":"ja","value":"","type":4,"typeString":"CustomFieldType_Localization"},{"title":"Sequence","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Menu
     Text ko","value":"","type":4,"typeString":"CustomFieldType_Localization"},{"title":"Menu
-    Text ja","value":"","type":4,"typeString":"CustomFieldType_Localization"},{"title":"EventGuid","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"NamePosition","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"CharsPerSecond","value":"0","type":1,"typeString":"CustomFieldType_Number"}],"actorPrimaryFieldTitles":[],"itemPrimaryFieldTitles":[],"questPrimaryFieldTitles":[],"locationPrimaryFieldTitles":[],"variablePrimaryFieldTitles":[],"conversationPrimaryFieldTitles":[],"dialogueEntryPrimaryFieldTitles":["SubtitlePanel","AlignName","NamePosition","TypewriterSound","CharsPerSecond"],"npcLineColor":{"r":1.0,"g":0.0,"b":0.0,"a":1.0},"pcLineColor":{"r":0.0,"g":0.0,"b":1.0,"a":1.0},"repeatLineColor":{"r":0.5,"g":0.5,"b":0.5,"a":1.0}}'
+    Text ja","value":"","type":4,"typeString":"CustomFieldType_Localization"},{"title":"EventGuid","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"NamePosition","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"CharsPerSecond","value":"-1","type":1,"typeString":"CustomFieldType_Number"}],"actorPrimaryFieldTitles":[],"itemPrimaryFieldTitles":[],"questPrimaryFieldTitles":[],"locationPrimaryFieldTitles":[],"variablePrimaryFieldTitles":[],"conversationPrimaryFieldTitles":[],"dialogueEntryPrimaryFieldTitles":["SubtitlePanel","AlignName","NamePosition","TypewriterSound","CharsPerSecond"],"npcLineColor":{"r":1.0,"g":0.0,"b":0.0,"a":1.0},"pcLineColor":{"r":0.0,"g":0.0,"b":1.0,"a":1.0},"repeatLineColor":{"r":0.5,"g":0.5,"b":0.5,"a":1.0}}'

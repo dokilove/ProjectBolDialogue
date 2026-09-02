@@ -412,6 +412,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 1
       isRoot: 1
       isGroup: 0
@@ -496,6 +500,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 1
       isRoot: 0
       isGroup: 0
@@ -579,6 +587,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 1
       isRoot: 0
       isGroup: 0
@@ -662,6 +674,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 1
       isRoot: 0
       isGroup: 0
@@ -745,6 +761,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 1
       isRoot: 0
       isGroup: 0
@@ -829,6 +849,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 1
       isRoot: 0
       isGroup: 0
@@ -912,6 +936,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 1
       isRoot: 0
       isGroup: 0
@@ -996,6 +1024,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 1
       isRoot: 0
       isGroup: 0
@@ -1079,6 +1111,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 1
       isRoot: 0
       isGroup: 0
@@ -1208,6 +1244,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 2
       isRoot: 1
       isGroup: 0
@@ -1341,6 +1381,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -1426,6 +1470,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -1515,6 +1563,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -1537,7 +1589,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 241.52094
-        y: 295.99457
+        y: 294.56598
         width: 160
         height: 30
     - id: 7
@@ -1604,6 +1656,10 @@ MonoBehaviour:
         value: Right
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 80
+        type: 1
+        typeString: CustomFieldType_Number
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -1626,7 +1682,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 243.98416
-        y: 376.49124
+        y: 375.06262
         width: 160
         height: 30
     - id: 8
@@ -1698,6 +1754,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -1791,6 +1851,10 @@ MonoBehaviour:
         value: Right
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 80
+        type: 1
+        typeString: CustomFieldType_Number
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -1813,7 +1877,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 468.40256
-        y: 126.885956
+        y: 125.45738
         width: 160
         height: 30
     - id: 10
@@ -1878,6 +1942,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -1965,6 +2033,10 @@ MonoBehaviour:
         value: Right
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 80
+        type: 1
+        typeString: CustomFieldType_Number
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -2052,6 +2124,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -2139,6 +2215,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -2224,6 +2304,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -2310,6 +2394,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -2395,6 +2483,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -2484,6 +2576,10 @@ MonoBehaviour:
         value: Right
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -2569,6 +2665,10 @@ MonoBehaviour:
         value: Right
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -2658,6 +2758,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -2741,6 +2845,10 @@ MonoBehaviour:
         value: Right
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -2831,6 +2939,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -2916,6 +3028,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -3005,6 +3121,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -3088,6 +3208,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -3175,6 +3299,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -3260,6 +3388,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -3345,6 +3477,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -3430,6 +3566,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -3517,6 +3657,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -3602,6 +3746,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -3687,6 +3835,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -3770,6 +3922,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -3855,6 +4011,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -3942,6 +4102,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -4034,6 +4198,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -4121,6 +4289,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -4208,6 +4380,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -4297,6 +4473,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -4386,6 +4566,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -4475,6 +4659,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -4564,6 +4752,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -4647,6 +4839,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -4732,6 +4928,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -4824,6 +5024,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -4907,6 +5111,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -5036,6 +5244,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 3
       isRoot: 1
       isGroup: 0
@@ -5119,6 +5331,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 3
       isRoot: 0
       isGroup: 0
@@ -5202,6 +5418,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 3
       isRoot: 0
       isGroup: 0
@@ -5285,6 +5505,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 3
       isRoot: 0
       isGroup: 0
@@ -5368,6 +5592,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 3
       isRoot: 0
       isGroup: 0
@@ -5451,6 +5679,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 3
       isRoot: 0
       isGroup: 0
@@ -5534,6 +5766,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 3
       isRoot: 0
       isGroup: 0
@@ -5617,6 +5853,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 3
       isRoot: 0
       isGroup: 0
@@ -5700,6 +5940,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: CharsPerSecond
+        value: 
+        type: 1
+        typeString: 
       conversationID: 3
       isRoot: 0
       isGroup: 0
@@ -5743,4 +5987,4 @@ MonoBehaviour:
     Text","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Dialogue
     Text","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"SubtitlePanel","value":"0","type":1,"typeString":"CustomFieldType_Number"},{"title":"ko","value":"","type":4,"typeString":"CustomFieldType_Localization"},{"title":"ja","value":"","type":4,"typeString":"CustomFieldType_Localization"},{"title":"Sequence","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Menu
     Text ko","value":"","type":4,"typeString":"CustomFieldType_Localization"},{"title":"Menu
-    Text ja","value":"","type":4,"typeString":"CustomFieldType_Localization"},{"title":"EventGuid","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"NamePosition","value":"","type":0,"typeString":"CustomFieldType_Text"}],"actorPrimaryFieldTitles":[],"itemPrimaryFieldTitles":[],"questPrimaryFieldTitles":[],"locationPrimaryFieldTitles":[],"variablePrimaryFieldTitles":[],"conversationPrimaryFieldTitles":[],"dialogueEntryPrimaryFieldTitles":["SubtitlePanel","AlignName","NamePosition","TypewriterSound"],"npcLineColor":{"r":1.0,"g":0.0,"b":0.0,"a":1.0},"pcLineColor":{"r":0.0,"g":0.0,"b":1.0,"a":1.0},"repeatLineColor":{"r":0.5,"g":0.5,"b":0.5,"a":1.0}}'
+    Text ja","value":"","type":4,"typeString":"CustomFieldType_Localization"},{"title":"EventGuid","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"NamePosition","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"CharsPerSecond","value":"0","type":1,"typeString":"CustomFieldType_Number"}],"actorPrimaryFieldTitles":[],"itemPrimaryFieldTitles":[],"questPrimaryFieldTitles":[],"locationPrimaryFieldTitles":[],"variablePrimaryFieldTitles":[],"conversationPrimaryFieldTitles":[],"dialogueEntryPrimaryFieldTitles":["SubtitlePanel","AlignName","NamePosition","TypewriterSound","CharsPerSecond"],"npcLineColor":{"r":1.0,"g":0.0,"b":0.0,"a":1.0},"pcLineColor":{"r":0.0,"g":0.0,"b":1.0,"a":1.0},"repeatLineColor":{"r":0.5,"g":0.5,"b":0.5,"a":1.0}}'

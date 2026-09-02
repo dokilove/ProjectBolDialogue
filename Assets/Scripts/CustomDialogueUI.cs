@@ -10,6 +10,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using PixelCrushers.DialogueSystem;
 using PixelCrushers.DialogueSystem.UIToolkit;
+using BeepSync;
 
 public class CustomDialogueUI : UIToolkitDialogueUI
 {
@@ -88,7 +89,7 @@ public class CustomDialogueUI : UIToolkitDialogueUI
     private List<LabelTextSyncGroup> _syncGroups = new List<LabelTextSyncGroup>();
 
     // ─────────────────────────────────────────────
-    // Typewriter Settings (UI Toolkit엔 타이핑 효과가 내장되어 있지 않아 직접 구현)
+    // Typewriter & Beep Settings (UI Toolkit엔 타이핑 효과가 내장되어 있지 않아 직접 구현)
     // ─────────────────────────────────────────────
 
     [System.Serializable]
@@ -99,18 +100,15 @@ public class CustomDialogueUI : UIToolkitDialogueUI
         public string labelName;
     }
 
-    private const string ActorSoundFieldName = "TypewriterSound";
-
     // Dialogue Entry에 이 이름의 커스텀 필드(Number)를 추가하면 해당 대사에서만
-    // 타이핑 속도를 다르게 쓸 수 있음. 비어있거나 0 이하면 기본값(charactersPerSecond) 사용.
+    // 타이핑 속도를 다르게 쓸 수 있음. 비어있거나 0 이하면 기본값 또는 BeepData의 charDelay 사용.
     private const string EntryCharsPerSecondFieldName = "CharsPerSecond";
 
     [Header("Typewriter Settings")]
     [Tooltip("타이핑 효과를 켤지 여부. 끄면 기존처럼 텍스트가 한 번에 표시됩니다.")]
     [SerializeField] private bool enableTypewriter = true;
 
-    [Tooltip("초당 몇 글자씩 찍을지 (기본값). Dialogue Entry에 'CharsPerSecond' 커스텀 필드를 추가하면 " +
-             "해당 대사에서만 이 값을 오버라이드할 수 있습니다.")]
+    [Tooltip("초당 몇 글자씩 찍을지 (기본값). BeepData에 charDelay가 있거나 Dialogue Entry에 'CharsPerSecond' 커스텀 필드가 있으면 오버라이드됩니다.")]
     [SerializeField] private float charactersPerSecond = 30f;
 
     [Tooltip("타이핑 효과 + 사운드를 적용할 Label 목록. 각 패널의 서브타이틀 텍스트 Label 이름을 등록하세요.")]
@@ -120,11 +118,18 @@ public class CustomDialogueUI : UIToolkitDialogueUI
         new TypewriterLabelConfig { labelName = "PCSubtitleLabel" }
     };
 
-    [Tooltip("Actor에 TypewriterSound 필드가 없거나 클립을 못 찾았을 때 사용할 기본 사운드 (선택 사항)")]
-    [SerializeField] private AudioClip defaultTypewriterSound;
+    [Header("Beep Data Settings (Character Voice Presets)")]
+    [Tooltip("캐릭터별 DialogueBeepData 프리셋 목록. 화자(Speaker) 이름이나 DB Actor 이름과 일치하는 데이터가 자동으로 적용됩니다.")]
+    [SerializeField] private List<DialogueBeepData> characterBeepDataList = new List<DialogueBeepData>();
+
+    [Tooltip("일치하는 캐릭터 데이터가 없을 때 사용할 기본 BeepData (선택 사항)")]
+    [SerializeField] private DialogueBeepData defaultBeepData;
 
     [Tooltip("타이핑 사운드 재생용 AudioSource. 비워두면 이 오브젝트에서 자동으로 찾거나 추가합니다.")]
     [SerializeField] private AudioSource typewriterAudioSource;
+
+    private static readonly HashSet<char> PunctuationChars = new HashSet<char> { '.', ',', '!', '?', ';', ':', '…', '~' };
+    private int _lastClipIndex = -1;
 
     private class TypewriterState
     {
@@ -134,10 +139,10 @@ public class CustomDialogueUI : UIToolkitDialogueUI
         public Coroutine coroutine;
         public string currentActorName;
         public float charactersPerSecond;
+        public DialogueBeepData beepData;
     }
     private List<TypewriterState> _typewriterStates = new List<TypewriterState>();
     private bool _typewriterStatesInitialized = false;
-    private Dictionary<string, AudioClip> _actorSoundCache = new Dictionary<string, AudioClip>();
 
     // ─────────────────────────────────────────────
     // Block Continue Settings
@@ -497,8 +502,73 @@ public class CustomDialogueUI : UIToolkitDialogueUI
         _typewriterStatesInitialized = true;
     }
 
+    [Tooltip("타이프라이터 및 비프음 매칭/재생 디버그 로그 출력 여부")]
+    [SerializeField] private bool debugBeepLogs = false;
+
+    private DialogueBeepData FindBeepData(Subtitle subtitle)
+    {
+        if (subtitle == null || subtitle.speakerInfo == null) return defaultBeepData;
+
+        string nameInDb = subtitle.speakerInfo.nameInDatabase;
+        string displayName = subtitle.speakerInfo.Name;
+        string transformName = subtitle.speakerInfo.transform != null ? subtitle.speakerInfo.transform.name : null;
+
+        if (characterBeepDataList != null && characterBeepDataList.Count > 0)
+        {
+            foreach (var data in characterBeepDataList)
+            {
+                if (data == null) continue;
+
+                // 1. DB 원본 영문 이름 매칭 (예: "Chona", "Fafnir", "Janghwa", "Vargr", "Player")
+                if (!string.IsNullOrEmpty(nameInDb))
+                {
+                    if (string.Equals(data.characterName, nameInDb, System.StringComparison.OrdinalIgnoreCase) ||
+                        string.Equals(data.name, nameInDb, System.StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (debugBeepLogs) Debug.Log($"[CustomDialogueUI] BeepData '{data.name}' matched with DB Name '{nameInDb}'");
+                        return data;
+                    }
+                }
+
+                // 2. 표시 이름 / 로컬라이즈된 이름 매칭 (예: "천아", "파프니르", "장화", "나")
+                if (!string.IsNullOrEmpty(displayName))
+                {
+                    if (string.Equals(data.characterName, displayName, System.StringComparison.OrdinalIgnoreCase) ||
+                        string.Equals(data.name, displayName, System.StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (debugBeepLogs) Debug.Log($"[CustomDialogueUI] BeepData '{data.name}' matched with Display Name '{displayName}'");
+                        return data;
+                    }
+                }
+
+                // 3. GameObject Transform 이름 매칭
+                if (!string.IsNullOrEmpty(transformName))
+                {
+                    if (string.Equals(data.characterName, transformName, System.StringComparison.OrdinalIgnoreCase) ||
+                        string.Equals(data.name, transformName, System.StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (debugBeepLogs) Debug.Log($"[CustomDialogueUI] BeepData '{data.name}' matched with Transform Name '{transformName}'");
+                        return data;
+                    }
+                }
+            }
+        }
+
+        if (defaultBeepData != null)
+        {
+            if (debugBeepLogs) Debug.Log($"[CustomDialogueUI] Using Default BeepData '{defaultBeepData.name}' for Speaker '{nameInDb ?? displayName}'");
+            return defaultBeepData;
+        }
+
+        if (debugBeepLogs)
+        {
+            Debug.LogWarning($"[CustomDialogueUI] No BeepData found for Speaker '{nameInDb}' (Display: '{displayName}'). Checked {characterBeepDataList?.Count ?? 0} items.");
+        }
+        return null;
+    }
+
     // Dialogue Entry의 "CharsPerSecond" 커스텀 필드를 확인해서, 있으면 그 값을,
-    // 없거나 파싱 실패/0 이하이면 기본값(charactersPerSecond)을 반환한다.
+    // 없거나 파싱 실패/0 이하이면 -1f를 반환한다 (BeepData의 charDelay 또는 기본값 사용 유도).
     private float GetEffectiveCharsPerSecond(Subtitle subtitle)
     {
         var entry = subtitle?.dialogueEntry;
@@ -513,7 +583,7 @@ public class CustomDialogueUI : UIToolkitDialogueUI
             }
         }
 
-        return charactersPerSecond;
+        return -1f;
     }
 
     // ShowSubtitle에서 패널이 정해질 때 호출.
@@ -526,9 +596,10 @@ public class CustomDialogueUI : UIToolkitDialogueUI
         }
 
         string actorName = (subtitle != null && subtitle.speakerInfo != null)
-            ? subtitle.speakerInfo.Name
+            ? (subtitle.speakerInfo.nameInDatabase ?? subtitle.speakerInfo.Name)
             : null;
 
+        DialogueBeepData beepData = FindBeepData(subtitle);
         float effectiveCharsPerSecond = GetEffectiveCharsPerSecond(subtitle);
 
         foreach (var state in _typewriterStates)
@@ -545,6 +616,7 @@ public class CustomDialogueUI : UIToolkitDialogueUI
 
             state.currentActorName = actorName;
             state.charactersPerSecond = effectiveCharsPerSecond;
+            state.beepData = beepData;
             // base.ShowSubtitle()이 이미 Label.text에 전체 텍스트를 넣어놓은 상태
             state.fullText = state.label.text;
 
@@ -554,7 +626,7 @@ public class CustomDialogueUI : UIToolkitDialogueUI
                 continue;
             }
 
-            state.label.text = "";
+            state.label.text = $"<color=#00000000>{state.fullText}</color>";
             state.isTyping = true;
             state.coroutine = StartCoroutine(TypewriterCoroutine(state));
         }
@@ -562,18 +634,68 @@ public class CustomDialogueUI : UIToolkitDialogueUI
 
     private IEnumerator TypewriterCoroutine(TypewriterState state)
     {
-        float cps = state.charactersPerSecond > 0f ? state.charactersPerSecond : charactersPerSecond;
-        float delay = cps > 0f ? 1f / cps : 0f;
+        var beep = state.beepData;
+        float basePitch = beep != null ? beep.basePitch : 1.0f;
+        float pitchRand = beep != null ? beep.pitchRandomness : 0.08f;
+
+        // 지연 시간 계산:
+        // 1. Dialogue Entry의 CharsPerSecond 커스텀 필드가 설정되어 있다면 최우선 적용
+        // 2. 아니면 BeepData의 charDelay 적용
+        // 3. 둘 다 없으면 기본 charactersPerSecond 기반 delay 적용
+        float charDelay;
+        if (state.charactersPerSecond > 0f)
+        {
+            charDelay = 1f / state.charactersPerSecond;
+        }
+        else if (beep != null && beep.charDelay > 0f)
+        {
+            charDelay = beep.charDelay;
+        }
+        else
+        {
+            charDelay = charactersPerSecond > 0f ? (1f / charactersPerSecond) : 0.045f;
+        }
+
+        float puncPause = beep != null ? beep.punctuationPause : 0f;
+        int soundFreq = (beep != null && beep.soundFrequency > 0) ? beep.soundFrequency : 1;
+        bool playOnSpace = beep != null && beep.playOnWhitespace;
+
         int length = state.fullText.Length;
+        int visibleCharCount = 0;
 
         for (int i = 1; i <= length; i++)
         {
-            state.label.text = state.fullText.Substring(0, i);
-            PlayTypewriterSound(state.currentActorName);
+            char c = state.fullText[i - 1];
+            visibleCharCount++;
 
-            if (delay > 0f)
+            // 중앙/우측 정렬 시 글자 위치가 왼쪽으로 밀리는 현상(레이아웃 시프트)을 방지하기 위해
+            // 아직 출력되지 않은 뒷부분 텍스트를 투명(<color=#00000000>)으로 채워 전체 문장 폭을 고정
+            if (i < length)
             {
-                yield return new WaitForSeconds(delay);
+                state.label.text = $"{state.fullText.Substring(0, i)}<color=#00000000>{state.fullText.Substring(i)}</color>";
+            }
+            else
+            {
+                state.label.text = state.fullText;
+            }
+
+            // 비프음 재생 조건 검사
+            bool isWhitespace = char.IsWhiteSpace(c);
+            bool shouldPlaySound = (!isWhitespace || playOnSpace) && (visibleCharCount % soundFreq == 0);
+
+            if (shouldPlaySound)
+            {
+                PlayTypewriterBeep(state.beepData, state.currentActorName, basePitch, pitchRand);
+            }
+
+            // 문장 부호 대기 또는 일반 글자 대기
+            if (PunctuationChars.Contains(c) && puncPause > 0f)
+            {
+                yield return new WaitForSeconds(charDelay + puncPause);
+            }
+            else if (charDelay > 0f)
+            {
+                yield return new WaitForSeconds(charDelay);
             }
             else
             {
@@ -614,40 +736,50 @@ public class CustomDialogueUI : UIToolkitDialogueUI
         return skippedAny;
     }
 
-    private void PlayTypewriterSound(string actorName)
+    private void PlayTypewriterBeep(DialogueBeepData beepData, string actorName, float basePitch, float pitchRandomness)
     {
-        if (typewriterAudioSource == null) return;
-
-        AudioClip clip = GetActorTypewriterSound(actorName);
-        if (clip == null) return;
-
-        typewriterAudioSource.PlayOneShot(clip);
-    }
-
-    private AudioClip GetActorTypewriterSound(string actorName)
-    {
-        if (string.IsNullOrEmpty(actorName)) return defaultTypewriterSound;
-
-        if (_actorSoundCache.TryGetValue(actorName, out AudioClip cached))
+        if (typewriterAudioSource == null)
         {
-            return cached != null ? cached : defaultTypewriterSound;
-        }
-
-        string clipName = DialogueLua.GetActorField(actorName, ActorSoundFieldName).asString;
-        AudioClip clip = null;
-
-        if (!string.IsNullOrEmpty(clipName))
-        {
-            clip = Resources.Load<AudioClip>(clipName);
-            if (clip == null)
+            typewriterAudioSource = GetComponent<AudioSource>();
+            if (typewriterAudioSource == null)
             {
-                Debug.LogWarning($"[CustomDialogueUI] Actor '{actorName}'의 '{ActorSoundFieldName}' 필드값 " +
-                                  $"'{clipName}'에 해당하는 클립을 Resources 폴더에서 찾지 못했습니다.");
+                typewriterAudioSource = gameObject.AddComponent<AudioSource>();
             }
         }
 
-        _actorSoundCache[actorName] = clip; // null이어도 캐싱해서 매번 재검색하지 않도록 함
-        return clip != null ? clip : defaultTypewriterSound;
+        if (typewriterAudioSource == null) return;
+
+        // 2D 오디오 및 볼륨 안전장치
+        typewriterAudioSource.spatialBlend = 0f;
+        typewriterAudioSource.mute = false;
+
+        if (beepData != null && beepData.beepClips != null && beepData.beepClips.Count > 0)
+        {
+            AudioClip clipToPlay;
+            int count = beepData.beepClips.Count;
+            if (count == 1)
+            {
+                clipToPlay = beepData.beepClips[0];
+            }
+            else
+            {
+                int index = UnityEngine.Random.Range(0, count);
+                if (index == _lastClipIndex)
+                {
+                    index = (index + 1) % count;
+                }
+                _lastClipIndex = index;
+                clipToPlay = beepData.beepClips[index];
+            }
+
+            if (clipToPlay != null)
+            {
+                float randomOffset = UnityEngine.Random.Range(-pitchRandomness, pitchRandomness);
+                typewriterAudioSource.pitch = Mathf.Clamp(basePitch + randomOffset, 0.1f, 3.0f);
+                typewriterAudioSource.volume = Mathf.Clamp01(beepData.volume);
+                typewriterAudioSource.PlayOneShot(clipToPlay);
+            }
+        }
     }
 
     // ─────────────────────────────────────────────
