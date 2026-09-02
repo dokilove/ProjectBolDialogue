@@ -53,10 +53,6 @@ MonoBehaviour:
       value: True
       type: 2
       typeString: CustomFieldType_Boolean
-    - title: NodeColor
-      value: '#aec9ffff'
-      type: 0
-      typeString: CustomFieldType_Text
     - title: Display Name ko
       value: 
       type: 4
@@ -65,6 +61,18 @@ MonoBehaviour:
       value: 
       type: 4
       typeString: CustomFieldType_Localization
+    - title: NodeColor
+      value: '#fbad25ff'
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: Display Name
+      value: 
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: TypewriterSound
+      value: 
+      type: 0
+      typeString: CustomFieldType_Text
     portrait: {fileID: 0}
     spritePortrait: {fileID: 0}
     alternatePortraits: []
@@ -87,14 +95,6 @@ MonoBehaviour:
       value: False
       type: 2
       typeString: CustomFieldType_Boolean
-    - title: NodeColor
-      value: Blue
-      type: 0
-      typeString: CustomFieldType_Text
-    - title: Display Name
-      value: Player
-      type: 0
-      typeString: CustomFieldType_Text
     - title: Display Name ko
       value: "\uB098"
       type: 4
@@ -103,6 +103,18 @@ MonoBehaviour:
       value: "\u4E3B\u4EBA\u516C"
       type: 4
       typeString: CustomFieldType_Localization
+    - title: NodeColor
+      value: '#fbad25ff'
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: Display Name
+      value: Player
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: TypewriterSound
+      value: 
+      type: 0
+      typeString: CustomFieldType_Text
     portrait: {fileID: 0}
     spritePortrait: {fileID: 0}
     alternatePortraits: []
@@ -125,10 +137,6 @@ MonoBehaviour:
       value: False
       type: 2
       typeString: CustomFieldType_Boolean
-    - title: NodeColor
-      value: '#3fbfffff'
-      type: 0
-      typeString: CustomFieldType_Text
     - title: Display Name ko
       value: "\uD30C\uD504\uB2C8\uB974"
       type: 4
@@ -137,11 +145,19 @@ MonoBehaviour:
       value: "\u30D5\u30A1\u30D5\u30CB\u30FC\u30EB"
       type: 4
       typeString: CustomFieldType_Localization
+    - title: NodeColor
+      value: '#3c86fdff'
+      type: 0
+      typeString: CustomFieldType_Text
     - title: Display Name
       value: Fafnir
       type: 0
       typeString: CustomFieldType_Text
-    portrait: {fileID: 0}
+    - title: TypewriterSound
+      value: 
+      type: 0
+      typeString: CustomFieldType_Text
+    portrait: {fileID: 2800000, guid: f53d50070a24d494581dc684482138c1, type: 3}
     spritePortrait: {fileID: 0}
     alternatePortraits: []
     spritePortraits: []
@@ -163,10 +179,6 @@ MonoBehaviour:
       value: False
       type: 2
       typeString: CustomFieldType_Boolean
-    - title: NodeColor
-      value: '#ff517fff'
-      type: 0
-      typeString: CustomFieldType_Text
     - title: Display Name ko
       value: "\uC7A5\uD654"
       type: 4
@@ -175,11 +187,19 @@ MonoBehaviour:
       value: "\u8594\u82B1"
       type: 4
       typeString: CustomFieldType_Localization
+    - title: NodeColor
+      value: '#f06d9bff'
+      type: 0
+      typeString: CustomFieldType_Text
     - title: Display Name
       value: Janghwa
       type: 0
       typeString: CustomFieldType_Text
-    portrait: {fileID: 0}
+    - title: TypewriterSound
+      value: 
+      type: 0
+      typeString: CustomFieldType_Text
+    portrait: {fileID: 2800000, guid: cfc06174efe937a4790a55fba6f639fd, type: 3}
     spritePortrait: {fileID: 0}
     alternatePortraits: []
     spritePortraits: []
@@ -201,10 +221,6 @@ MonoBehaviour:
       value: False
       type: 2
       typeString: CustomFieldType_Boolean
-    - title: NodeColor
-      value: '#da5dfbff'
-      type: 0
-      typeString: CustomFieldType_Text
     - title: Display Name ko
       value: "\uCC9C\uC544"
       type: 4
@@ -213,11 +229,19 @@ MonoBehaviour:
       value: "\u30C1\u30E7\u30CA"
       type: 4
       typeString: CustomFieldType_Localization
+    - title: NodeColor
+      value: '#8f68bcff'
+      type: 0
+      typeString: CustomFieldType_Text
     - title: Display Name
       value: Chona
       type: 0
       typeString: CustomFieldType_Text
-    portrait: {fileID: 0}
+    - title: TypewriterSound
+      value: 
+      type: 0
+      typeString: CustomFieldType_Text
+    portrait: {fileID: 2800000, guid: a4454d1cc8601f74f8344380b8b9d18a, type: 3}
     spritePortrait: {fileID: 0}
     alternatePortraits: []
     spritePortraits: []
@@ -239,10 +263,6 @@ MonoBehaviour:
       value: False
       type: 2
       typeString: CustomFieldType_Boolean
-    - title: NodeColor
-      value: '#656565ff'
-      type: 0
-      typeString: CustomFieldType_Text
     - title: Display Name ko
       value: "\uBC14\uB974\uADF8"
       type: 4
@@ -251,11 +271,19 @@ MonoBehaviour:
       value: "\u30EF\u30FC\u30B0"
       type: 4
       typeString: CustomFieldType_Localization
+    - title: NodeColor
+      value: '#9d9592ff'
+      type: 0
+      typeString: CustomFieldType_Text
     - title: Display Name
       value: Vargr
       type: 0
       typeString: CustomFieldType_Text
-    portrait: {fileID: 0}
+    - title: TypewriterSound
+      value: 
+      type: 0
+      typeString: CustomFieldType_Text
+    portrait: {fileID: 2800000, guid: 83ca75eb185bcbf4cbfad0ea5e5e770f, type: 3}
     spritePortrait: {fileID: 0}
     alternatePortraits: []
     spritePortraits: []
@@ -352,10 +380,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: 
-      - title: Sequence
-        value: None()
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: 
         type: 4
@@ -364,6 +392,10 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: None()
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -372,6 +404,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 1
       isRoot: 1
       isGroup: 0
@@ -424,10 +464,10 @@ MonoBehaviour:
           \uBA40\uB9AC\uC11C \uBB34\uC5B8\uAC00\uAC00 \uC6B0\uB9AC\uC5D0\uAC8C \uB2E4\uAC00\uC654\uB2E4."
         type: 0
         typeString: 
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: '#NAME?'
         type: 4
@@ -436,6 +476,10 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -444,6 +488,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 1
       isRoot: 0
       isGroup: 0
@@ -495,10 +547,10 @@ MonoBehaviour:
         value: "- \uC6B0\uB9AC\uC5D0\uAC8C \uB2E4\uAC00\uC654\uB2E4."
         type: 0
         typeString: 
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: '#NAME?'
         type: 4
@@ -507,6 +559,10 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -515,6 +571,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 1
       isRoot: 0
       isGroup: 0
@@ -566,10 +630,10 @@ MonoBehaviour:
         value: "- \uACC4\uC18D \uB2E4\uAC00\uC654\uB2E4."
         type: 0
         typeString: 
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: '#NAME?'
         type: 4
@@ -578,6 +642,10 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -586,6 +654,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 1
       isRoot: 0
       isGroup: 0
@@ -637,10 +713,10 @@ MonoBehaviour:
         value: "- ......\uD55C\uCC38 \uB2E4\uAC00\uC654\uB2E4"
         type: 0
         typeString: 
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: "- ......\uD55C\uCC38 \uB2E4\uAC00\uC654\uB2E4"
         type: 4
@@ -649,6 +725,10 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -657,6 +737,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 1
       isRoot: 0
       isGroup: 0
@@ -709,10 +797,10 @@ MonoBehaviour:
           \uC6B0\uB9AC \uC55E\uC5D0 \uB3C4\uCC29\uD588\uB2E4."
         type: 0
         typeString: 
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: '#NAME?'
         type: 4
@@ -721,6 +809,10 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -729,6 +821,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 1
       isRoot: 0
       isGroup: 0
@@ -780,10 +880,10 @@ MonoBehaviour:
         value: "- \uB300\uC6D0\uB4E4\uC774 \uB0B4 \uC55E\uC744 \uAC00\uB85C\uB9C9\uC558\uB2E4."
         type: 0
         typeString: 
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: '#NAME?'
         type: 4
@@ -792,6 +892,10 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -800,6 +904,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 1
       isRoot: 0
       isGroup: 0
@@ -852,10 +964,10 @@ MonoBehaviour:
           \uB2E4\uAC00\uC628 \uADF8 \uC790\uB294 \uC5ED\uC815\uC744 \uB0C8\uB2E4."
         type: 0
         typeString: 
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: '#NAME?'
         type: 4
@@ -864,6 +976,10 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -872,6 +988,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 1
       isRoot: 0
       isGroup: 0
@@ -923,10 +1047,10 @@ MonoBehaviour:
         value: "\uC65C \uC774\uB9AC \uBA40\uC5B4!"
         type: 0
         typeString: 
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: "\uC65C \uC774\uB9AC \uBA40\uC5B4!"
         type: 4
@@ -935,6 +1059,10 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -943,6 +1071,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 1
       isRoot: 0
       isGroup: 0
@@ -1040,10 +1176,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: 
-      - title: Sequence
-        value: None()
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: 
         type: 4
@@ -1052,6 +1188,10 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: None()
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -1060,6 +1200,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 1
       isGroup: 0
@@ -1081,8 +1229,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 31.683136
-        y: 123.053635
+        x: 37.346863
+        y: 128.0094
         width: 160
         height: 30
     - id: 4
@@ -1090,11 +1238,11 @@ MonoBehaviour:
       - title: Title
         value: 
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Description
         value: 
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Actor
         value: 3
         type: 5
@@ -1106,11 +1254,23 @@ MonoBehaviour:
       - title: Menu Text
         value: 
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Dialogue Text
         value: ......
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
+      - title: ko
+        value: ......
+        type: 4
+        typeString: CustomFieldType_Localization
+      - title: ja
+        value: "\u2026\u2026"
+        type: 4
+        typeString: CustomFieldType_Localization
       - title: Sequence
         value: 'SpineTrack(Janghwa, face, Expression_ProudClosed);
 
@@ -1138,61 +1298,33 @@ MonoBehaviour:
 
           CinemachineFocus(Janghwa_Cam);
 
-          SpineDepth(Janghwa,
+          //SpineDepth(Janghwa,
           0.6, 2, 0);
 
-          SpineDepth(Chona, 0.6, 2, 0);
+          //SpineDepth(Chona, 0.6, 2, 0);
 
-          SpineDepth(Vargr,
+          //SpineDepth(Vargr,
           0.6, 2, 0);
 
-
-          CinemachineTarget(Janghwa_Cam, Janghwa_Focus);
-
-          SpineMoveTo(Janghwa,
-          -10, 0, 1, 0.2, true, 0.06, 0.5);
-
-          SpineMoveTo(Janghwa, -5, 0,
-          1, 0.2, true, 0.06, 0.5);
-
-          SpineMoveTo(Janghwa, -10, 0, 1, 0.2,
-          true, 0.06, 0.5);
-
-          SpineMoveTo(Janghwa, -5, 0, 1, 0.2, true,
-          0.06, 0.5);
+          SpineDepth(Fafnir, 1.6, -3, 0);
 
 
-          SpineRotate(Janghwa, 90, 0.5, 0.5, 0.5, "EaseOut");
+          CinemachineTarget(Janghwa_Cam,
+          Janghwa_Focus);
 
-          SpineRotate(Janghwa,
-          180, 0.5, 0.5, 0.5, "EaseIn");
+          SpineMoveTo(Janghwa, -7, 0, 1, 0.2, true, 0.06,
+          0.5);
 
-          SpineRotate(Janghwa, 270, 0.5,
-          0.5, 0.5, "EaseOut");
-
-          SpineRotate(Janghwa, 0, 0.5, 0.5, 0.5,
-          "EaseIn");
+          SpineMoveTo(Janghwa, -5, 0, 1, 0.2, true, 0.06, 0.5);
 
 
 
-          CinemachineZoom(1.0, 3.0);
+          //CinemachineZoom(1.0,
+          3.0);
 
-          CinemachineZoom(3.0,
-          3.0);'
+          //CinemachineZoom(3.0, 3.0);'
         type: 0
-        typeString: 
-      - title: EventGuid
-        value: 0e3e6267-5764-4fac-89ac-c883bf1b640d
-        type: 0
-        typeString: 
-      - title: ko
-        value: ......
-        type: 4
-        typeString: CustomFieldType_Localization
-      - title: ja
-        value: "\u2026\u2026"
-        type: 4
-        typeString: CustomFieldType_Localization
+        typeString: CustomFieldType_Text
       - title: Menu Text ko
         value: 
         type: 4
@@ -1201,6 +1333,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 0e3e6267-5764-4fac-89ac-c883bf1b640d
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -1222,8 +1362,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 243.13602
-        y: 121.11043
+        x: 245.28519
+        y: 116.785446
         width: 160
         height: 30
     - id: 5
@@ -1231,11 +1371,11 @@ MonoBehaviour:
       - title: Title
         value: 
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Description
         value: 
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Actor
         value: 4
         type: 5
@@ -1247,21 +1387,15 @@ MonoBehaviour:
       - title: Menu Text
         value: 
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Dialogue Text
         value: ......
         type: 0
-        typeString: 
-      - title: Sequence
-        value: 'SpineFocus(Chona);
-
-          CinemachineFocus(Chona_Cam);'
-        type: 0
-        typeString: 
-      - title: EventGuid
-        value: 5e8aa57d-56bc-4a14-9f62-4e8152a1a7a7
-        type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: ......
         type: 4
@@ -1270,6 +1404,12 @@ MonoBehaviour:
         value: "\u2026\u2026"
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: 'SpineFocus(Chona, keep);
+
+          CinemachineFocus(Chona_Cam);'
+        type: 0
+        typeString: CustomFieldType_Text
       - title: Menu Text ko
         value: 
         type: 4
@@ -1278,6 +1418,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 5e8aa57d-56bc-4a14-9f62-4e8152a1a7a7
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -1299,8 +1447,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 238.11636
-        y: 209.00659
+        x: 236.70047
+        y: 207.55203
         width: 160
         height: 30
     - id: 6
@@ -1331,19 +1479,10 @@ MonoBehaviour:
 '
         type: 0
         typeString: CustomFieldType_Text
-      - title: Sequence
-        value: 'SpineFocus(Fafnir);
-
-          CinemachineFocus(Fafnir_Cam);
-
-          SpineDepth(Fafnir,
-          1.6, -3, 0);'
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: EventGuid
-        value: fd2113f2-274b-422c-abd1-32ff38260d88
-        type: 0
-        typeString: CustomFieldType_Text
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: '......
 
@@ -1354,6 +1493,12 @@ MonoBehaviour:
         value: "\u2026\u2026"
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: 'SpineFocus(Fafnir);
+
+          CinemachineFocus(Fafnir_Cam);'
+        type: 0
+        typeString: CustomFieldType_Text
       - title: Menu Text ko
         value: 
         type: 4
@@ -1362,6 +1507,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: fd2113f2-274b-422c-abd1-32ff38260d88
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -1384,7 +1537,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 241.52094
-        y: 295.27402
+        y: 295.99457
         width: 160
         height: 30
     - id: 7
@@ -1413,6 +1566,18 @@ MonoBehaviour:
         value: "\uB108\uD76C\uAC00 \uC65C \uAC70\uAE30 \uC788\uC5B4?"
         type: 0
         typeString: CustomFieldType_Text
+      - title: SubtitlePanel
+        value: 2
+        type: 1
+        typeString: CustomFieldType_Number
+      - title: ko
+        value: "\uB108\uD76C\uAC00 \uC65C \uAC70\uAE30 \uC788\uC5B4?"
+        type: 4
+        typeString: CustomFieldType_Localization
+      - title: ja
+        value: "\u306A\u3093\u3067\u304A\u524D\u305F\u3061\u304C\u3044\u308B\u306E\uFF1F"
+        type: 4
+        typeString: CustomFieldType_Localization
       - title: Sequence
         value: 'SpineTrack(Fafnir, face, Expression_Embarrassed);
 
@@ -1423,18 +1588,6 @@ MonoBehaviour:
           1.0);'
         type: 0
         typeString: CustomFieldType_Text
-      - title: EventGuid
-        value: 20e30e63-ccf7-4a70-980e-98289b9cd8d4
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: ko
-        value: "\uB108\uD76C\uAC00 \uC65C \uAC70\uAE30 \uC788\uC5B4?"
-        type: 4
-        typeString: CustomFieldType_Localization
-      - title: ja
-        value: "\u306A\u3093\u3067\u304A\u524D\u305F\u3061\u304C\u3044\u308B\u306E\uFF1F"
-        type: 4
-        typeString: CustomFieldType_Localization
       - title: Menu Text ko
         value: 
         type: 4
@@ -1443,6 +1596,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 20e30e63-ccf7-4a70-980e-98289b9cd8d4
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: Right
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -1464,8 +1625,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 243.97748
-        y: 377.1992
+        x: 243.98416
+        y: 376.49124
         width: 160
         height: 30
     - id: 8
@@ -1494,10 +1655,23 @@ MonoBehaviour:
         value: "\uC624\uB79C\uB9CC\uC774\uC57C, \uBC30\uD130\uB9AC"
         type: 0
         typeString: CustomFieldType_Text
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
+      - title: ko
+        value: "\uC624\uB79C\uB9CC\uC774\uC57C, \uBC30\uD130\uB9AC"
+        type: 4
+        typeString: CustomFieldType_Localization
+      - title: ja
+        value: "\u4E45\u3057\u3076\u308A\u3058\u3083\u3093\u3001\u96FB\u6C60\u3002"
+        type: 4
+        typeString: CustomFieldType_Localization
       - title: Sequence
         value: 'SpineTrack(Chona, face, Expression_Smile);
 
-          SpineFocus(Chona);
+          SpineFocus(Chona,
+          keep);
 
           CinemachineFocus(Chona_Cam);
 
@@ -1508,18 +1682,6 @@ MonoBehaviour:
           CinemachineZoom(3.5, 1.0);'
         type: 0
         typeString: CustomFieldType_Text
-      - title: EventGuid
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: ko
-        value: "\uC624\uB79C\uB9CC\uC774\uC57C, \uBC30\uD130\uB9AC"
-        type: 4
-        typeString: CustomFieldType_Localization
-      - title: ja
-        value: "\u4E45\u3057\u3076\u308A\u3058\u3083\u3093\u3001\u96FB\u6C60\u3002"
-        type: 4
-        typeString: CustomFieldType_Localization
       - title: Menu Text ko
         value: 
         type: 4
@@ -1528,6 +1690,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -1549,7 +1719,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 240.23322
+        x: 241.66177
         y: 467.76898
         width: 160
         height: 30
@@ -1558,11 +1728,11 @@ MonoBehaviour:
       - title: Title
         value: 
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Description
         value: 
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Actor
         value: 2
         type: 5
@@ -1574,11 +1744,23 @@ MonoBehaviour:
       - title: Menu Text
         value: 
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Dialogue Text
         value: "\uBC30\uD130\uB9AC\uB77C\uACE0 \uBD80\uB974\uC9C0 \uB9D0\uB7AC\uC9C0!"
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
+      - title: SubtitlePanel
+        value: 2
+        type: 1
+        typeString: CustomFieldType_Number
+      - title: ko
+        value: "\uBC30\uD130\uB9AC\uB77C\uACE0 \uBD80\uB974\uC9C0 \uB9D0\uB7AC\uC9C0!"
+        type: 4
+        typeString: CustomFieldType_Localization
+      - title: ja
+        value: "\u96FB\u6C60\u3063\u3066\u547C\u3076\u306A\uFF01"
+        type: 4
+        typeString: CustomFieldType_Localization
       - title: Sequence
         value: 'SpineTrack(Fafnir, face, Expression_Annoyed);
 
@@ -1592,15 +1774,7 @@ MonoBehaviour:
 
           CinemachineZoom(5, 1.0);'
         type: 0
-        typeString: 
-      - title: ko
-        value: "\uBC30\uD130\uB9AC\uB77C\uACE0 \uBD80\uB974\uC9C0 \uB9D0\uB7AC\uC9C0!"
-        type: 4
-        typeString: CustomFieldType_Localization
-      - title: ja
-        value: "\u96FB\u6C60\u3063\u3066\u547C\u3076\u306A\uFF01"
-        type: 4
-        typeString: CustomFieldType_Localization
+        typeString: CustomFieldType_Text
       - title: Menu Text ko
         value: 
         type: 4
@@ -1609,6 +1783,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: Right
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -1631,7 +1813,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 468.40256
-        y: 129.04182
+        y: 126.885956
         width: 160
         height: 30
     - id: 10
@@ -1661,12 +1843,10 @@ MonoBehaviour:
           \uBC14\uBCF4\uB2C8\uB974?"
         type: 0
         typeString: CustomFieldType_Text
-      - title: Sequence
-        value: 'SpineTrack(Janghwa, face, Expression_Smile);
-
-          SpineFocus(Janghwa);'
-        type: 0
-        typeString: CustomFieldType_Text
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: "\uBABB \uBCF4\uB294 \uC0AC\uC774\uC5D0 \uB9CE\uC774 \uCEF8\uB2E4,
           \uBC14\uBCF4\uB2C8\uB974?"
@@ -1676,6 +1856,12 @@ MonoBehaviour:
         value: "\u898B\u306A\u3044\u9593\u306B\u306A\u3093\u304B\u30C7\u30AB\u304F\u306A\u3063\u305F\uFF1F\u30D0\u30AB\u30CB\u30FC\u30EB\uFF1F"
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: 'SpineTrack(Janghwa, face, Expression_Smile);
+
+          SpineFocus(Janghwa);'
+        type: 0
+        typeString: CustomFieldType_Text
       - title: Menu Text ko
         value: 
         type: 4
@@ -1684,6 +1870,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -1737,10 +1931,10 @@ MonoBehaviour:
           \uB354 \uCEE4!"
         type: 0
         typeString: 
-      - title: Sequence
-        value: SpineFocus(Fafnir);
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 2
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: "\uD568\uBD80\uB85C \uB0A8\uC758 \uC774\uB984 \uBC14\uAFD4\uC11C \uBD80\uB974\uC9C0
           \uB9D0\uB77C\uACE0! \uADF8\uB9AC\uACE0 \uD0A4\uB294 \uB0B4\uAC00 \uB108\uBCF4\uB2E4
@@ -1751,6 +1945,10 @@ MonoBehaviour:
         value: "\u5931\u793C\u306D\uFF01\u4ED6\u4EBA\u3092\u5909\u306A\u3042\u3060\u540D\u3067\u547C\u3076\u306E\u306F\u30C0\u30E1\u306A\u306E\u3088\uFF01\n\u305D\u308C\u306B\u3001\u5143\u304B\u3089\u3042\u3093\u305F\u3088\u308A\u30C7\u30AB\u3044\u308F\u3088\uFF01\u3070\u304B\uFF01"
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: SpineFocus(Fafnir);
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -1759,6 +1957,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: Right
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -1811,12 +2017,10 @@ MonoBehaviour:
           \uAC70\uC57C?"
         type: 0
         typeString: 
-      - title: Sequence
-        value: 'SpineTrack(Chona, face, Expression_Curious);
-
-          SpineFocus(Chona);'
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: "\uC800\uAE30 \uB5A0 \uC788\uB294 \uCEE4\uB2E4\uB780 \uAC8C \uB124
           \uAC70\uC57C?"
@@ -1826,6 +2030,12 @@ MonoBehaviour:
         value: "\u3066\u304B\u3055\uFF5E\u3001\u3042\u306E\u6D6E\u304B\u3093\u3067\u308B\u3084\u3064\u3001\u3042\u3093\u305F\u306E\uFF1F"
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: 'SpineTrack(Chona, face, Expression_Curious);
+
+          SpineFocus(Chona);'
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -1834,6 +2044,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -1886,12 +2104,10 @@ MonoBehaviour:
           \uB465\uC9C0\uC57C."
         type: 0
         typeString: 
-      - title: Sequence
-        value: 'SpineTrack(Fafnir, face, Expression_Proud);
-
-          SpineFocus(Fafnir)'
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: "\uD6C4\uD6C4, \uADF8\uB798. \uB0B4 \uACF5\uC911 \uC694\uC0C8 \uC6A9\uC758
           \uB465\uC9C0\uC57C."
@@ -1901,6 +2117,12 @@ MonoBehaviour:
         value: "\u3075\u3075\uFF01\u9A5A\u3044\u305F\uFF1F\u3048\u3048\u3001\u305D\u3046\u3088\uFF01\u79C1\u306E\u6700\u5F37\u7A7A\u4E2D\u8981\u585E\u201C\u9F8D\u306E\u5DE3\u201D\u3088\uFF01"
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: 'SpineTrack(Fafnir, face, Expression_Proud);
+
+          SpineFocus(Fafnir)'
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -1909,6 +2131,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -1961,10 +2191,10 @@ MonoBehaviour:
           \uC800\uB7F0 \uAC74 \uBABB \uAD6C\uD560 \uAC78?"
         type: 0
         typeString: 
-      - title: Sequence
-        value: SpineTrack(Fafnir, face, Expression_Smug);
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: "\uB108 \uAC19\uC740 \uAC74 \uD3C9\uC0DD \uB178\uB825\uD574\uB3C4
           \uC800\uB7F0 \uAC74 \uBABB \uAD6C\uD560 \uAC78?"
@@ -1974,6 +2204,10 @@ MonoBehaviour:
         value: "\u304A\u524D\u305F\u3061\u306B\u306F\u4E00\u751F\u304B\u304B\u3063\u3066\u3082\u624B\u306B\u5165\u3089\u306A\u3044\u3067\u3057\u3087\uFF01\u3069\u3046\uFF1F\u7FA8\u307E\u3057\u3044\u3067\u3057\u3087\uFF1F"
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: SpineTrack(Fafnir, face, Expression_Smug);
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -1982,6 +2216,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -2033,12 +2275,10 @@ MonoBehaviour:
         value: "\uC6B0.\uC640.\uBD80.\uB7FD.\uB2E4."
         type: 0
         typeString: 
-      - title: Sequence
-        value: 'SpineTrack(Chona, face, Expression_Neutral);
-
-          SpineFocus(Chona)'
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: "\uC6B0.\uC640.\uBD80.\uB7FD.\uB2E4."
         type: 4
@@ -2047,6 +2287,13 @@ MonoBehaviour:
         value: "\u30EF\u30FC\u3001\u30A6\u30E9\u30E4\u30DE\u30B7\u30FC"
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: 'SpineTrack(Chona, face, Expression_Neutral);
+
+          SpineFocus(Chona,
+          keep)'
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -2055,6 +2302,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -2107,10 +2362,10 @@ MonoBehaviour:
           \uB3CC\uB824\uC904\uAC8C."
         type: 0
         typeString: 
-      - title: Sequence
-        value: SpineTrack(Chona, face, Expression_Smile);
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: "\uC870\uAE08\uB9CC \uBE4C\uB9AC\uC790. \uC870\uAE08\uB9CC \uC4F0\uACE0
           \uB3CC\uB824\uC904\uAC8C."
@@ -2120,6 +2375,10 @@ MonoBehaviour:
         value: "\u3061\u3087\u3063\u3068\u8CB8\u3057\u3066\u3088\u3002\u3061\u3083\u3093\u3068\u8FD4\u3059\u304B\u3089\u3002"
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: SpineTrack(Chona, face, Expression_Smile);
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -2128,6 +2387,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -2181,12 +2448,10 @@ MonoBehaviour:
           \uADF8\uB0E5 \uB6F0\uC5B4\uB0B4\uB838\uC796\uC544!"
         type: 0
         typeString: 
-      - title: Sequence
-        value: 'SpineTrack(Fafnir, face, Expression_Annoyed);
-
-          SpineFocus(Fafnir)'
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 2
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: "\uB108 \uC61B\uB0A0\uC5D0\uB3C4 \uADF8 \uB9D0 \uD558\uACE0 \uB098\uD55C\uD14C\uC11C
           \uB099\uD558\uC0B0 \uBE4C\uB824 \uAC14\uB2E4\uAC00 \uC548 \uB3CC\uB824\uC8FC\uACE0
@@ -2197,6 +2462,12 @@ MonoBehaviour:
         value: "\u304A\u524D\u3001\u6614\u3082\u305D\u3046\u3084\u3063\u3066\u79C1\u306E\u30D1\u30E9\u30B7\u30E5\u30FC\u30C8\u4F7F\u3063\u3066\u8131\u51FA\u3057\u305F\u3053\u3068\u304C\u3042\u3063\u305F\u3067\u3057\u3087\uFF01\uFF1F"
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: 'SpineTrack(Fafnir, face, Expression_Annoyed);
+
+          SpineFocus(Fafnir)'
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -2205,6 +2476,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: Right
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -2257,10 +2536,10 @@ MonoBehaviour:
           \uC8FD\uC744 \uBED4\uD588\uB2E4\uACE0!"
         type: 0
         typeString: 
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 2
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: "\uB098\uB294 \uB099\uD558\uC0B0 \uC5C6\uC774 \uB6F0\uC5B4\uB0B4\uB9AC\uB290\uB77C
           \uC8FD\uC744 \uBED4\uD588\uB2E4\uACE0!"
@@ -2270,6 +2549,10 @@ MonoBehaviour:
         value: "\u304A\u304B\u3052\u3067\u30D1\u30E9\u30B7\u30E5\u30FC\u30C8\u306A\u3057\u3067\u98DB\u3073\u964D\u308A\u3066\u6B7B\u306B\u304B\u3051\u305F\u3093\u3060\u304B\u3089\u306D\uFF01"
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -2278,6 +2561,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: Right
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -2330,10 +2621,10 @@ MonoBehaviour:
           \uC8FD\uC5C8\uC73C\uBA74 \uB410\uC796\uC544."
         type: 0
         typeString: 
-      - title: Sequence
-        value: SpineFocus(Chona)
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: "\uC5D0\uC774, \uC65C \uADF8\uB798. \uCE5C\uAD6C\uB07C\uB9AC? \uC548
           \uC8FD\uC5C8\uC73C\uBA74 \uB410\uC796\uC544."
@@ -2343,6 +2634,14 @@ MonoBehaviour:
         value: "\u305D\u3093\u306A\u3053\u3068\u3067\u8179\u7ACB\u3066\u3066\u3093\u306E\uFF1F\u30DE\u30A4\u30D5\u30EC\u30F3\u30C9\uFF5E\u3002\u751F\u304D\u3066\u308B\u304B\u3089\u3044\u3044\u3058\u3083\u3093\u3002"
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: 'SpineFocus(Chona);
+
+          CinemachineFocus(Chona_Cam);
+
+'
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -2351,6 +2650,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -2372,8 +2679,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 871.2358
-        y: 210.24359
+        x: 954.11884
+        y: 109.20456
         width: 160
         height: 30
     - id: 20
@@ -2402,10 +2709,10 @@ MonoBehaviour:
         value: "\uC6C3\uACA8! \uC6B0\uB9AC\uAC00 \uC5B8\uC81C \uCE5C\uAD6C\uC600\uB2E4\uACE0!"
         type: 0
         typeString: CustomFieldType_Text
-      - title: Sequence
-        value: SpineFocus(Fafnir)
-        type: 0
-        typeString: CustomFieldType_Text
+      - title: SubtitlePanel
+        value: 2
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: "\uC6C3\uACA8! \uC6B0\uB9AC\uAC00 \uC5B8\uC81C \uCE5C\uAD6C\uC600\uB2E4\uACE0!"
         type: 4
@@ -2414,6 +2721,10 @@ MonoBehaviour:
         value: "\u306F\u3041\uFF01\uFF1F\u8AB0\u304C\u30DE\u30A4\u30D5\u30EC\u30F3\u30C9\u3088\uFF01"
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: SpineFocus(Fafnir)
+        type: 0
+        typeString: CustomFieldType_Text
       - title: Menu Text ko
         value: 
         type: 4
@@ -2422,6 +2733,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: Right
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -2474,12 +2793,10 @@ MonoBehaviour:
           \uC5B8\uC81C \uC6B0\uB9AC\uB791 \uB9DE\uBA39\uC5C8\uB0D0?"
         type: 0
         typeString: 
-      - title: Sequence
-        value: 'SpineTrack(Janghwa, face, Expression_Irritated);
-
-          SpineFocus(Janghwa)'
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: "\uB108 \uC870\uAE08 \uB9C8\uC74C\uC5D0 \uC548 \uB4E0\uB2E4? \uB124\uAC00
           \uC5B8\uC81C \uC6B0\uB9AC\uB791 \uB9DE\uBA39\uC5C8\uB0D0?"
@@ -2489,6 +2806,15 @@ MonoBehaviour:
         value: "\u3064\u30FC\u304B\u3055\u3001\u4F55\u3067\u3042\u3093\u305F\u30A2\u30BF\u30B7\u305F\u3061\u3068\u5BFE\u7B49\u306B\u558B\u3063\u3066\u3093\u306E\u3088\u3002"
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: 'SpineTrack(Janghwa, face, Expression_Irritated);
+
+          SpineFocus(Janghwa);
+
+
+          CinemachineFocus(Janghwa_Cam);'
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -2497,6 +2823,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -2519,7 +2853,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 942.3956
-        y: 300.0225
+        y: 298.5939
         width: 160
         height: 30
     - id: 22
@@ -2549,10 +2883,10 @@ MonoBehaviour:
           \uBA3C\uC800 \uC2E0\uACE0\uD574\uC57C \uD558\uB294 \uAC70 \uC544\uB0D0?"
         type: 0
         typeString: 
-      - title: Sequence
-        value: SpineTrack(Janghwa, face, Expression_EvilGrin);
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: "\uADF8\uB9AC\uACE0 \uC88B\uC740 \uAC74 \uC774 \uC5B8\uB2C8\uD55C\uD14C
           \uBA3C\uC800 \uC2E0\uACE0\uD574\uC57C \uD558\uB294 \uAC70 \uC544\uB0D0?"
@@ -2562,6 +2896,10 @@ MonoBehaviour:
         value: "\u307B\u3089\u3001\u5148\u8F29\u306B\u306F\u656C\u8A9E\u4F7F\u3044\u306A\u3055\u3044\u3088\u3002"
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: SpineTrack(Janghwa, face, Expression_EvilGrin);
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -2570,6 +2908,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -2623,10 +2969,10 @@ MonoBehaviour:
           \uAC70\uACA0\uC9C0?"
         type: 0
         typeString: 
-      - title: Sequence
-        value: SpineFocus(none)
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 3
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: "- \uC7A5\uD654\uC640 \uCC9C\uC544\uB3C4 \uD30C\uD504\uB2C8\uB974\uAC00
           \uC624\uB974\uCE74\uC758 \uC77C\uC6D0\uC774 \uC544\uB2C8\uB77C\uC11C \uC774\uB7EC\uB294
@@ -2637,6 +2983,12 @@ MonoBehaviour:
         value: "\u2010\u8594\u82B1\u3082\u30C1\u30E7\u30CA\u3082\u30D5\u30A1\u30D5\u30CB\u30FC\u30EB\u304C\u30AA\u30EB\u30AB\u306E\u4E00\u54E1\u3058\u3083\u306A\u3044\u304B\u3089\n\u3053\u3093\u306A\u306B\u6271\u3044\u304C\u96D1\u306A\u3093\u3060\u3088\u306D\u2026\u2026\uFF1F"
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: 'SpineFocus(none);
+
+          CinemachineFocus(Wide_Cam);'
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -2645,6 +2997,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -2696,10 +3056,10 @@ MonoBehaviour:
         value: "- \uC544\uB2C8\uB77C\uC11C \uC774\uB7EC\uB294 \uAC70 \uB9DE\uACA0\uC9C0?"
         type: 0
         typeString: 
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 3
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: "- \uC544\uB2C8\uB77C\uC11C \uC774\uB7EC\uB294 \uAC70 \uB9DE\uACA0\uC9C0?"
         type: 4
@@ -2708,6 +3068,10 @@ MonoBehaviour:
         value: "\u2010\u3060\u3088\u306D\uFF1F"
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -2716,6 +3080,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -2769,14 +3141,10 @@ MonoBehaviour:
           \uC6B0\uB9AC\uB294 \uC5B4\uB290 \uCABD\uC774\uB4E0 \uC0C1\uAD00\uC5C6\uC9C0\uB9CC."
         type: 0
         typeString: 
-      - title: Sequence
-        value: SpineFocus(Janghwa)
-        type: 0
-        typeString: 
-      - title: EventGuid
-        value: 626a5469-e4e5-4dce-8ab8-1ae346cbe0c0
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: "\uC57C, \uADF8\uB0E5 \uBE4C\uB824\uC8FC\uB294 \uAC8C \uBA87 \uB300
           \uB9DE\uACE0 \uBE4C\uB824\uC8FC\uB294 \uAC83\uBCF4\uB2E4 \uB0AB\uC9C0 \uC54A\uB0D0?
@@ -2787,6 +3155,10 @@ MonoBehaviour:
         value: "\u307E\u3041\u3001\u30A2\u30BF\u30B7\u306F\u3069\u3063\u3061\u3067\u3082\u3044\u3044\u3051\u3069\uFF1F\u30DC\u30B3\u3063\u3066\u3069\u3063\u3061\u304C\u4E0A\u304B\n\u89E3\u3089\u305B\u308C\u3070\u3044\u3044\u3093\u3060\u304B\u3089\u3002"
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: SpineFocus(Janghwa)
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -2795,6 +3167,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 626a5469-e4e5-4dce-8ab8-1ae346cbe0c0
+        type: 0
+        typeString: 
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -2847,14 +3227,10 @@ MonoBehaviour:
           \uC608\uC808\uAD50\uC2E4 \uC5F4\uC5B4\uB2EC\uB77C\uACE0 \uB9D0\uD558\uC790."
         type: 0
         typeString: CustomFieldType_Text
-      - title: Sequence
-        value: SpineFocus(none)
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: EventGuid
-        value: 0372333f-cabf-464f-b4fb-83cb6b7cec2f
-        type: 0
-        typeString: CustomFieldType_Text
+      - title: SubtitlePanel
+        value: 3
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: "- ......\uB098\uC911\uC5D0 \uC54C\uB809\uC0B0\uB4DC\uB77C\uC5D0\uAC8C
           \uC608\uC808\uAD50\uC2E4 \uC5F4\uC5B4\uB2EC\uB77C\uACE0 \uB9D0\uD558\uC790."
@@ -2864,6 +3240,10 @@ MonoBehaviour:
         value: "\u2010\u2026\u2026\u3042\u3068\u3067\u30A2\u30EC\u30AF\u30B5\u30F3\u30C9\u30E9\u306B\u30DE\u30CA\u30FC\u6559\u5BA4\u3092\u958B\u304F\u3088\u3046\u306B\u8A00\u3063\u3066\u304A\u3053\u3046\u3002"
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: SpineFocus(none)
+        type: 0
+        typeString: CustomFieldType_Text
       - title: Menu Text ko
         value: 
         type: 4
@@ -2872,6 +3252,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 0372333f-cabf-464f-b4fb-83cb6b7cec2f
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -2924,14 +3312,10 @@ MonoBehaviour:
           \uB9C8\uB77C."
         type: 0
         typeString: 
-      - title: Sequence
-        value: SpineFocus(Vargr)
-        type: 0
-        typeString: 
-      - title: EventGuid
-        value: 70af96f5-9140-40a5-837e-c62c789c0fc8
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: "\uC8FC\uC778\uB2D8 \uC55E\uC774\uB2E4. \uD749\uD55C \uAF34 \uBCF4\uC774\uC9C0
           \uB9C8\uB77C."
@@ -2941,6 +3325,10 @@ MonoBehaviour:
         value: "\u4E3B\u69D8\u306E\u524D\u3060\u3002\u307F\u3063\u3068\u3082\u306A\u3044\u59FF\u3092\u898B\u305B\u308B\u306A\u3002\u4E3B\u69D8\u306E\u54C1\u683C\u304C\u7591\u308F\u308C\u308B\u3002"
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: SpineFocus(Vargr)
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -2949,6 +3337,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 70af96f5-9140-40a5-837e-c62c789c0fc8
+        type: 0
+        typeString: 
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -3001,14 +3397,10 @@ MonoBehaviour:
           \uC21C\uC2DD\uAC04\uC5D0 \uAC00\uB77C\uC549\uC558\uB2E4."
         type: 0
         typeString: 
-      - title: Sequence
-        value: SpineFocus(none)
-        type: 0
-        typeString: 
-      - title: EventGuid
-        value: 108087ee-7240-475b-aafd-dbec5b7f1203
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 3
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: "- \uBC14\uB974\uADF8\uAC00 \uB07C\uC5B4\uB4E4\uC790 \uC18C\uB780\uC740
           \uC21C\uC2DD\uAC04\uC5D0 \uAC00\uB77C\uC549\uC558\uB2E4."
@@ -3018,6 +3410,10 @@ MonoBehaviour:
         value: "\u2010\u30EF\u30FC\u30B0\u304C\u5272\u308A\u8FBC\u3080\u3068\u3001\u4E00\u6C17\u306B\u9759\u304B\u306B\u306A\u3063\u305F\u3002"
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: SpineFocus(none)
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -3026,6 +3422,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 108087ee-7240-475b-aafd-dbec5b7f1203
+        type: 0
+        typeString: 
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -3079,10 +3483,10 @@ MonoBehaviour:
           \uB54C..."
         type: 0
         typeString: 
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 3
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: "- \uB0B4\uAC00 \uC5ED\uC2DC \uC5E0\uD504\uB808\uC2DC\uC2A4 \uD558\uC6B4\uB4DC\uC758
           \uB300\uC7A5\uC774\uAD6C\uB098 \uD558\uACE0 \uAC10\uD0C4\uD558\uACE0 \uC788\uC744
@@ -3093,6 +3497,10 @@ MonoBehaviour:
         value: "\u2010\u6D41\u77F3\u306F\u30A8\u30F3\u30D7\u30EC\u30B7\u30B9\u30CF\u30A6\u30F3\u30C9\u306E\u30EA\u30FC\u30C0\u30FC\u3060\u306A\u3002"
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -3101,6 +3509,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -3152,16 +3568,10 @@ MonoBehaviour:
         value: "\uBB50\uC57C, \uC774 \uAF2C\uB9F9\uC774\uB294?"
         type: 0
         typeString: 
-      - title: Sequence
-        value: 'SpineTrack(Fafnir, face, Expression_Proud);
-
-          SpineFocus(Fafnir)'
-        type: 0
-        typeString: 
-      - title: EventGuid
-        value: 9fb0e6c8-a83c-4a75-802a-f4bfb9bb8f69
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: "\uBB50\uC57C, \uC774 \uAF2C\uB9F9\uC774\uB294?"
         type: 4
@@ -3170,6 +3580,12 @@ MonoBehaviour:
         value: "\u4F55\uFF1F\u3053\u306E\u30C1\u30D3\uFF1F"
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: 'SpineTrack(Fafnir, face, Expression_Proud);
+
+          SpineFocus(Fafnir)'
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -3178,6 +3594,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 9fb0e6c8-a83c-4a75-802a-f4bfb9bb8f69
+        type: 0
+        typeString: 
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -3230,14 +3654,10 @@ MonoBehaviour:
           \uCC28\uAC00\uC6CC\uC9C0\uB294 \uAC8C \uB290\uAEF4\uC84C\uB2E4."
         type: 0
         typeString: 
-      - title: Sequence
-        value: SpineFocus(none)
-        type: 0
-        typeString: 
-      - title: EventGuid
-        value: 98337482-03f1-4ede-b003-a18b06dfadfe
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 3
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: "- \uAC00\uB77C\uC549\uC558\uB358 \uBD84\uC704\uAE30\uAC00 \uC21C\uC2DD\uAC04\uC5D0
           \uCC28\uAC00\uC6CC\uC9C0\uB294 \uAC8C \uB290\uAEF4\uC84C\uB2E4."
@@ -3247,6 +3667,10 @@ MonoBehaviour:
         value: "\u2010\u4E00\u77AC\u3001\u7DCA\u5F35\u304C\u8D70\u3063\u305F\u3002"
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: SpineFocus(none)
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -3255,6 +3679,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 98337482-03f1-4ede-b003-a18b06dfadfe
+        type: 0
+        typeString: 
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -3306,10 +3738,10 @@ MonoBehaviour:
         value: "- \uBC14\uB974\uADF8\uB294 \uCE68\uCC29\uD558\uAC8C \uB9D0\uD588\uB2E4."
         type: 0
         typeString: 
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 3
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: "- \uBC14\uB974\uADF8\uB294 \uCE68\uCC29\uD558\uAC8C \uB9D0\uD588\uB2E4."
         type: 4
@@ -3318,6 +3750,10 @@ MonoBehaviour:
         value: "\u2010\u30FC\u30FC\u304C\u3001\u30EF\u30FC\u30B0\u306F\u3059\u3050\u306B\u7A4F\u3084\u304B\u306B\u53E3\u3092\u958B\u304F\u3002"
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -3326,6 +3762,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -3378,10 +3822,10 @@ MonoBehaviour:
           \uBC14\uB974\uADF8\uB2E4."
         type: 0
         typeString: 
-      - title: Sequence
-        value: SpineFocus(Vargr)
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: "\uC5E0\uD504\uB808\uC2DC\uC2A4 \uD558\uC6B4\uB4DC\uC758 \uB300\uC7A5
           \uBC14\uB974\uADF8\uB2E4."
@@ -3391,6 +3835,10 @@ MonoBehaviour:
         value: "\u30A8\u30F3\u30D7\u30EC\u30B7\u30B9\u30CF\u30A6\u30F3\u30C9\u306E\u30EA\u30FC\u30C0\u30FC\u3001\u30EF\u30FC\u30B0\u3060\u3002"
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: SpineFocus(Vargr)
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -3399,6 +3847,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -3452,10 +3908,10 @@ MonoBehaviour:
           \uC6C3\uAE30\uC2DC\uB124."
         type: 0
         typeString: 
-      - title: Sequence
-        value: SpineFocus(Fafnir)
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: "\uBB50? \uC5E0\uD504\uB808\uC2DC\uC2A4 \uD558\uC6B4\uB4DC\uC5D0 \uB300\uC7A5\uC774
           \uC788\uB2E4\uACE0? \uADF8\uB9AC\uACE0 \uADF8 \uB300\uC7A5\uC774 \uB108\uB77C\uACE0?
@@ -3466,6 +3922,10 @@ MonoBehaviour:
         value: "\u306F\u3041\uFF1F\u30A8\u30F3\u30D7\u30EC\u30B7\u30B9\u30CF\u30A6\u30F3\u30C9\u306B\u30EA\u30FC\u30C0\u30FC\u304C\u3044\u305F\u306E\uFF1F\u3057\u304B\u3082\u305D\u308C\u304C\u304A\u524D\uFF1F\n\u9762\u767D\u3044\u3053\u3068\u8A00\u3046\u308F\u306D\u3002"
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: SpineFocus(Fafnir)
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -3474,6 +3934,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -3527,19 +3995,10 @@ MonoBehaviour:
           \uBB34\uC2A8 \uC758\uBBF8\uC9C0?"
         type: 0
         typeString: 
-      - title: Sequence
-        value: 'SpineTrack(Chona, face, Expression_SilentLaugh);
-
-          SpineTrack(Chona,
-          extra, Extra_FingerCount_1);
-
-          SpineFocus(none)'
-        type: 0
-        typeString: 
-      - title: EventGuid
-        value: 257b5374-e777-4f41-8949-b101f58cbbf5
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 3
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: "- \uBC14\uB974\uADF8 \uC606\uC5D0 \uC788\uB358 \uCC9C\uC544\uAC00
           \uAC80\uC9C0\uB97C \uC138\uC6B0\uB294 \uAC83\uC774 \uBCF4\uC600\uB2E4.
@@ -3550,6 +4009,15 @@ MonoBehaviour:
         value: "\u2010\u30EF\u30FC\u30B0\u306E\u305D\u3070\u306B\u3044\u305F\u30C1\u30E7\u30CA\u306F\u4EBA\u5DEE\u3057\u6307\u3092\u7ACB\u3066\u305F\u3002\n\u3069\u3046\u3044\u3046\u610F\u5473\u3060\uFF1F"
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: 'SpineTrack(Chona, face, Expression_SilentLaugh);
+
+          SpineTrack(Chona,
+          extra, Extra_FingerCount_1);
+
+          SpineFocus(none)'
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -3558,6 +4026,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 257b5374-e777-4f41-8949-b101f58cbbf5
+        type: 0
+        typeString: 
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -3610,16 +4086,10 @@ MonoBehaviour:
           \uB354 \uB300\uC7A5\uC5D0 \uC5B4\uC6B8\uB9AC\uC9C0 \uC54A\uC544?"
         type: 0
         typeString: 
-      - title: Sequence
-        value: 'SpineTrack(Fafnir, face, Expression_Smug);
-
-          SpineFocus(Fafnir)'
-        type: 0
-        typeString: 
-      - title: EventGuid
-        value: f41693f2-6535-4006-a513-c017500c57fd
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: "\uB108 \uAC19\uC740 \uAF2C\uB9F9\uC774\uBCF4\uB2E4\uB294 \uB0B4\uAC00
           \uB354 \uB300\uC7A5\uC5D0 \uC5B4\uC6B8\uB9AC\uC9C0 \uC54A\uC544?"
@@ -3629,6 +4099,12 @@ MonoBehaviour:
         value: "\u3042\u3093\u305F\u307F\u305F\u3044\u306A\u30C1\u30D3\u3063\u5B50\u3058\u3083\u306A\u304F\u3066\u3001\u79C1\u306E\u65B9\u304C\u30EA\u30FC\u30C0\u30FC\u306B\u76F8\u5FDC\u3057\u304F\u306A\u3044\uFF1F"
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: 'SpineTrack(Fafnir, face, Expression_Smug);
+
+          SpineFocus(Fafnir)'
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -3637,6 +4113,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: f41693f2-6535-4006-a513-c017500c57fd
+        type: 0
+        typeString: 
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -3689,12 +4173,10 @@ MonoBehaviour:
           \uD558\uB9C8."
         type: 0
         typeString: 
-      - title: Sequence
-        value: 'SpineTrack(Vargr, face, Expression_EyeClosed);
-
-          SpineFocus(Vargr)'
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: "\uB0B4 \uBD80\uB355\uD568\uC758 \uC18C\uCE58\uB2E4. \uC815\uC9C4\uD558\uB3C4\uB85D
           \uD558\uB9C8."
@@ -3704,6 +4186,12 @@ MonoBehaviour:
         value: "\u79C1\u306E\u4E0D\u5FB3\u306E\u81F4\u3059\u3068\u3053\u308D\u3067\u3059\u3002\u7CBE\u9032\u3044\u305F\u3057\u307E\u3059\u3001\u4E3B\u69D8\u3002"
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: 'SpineTrack(Vargr, face, Expression_EyeClosed);
+
+          SpineFocus(Vargr)'
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -3712,6 +4200,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -3765,16 +4261,10 @@ MonoBehaviour:
           \uD558\uACE0 \uC788\uB2E4\uB294 \uAC83\uC744 \uC54C\uC544\uCC28\uB838\uB2E4."
         type: 0
         typeString: 
-      - title: Sequence
-        value: 'SpineTrack(Chona, extra, Extra_FingerCount_2);
-
-          SpineFocus(none)'
-        type: 0
-        typeString: 
-      - title: EventGuid
-        value: 8c53ecbc-7f0c-43fd-90bc-a5c52c1eecee
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 3
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: "- \uCC9C\uC544\uAC00 \uAC80\uC9C0\uC5D0 \uC774\uC5B4 \uC911\uC9C0\uB97C
           \uC138\uC6E0\uB2E4. \uB098\uB294 \uCC9C\uC544\uAC00 \uCE74\uC6B4\uD2B8\uB97C
@@ -3785,6 +4275,12 @@ MonoBehaviour:
         value: "\u2010\u30C1\u30E7\u30CA\u304C\u4EBA\u5DEE\u3057\u6307\u306B\u7D9A\u3044\u3066\u4E2D\u6307\u3092\u7ACB\u3066\u305F\u3002\n\u3069\u3046\u3084\u3089\u2026\u2026\u4F55\u304B\u3092\u30AB\u30A6\u30F3\u30C8\u3057\u3066\u3044\u308B\uFF1F"
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: 'SpineTrack(Chona, extra, Extra_FingerCount_2);
+
+          SpineFocus(none)'
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -3793,6 +4289,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 8c53ecbc-7f0c-43fd-90bc-a5c52c1eecee
+        type: 0
+        typeString: 
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -3847,14 +4351,10 @@ MonoBehaviour:
           \uB465\uC9C0\uB3C4 \uAC00\uC9C0\uACE0 \uC788\uB2E4\uACE0."
         type: 0
         typeString: 
-      - title: Sequence
-        value: SpineFocus(Fafnir)
-        type: 0
-        typeString: 
-      - title: EventGuid
-        value: e03f01ba-eddd-421f-8f23-43b7185aff64
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: "\uB108\uB294 \uAE30\uAECF\uD574\uC57C \uC774 \uC131\uACA9 \uB354\uB7EC\uC6B4
           \uC560\uB4E4\uC774\uB098 \uC774\uB04C\uC9C0\uB9CC \uB098\uB294 \uD6E8\uC52C
@@ -3866,6 +4366,10 @@ MonoBehaviour:
         value: "\u304A\u524D\u306F\u307E\u3041\u305B\u3044\u305C\u3044\u305D\u3053\u306E\u6027\u683C\u304C\u304A\u308F\u3063\u3066\u308B\u731F\u72AC\u305F\u3061\u306E\u30EA\u30FC\u30C0\u30FC\u3060\u3051\u3069\u3001\n\u79C1\u306F\u9065\u304B\u306B\u305F\u304F\u3055\u3093\u306E\u90E8\u4E0B\u3092\u7387\u3044\u308B\u30EA\u30FC\u30C0\u30FC\uFF01\u3057\u304B\u3082\u304A\u5B9D\u3082\u9F8D\u306E\u5DE3\u3082\u6301\u3063\u3066\u308B\u308F\uFF01"
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: SpineFocus(Fafnir)
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -3874,6 +4378,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: e03f01ba-eddd-421f-8f23-43b7185aff64
+        type: 0
+        typeString: 
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -3927,12 +4439,10 @@ MonoBehaviour:
           \uC99D\uAC70\uC77C\uD14C\uB2C8."
         type: 0
         typeString: 
-      - title: Sequence
-        value: 'SpineTrack(Vargr, face, Expression_Dignified);
-
-          SpineFocus(Vargr)'
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: "\uADF8\uAC74 \uCE6D\uCC2C\uD558\uB9C8. \uC778\uB958\uAC00 \uBA78\uB9DD\uD55C
           \uD6C4\uC5D0\uB3C4 \uB108 \uC5ED\uC2DC\uB3C4 \uC5F4\uC2EC\uD788 \uC0B4\uC558\uB2E4\uB294
@@ -3943,6 +4453,12 @@ MonoBehaviour:
         value: "\u305D\u308C\u306F\u7D20\u76F4\u306B\u79F0\u8CDB\u3057\u3088\u3046\u3002\n\u4EBA\u985E\u304C\u6EC5\u4EA1\u3057\u305F\u5F8C\u3082\u304A\u524D\u304C\u61F8\u547D\u306B\u751F\u304D\u3066\u304D\u305F\u3068\u3044\u3046\u8A3C\u306A\u306E\u3060\u308D\u3046\u304B\u3089\u3002"
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: 'SpineTrack(Vargr, face, Expression_Dignified);
+
+          SpineFocus(Vargr)'
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -3951,6 +4467,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -4004,16 +4528,10 @@ MonoBehaviour:
           \uB9CE\uB2E4\uB294 \uC758\uBBF8\uACA0\uC9C0."
         type: 0
         typeString: 
-      - title: Sequence
-        value: 'SpineTrack(Chona, extra, Extra_FingerCount_3);
-
-          SpineFocus(none)'
-        type: 0
-        typeString: 
-      - title: EventGuid
-        value: 790f8e1c-6716-43c6-94b5-74684f3918e1
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 3
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: "- \uCC9C\uC544\uAC00 \uC57D\uC9C0\uB3C4 \uD3BC\uCCE4\uB2E4. \uC801\uC5B4\uB3C4
           \uBC14\uB974\uADF8\uC758 \uC610\uB85C\uCE74\uB4DC\uB294 3\uC7A5\uBCF4\uB2E4\uB294
@@ -4024,6 +4542,12 @@ MonoBehaviour:
         value: "\u2010\u30C1\u30E7\u30CA\u304C\u85AC\u6307\u3082\u7ACB\u3066\u305F\u3002\u306A\u308B\u307B\u3069\u3001\u3053\u308C\u306F\u30EF\u30FC\u30B0\u306E\u5730\u96F7\u3092\u8E0F\u3093\u3060\u6570\u304B\u2026\u2026"
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: 'SpineTrack(Chona, extra, Extra_FingerCount_3);
+
+          SpineFocus(none)'
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -4032,6 +4556,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 790f8e1c-6716-43c6-94b5-74684f3918e1
+        type: 0
+        typeString: 
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -4083,14 +4615,10 @@ MonoBehaviour:
         value: "\uC5EC\uC81C \uC544\uC90C-"
         type: 0
         typeString: 
-      - title: Sequence
-        value: SpineFocus(Fafnir)
-        type: 0
-        typeString: 
-      - title: EventGuid
-        value: a226f3a0-069b-4a3d-b766-59905e32cf55
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: "\uC5EC\uC81C \uC544\uC90C-"
         type: 4
@@ -4099,6 +4627,10 @@ MonoBehaviour:
         value: "\u5973\u5E1D\u30D0\u30D0\u30A2\u30FC"
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: SpineFocus(Fafnir)
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -4107,6 +4639,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: a226f3a0-069b-4a3d-b766-59905e32cf55
+        type: 0
+        typeString: 
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -4158,16 +4698,10 @@ MonoBehaviour:
         value: "\uC8FD\uC5EC\uBC84\uB9AC\uACA0\uB2E4\uBC30\uC740\uB9DD\uB355\uD55C\uB144."
         type: 0
         typeString: 
-      - title: Sequence
-        value: 'SpineTrack(Vargr, face, Expression_Angry);
-
-          SpineFocus(Vargr)'
-        type: 0
-        typeString: 
-      - title: EventGuid
-        value: c0303081-7fbd-45d3-a779-b1e65ecd7120
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: "\uC8FD\uC5EC\uBC84\uB9AC\uACA0\uB2E4\uBC30\uC740\uB9DD\uB355\uD55C\uB144."
         type: 4
@@ -4176,6 +4710,12 @@ MonoBehaviour:
         value: "\u6BBA\u3059\uFF01\uFF01\uFF01\uFF01\uFF01\uFF01\uFF01"
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: 'SpineTrack(Vargr, face, Expression_Angry);
+
+          SpineFocus(Vargr)'
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -4184,6 +4724,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: c0303081-7fbd-45d3-a779-b1e65ecd7120
+        type: 0
+        typeString: 
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -4237,19 +4785,10 @@ MonoBehaviour:
           \uC5ED\uB9B0\uC744 \uAC74\uB4DC\uB838\uB2E4\uB294 \uC758\uBBF8\uC600\uB2E4."
         type: 0
         typeString: 
-      - title: Sequence
-        value: 'SpineTrack(Chona, face, Expression_Enlightened);
-
-          SpineTrack(Chona,
-          extra, Extra_Enlightened);
-
-          SpineFocus(none)'
-        type: 0
-        typeString: 
-      - title: EventGuid
-        value: cc03ed66-c9a5-4f82-ab6c-f65c5d9c2efe
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 3
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: "- \uCC9C\uC544\uB294 \uC591\uC190\uC744 \uCAD9 \uD3BC\uCCE4\uB2E4.
           \uCE74\uC6B4\uD2B8\uB97C \uD560 \uD544\uC694\uB3C4 \uC5C6\uB294 \uBC14\uB974\uADF8\uC758
@@ -4260,6 +4799,15 @@ MonoBehaviour:
         value: "\"\u2010\u30C1\u30E7\u30CA\u304C\u697D\u3057\u305D\u3046\u306B\u4E21\u624B\u3092\u5E83\u3052\u305F\u3002\n\u305F\u3057\u304B\u306B\u3082\u3046\u30AB\u30A6\u30F3\u30C8\u3059\u308B\u5FC5\u8981\u304C\u306A\u3044\u30EC\u30D9\u30EB\u306E\u5730\u96F7\u3092\u8E0F\u307F\u629C\u3044\u305F\u306A\u2026\u2026\""
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: 'SpineTrack(Chona, face, Expression_Enlightened);
+
+          SpineTrack(Chona,
+          extra, Extra_Enlightened);
+
+          SpineFocus(none)'
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -4268,6 +4816,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: cc03ed66-c9a5-4f82-ab6c-f65c5d9c2efe
+        type: 0
+        typeString: 
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -4319,10 +4875,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: 
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: 
         type: 4
@@ -4331,6 +4887,10 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
       - title: Menu Text ko
         value: 
         type: 4
@@ -4339,6 +4899,14 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -4359,8 +4927,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 34.057198, y: 56.696495}
-    canvasZoom: 1.1299994
+    canvasScrollPosition: {x: 55.200073, y: 20.742859}
+    canvasZoom: 0.55999964
   - id: 3
     fields:
     - title: Title
@@ -4436,10 +5004,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: 
-      - title: Sequence
-        value: None()
-        type: 0
-        typeString: 
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: 
         type: 4
@@ -4448,6 +5016,26 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: None()
+        type: 0
+        typeString: 
+      - title: Menu Text ko
+        value: 
+        type: 4
+        typeString: CustomFieldType_Localization
+      - title: Menu Text ja
+        value: 
+        type: 4
+        typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 3
       isRoot: 1
       isGroup: 0
@@ -4499,10 +5087,10 @@ MonoBehaviour:
         value: Expression_Smile
         type: 0
         typeString: CustomFieldType_Text
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: 
         type: 4
@@ -4511,10 +5099,26 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Menu Text ko
+        value: 
+        type: 4
+        typeString: CustomFieldType_Localization
+      - title: Menu Text ja
+        value: 
+        type: 4
+        typeString: CustomFieldType_Localization
       - title: EventGuid
         value: f28e1672-1362-43d0-aa15-67d633975cb6
         type: 0
         typeString: 
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 3
       isRoot: 0
       isGroup: 0
@@ -4566,10 +5170,10 @@ MonoBehaviour:
         value: Expression_Neutral
         type: 0
         typeString: CustomFieldType_Text
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: 
         type: 4
@@ -4578,10 +5182,26 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Menu Text ko
+        value: 
+        type: 4
+        typeString: CustomFieldType_Localization
+      - title: Menu Text ja
+        value: 
+        type: 4
+        typeString: CustomFieldType_Localization
       - title: EventGuid
         value: 1f0c5d22-67af-4717-96cb-8cb0771f54d0
         type: 0
         typeString: 
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 3
       isRoot: 0
       isGroup: 0
@@ -4633,10 +5253,10 @@ MonoBehaviour:
         value: Expression_ProudClosed
         type: 0
         typeString: CustomFieldType_Text
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: 
         type: 4
@@ -4645,10 +5265,26 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Menu Text ko
+        value: 
+        type: 4
+        typeString: CustomFieldType_Localization
+      - title: Menu Text ja
+        value: 
+        type: 4
+        typeString: CustomFieldType_Localization
       - title: EventGuid
         value: a2bb7498-78d4-4def-93ae-7b9c02ec6f0c
         type: 0
         typeString: 
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 3
       isRoot: 0
       isGroup: 0
@@ -4700,10 +5336,10 @@ MonoBehaviour:
         value: Expression_Smile
         type: 0
         typeString: CustomFieldType_Text
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: 
         type: 4
@@ -4712,10 +5348,26 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Menu Text ko
+        value: 
+        type: 4
+        typeString: CustomFieldType_Localization
+      - title: Menu Text ja
+        value: 
+        type: 4
+        typeString: CustomFieldType_Localization
       - title: EventGuid
         value: 0c37e124-7cbd-4a19-b30a-d868e24dc875
         type: 0
         typeString: 
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 3
       isRoot: 0
       isGroup: 0
@@ -4767,10 +5419,10 @@ MonoBehaviour:
         value: Expression_Irritated
         type: 0
         typeString: CustomFieldType_Text
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: 
         type: 4
@@ -4779,10 +5431,26 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Menu Text ko
+        value: 
+        type: 4
+        typeString: CustomFieldType_Localization
+      - title: Menu Text ja
+        value: 
+        type: 4
+        typeString: CustomFieldType_Localization
       - title: EventGuid
         value: 82142fc6-4551-4696-96c6-ac49d88856dc
         type: 0
         typeString: 
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 3
       isRoot: 0
       isGroup: 0
@@ -4834,10 +5502,10 @@ MonoBehaviour:
         value: Expression_EvilGrin
         type: 0
         typeString: CustomFieldType_Text
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: 
         type: 4
@@ -4846,10 +5514,26 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Menu Text ko
+        value: 
+        type: 4
+        typeString: CustomFieldType_Localization
+      - title: Menu Text ja
+        value: 
+        type: 4
+        typeString: CustomFieldType_Localization
       - title: EventGuid
         value: 8ff00db9-8705-4bd4-82e6-90be8de262ac
         type: 0
         typeString: 
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 3
       isRoot: 0
       isGroup: 0
@@ -4901,10 +5585,10 @@ MonoBehaviour:
         value: sadasd
         type: 0
         typeString: CustomFieldType_Text
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: 
         type: 4
@@ -4913,6 +5597,26 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Menu Text ko
+        value: 
+        type: 4
+        typeString: CustomFieldType_Localization
+      - title: Menu Text ja
+        value: 
+        type: 4
+        typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 3
       isRoot: 0
       isGroup: 0
@@ -4964,10 +5668,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
+      - title: SubtitlePanel
+        value: 0
+        type: 1
+        typeString: CustomFieldType_Number
       - title: ko
         value: 
         type: 4
@@ -4976,6 +5680,26 @@ MonoBehaviour:
         value: 
         type: 4
         typeString: CustomFieldType_Localization
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Menu Text ko
+        value: 
+        type: 4
+        typeString: CustomFieldType_Localization
+      - title: Menu Text ja
+        value: 
+        type: 4
+        typeString: CustomFieldType_Localization
+      - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: NamePosition
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
       conversationID: 3
       isRoot: 0
       isGroup: 0
@@ -4999,7 +5723,7 @@ MonoBehaviour:
     canvasScrollPosition: {x: 43.8826, y: 41.207478}
     canvasZoom: 0.8800002
   syncInfo:
-    syncActors: 0
+    syncActors: 1
     syncItems: 0
     syncLocations: 0
     syncVariables: 0
@@ -5009,11 +5733,14 @@ MonoBehaviour:
     syncVariablesDatabase: {fileID: 0}
   templateJson: '{"treatItemsAsQuests":true,"actorFields":[{"title":"Name","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Pictures","value":"[]","type":3,"typeString":"CustomFieldType_Files"},{"title":"Description","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"IsPlayer","value":"False","type":2,"typeString":"CustomFieldType_Boolean"},{"title":"Display
     Name ko","value":"","type":4,"typeString":"CustomFieldType_Localization"},{"title":"Display
-    Name ja","value":"","type":4,"typeString":"CustomFieldType_Localization"}],"itemFields":[{"title":"Name","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Pictures","value":"[]","type":3,"typeString":"CustomFieldType_Files"},{"title":"Description","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Is
+    Name ja","value":"","type":4,"typeString":"CustomFieldType_Localization"},{"title":"NodeColor","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Display
+    Name","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"TypewriterSound","value":"","type":0,"typeString":"CustomFieldType_Text"}],"itemFields":[{"title":"Name","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Pictures","value":"[]","type":3,"typeString":"CustomFieldType_Files"},{"title":"Description","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Is
     Item","value":"True","type":2,"typeString":"CustomFieldType_Boolean"}],"questFields":[{"title":"Name","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Pictures","value":"[]","type":3,"typeString":"CustomFieldType_Files"},{"title":"Description","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Success
     Description","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Failure
     Description","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"State","value":"unassigned","type":0,"typeString":"CustomFieldType_QuestState"},{"title":"Is
     Item","value":"False","type":2,"typeString":"CustomFieldType_Boolean"}],"locationFields":[{"title":"Name","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Description","value":"","type":0,"typeString":"CustomFieldType_Text"}],"variableFields":[{"title":"Name","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Initial
     Value","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Description","value":"","type":0,"typeString":"CustomFieldType_Text"}],"conversationFields":[{"title":"Title","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Description","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Actor","value":"0","type":5,"typeString":"CustomFieldType_Actor"},{"title":"Conversant","value":"0","type":5,"typeString":"CustomFieldType_Actor"}],"dialogueEntryFields":[{"title":"Title","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Description","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Actor","value":"","type":5,"typeString":"CustomFieldType_Actor"},{"title":"Conversant","value":"","type":5,"typeString":"CustomFieldType_Actor"},{"title":"Menu
     Text","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Dialogue
-    Text","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Sequence","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"ko","value":"","type":4,"typeString":"CustomFieldType_Localization"},{"title":"ja","value":"","type":4,"typeString":"CustomFieldType_Localization"}],"actorPrimaryFieldTitles":[],"itemPrimaryFieldTitles":[],"questPrimaryFieldTitles":[],"locationPrimaryFieldTitles":[],"variablePrimaryFieldTitles":[],"conversationPrimaryFieldTitles":[],"dialogueEntryPrimaryFieldTitles":[],"npcLineColor":{"r":1.0,"g":0.0,"b":0.0,"a":1.0},"pcLineColor":{"r":0.0,"g":0.0,"b":1.0,"a":1.0},"repeatLineColor":{"r":0.5,"g":0.5,"b":0.5,"a":1.0}}'
+    Text","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"SubtitlePanel","value":"0","type":1,"typeString":"CustomFieldType_Number"},{"title":"ko","value":"","type":4,"typeString":"CustomFieldType_Localization"},{"title":"ja","value":"","type":4,"typeString":"CustomFieldType_Localization"},{"title":"Sequence","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Menu
+    Text ko","value":"","type":4,"typeString":"CustomFieldType_Localization"},{"title":"Menu
+    Text ja","value":"","type":4,"typeString":"CustomFieldType_Localization"},{"title":"EventGuid","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"NamePosition","value":"","type":0,"typeString":"CustomFieldType_Text"}],"actorPrimaryFieldTitles":[],"itemPrimaryFieldTitles":[],"questPrimaryFieldTitles":[],"locationPrimaryFieldTitles":[],"variablePrimaryFieldTitles":[],"conversationPrimaryFieldTitles":[],"dialogueEntryPrimaryFieldTitles":["SubtitlePanel","AlignName","NamePosition","TypewriterSound"],"npcLineColor":{"r":1.0,"g":0.0,"b":0.0,"a":1.0},"pcLineColor":{"r":0.0,"g":0.0,"b":1.0,"a":1.0},"repeatLineColor":{"r":0.5,"g":0.5,"b":0.5,"a":1.0}}'

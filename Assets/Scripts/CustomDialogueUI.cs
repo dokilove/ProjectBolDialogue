@@ -4,6 +4,7 @@
 // 해당 인덱스의 패널을 사용합니다.
 // 필드가 없거나 0이면 기본 NPC/PC 패널로 fallback합니다.
 
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -87,6 +88,58 @@ public class CustomDialogueUI : UIToolkitDialogueUI
     private List<LabelTextSyncGroup> _syncGroups = new List<LabelTextSyncGroup>();
 
     // ─────────────────────────────────────────────
+    // Typewriter Settings (UI Toolkit엔 타이핑 효과가 내장되어 있지 않아 직접 구현)
+    // ─────────────────────────────────────────────
+
+    [System.Serializable]
+    public class TypewriterLabelConfig
+    {
+        [Tooltip("타이핑 효과 + 사운드를 적용할 Label 이름. 여러 패널에 적용하려면 각 패널의 텍스트 Label을 모두 등록하세요. " +
+                 "(예: NPCSubtitleLabel, PCSubtitleLabel, ShoutPortraitLabel 등)")]
+        public string labelName;
+    }
+
+    private const string ActorSoundFieldName = "TypewriterSound";
+
+    // Dialogue Entry에 이 이름의 커스텀 필드(Number)를 추가하면 해당 대사에서만
+    // 타이핑 속도를 다르게 쓸 수 있음. 비어있거나 0 이하면 기본값(charactersPerSecond) 사용.
+    private const string EntryCharsPerSecondFieldName = "CharsPerSecond";
+
+    [Header("Typewriter Settings")]
+    [Tooltip("타이핑 효과를 켤지 여부. 끄면 기존처럼 텍스트가 한 번에 표시됩니다.")]
+    [SerializeField] private bool enableTypewriter = true;
+
+    [Tooltip("초당 몇 글자씩 찍을지 (기본값). Dialogue Entry에 'CharsPerSecond' 커스텀 필드를 추가하면 " +
+             "해당 대사에서만 이 값을 오버라이드할 수 있습니다.")]
+    [SerializeField] private float charactersPerSecond = 30f;
+
+    [Tooltip("타이핑 효과 + 사운드를 적용할 Label 목록. 각 패널의 서브타이틀 텍스트 Label 이름을 등록하세요.")]
+    [SerializeField] private List<TypewriterLabelConfig> typewriterLabelConfigs = new List<TypewriterLabelConfig>()
+    {
+        new TypewriterLabelConfig { labelName = "NPCSubtitleLabel" },
+        new TypewriterLabelConfig { labelName = "PCSubtitleLabel" }
+    };
+
+    [Tooltip("Actor에 TypewriterSound 필드가 없거나 클립을 못 찾았을 때 사용할 기본 사운드 (선택 사항)")]
+    [SerializeField] private AudioClip defaultTypewriterSound;
+
+    [Tooltip("타이핑 사운드 재생용 AudioSource. 비워두면 이 오브젝트에서 자동으로 찾거나 추가합니다.")]
+    [SerializeField] private AudioSource typewriterAudioSource;
+
+    private class TypewriterState
+    {
+        public Label label;
+        public string fullText;
+        public bool isTyping;
+        public Coroutine coroutine;
+        public string currentActorName;
+        public float charactersPerSecond;
+    }
+    private List<TypewriterState> _typewriterStates = new List<TypewriterState>();
+    private bool _typewriterStatesInitialized = false;
+    private Dictionary<string, AudioClip> _actorSoundCache = new Dictionary<string, AudioClip>();
+
+    // ─────────────────────────────────────────────
     // Block Continue Settings
     // ─────────────────────────────────────────────
 
@@ -140,6 +193,7 @@ public class CustomDialogueUI : UIToolkitDialogueUI
     {
         base.Start();
         InitializeTextSync();
+        InitializeTypewriterStates();
     }
 
     public bool IsPointerOverDialogueArea()
@@ -209,7 +263,7 @@ public class CustomDialogueUI : UIToolkitDialogueUI
     }
 
     // ─────────────────────────────────────────────
-    // ShowSubtitle: 배경 색상 적용
+    // ShowSubtitle: 배경 색상 적용 + 타이핑 효과 시작
     // ─────────────────────────────────────────────
 
     public override void ShowSubtitle(Subtitle subtitle)
@@ -232,6 +286,11 @@ public class CustomDialogueUI : UIToolkitDialogueUI
 
         var panelElement = root.Q<VisualElement>(panel.SubtitlePanelName);
         if (panelElement == null) return;
+
+        // 이 패널 안에 있는 타이핑 대상 Label에서 타이핑 효과 시작
+        // (base.ShowSubtitle이 이미 Label.text에 전체 텍스트를 채워놓은 상태이므로,
+        //  그 텍스트를 가져다가 다시 한 글자씩 재생함)
+        StartTypewriterForPanel(subtitle, panelElement);
 
         string colorElementName = "NPCBackgroundColor";
         if (panelColorConfigs != null)
@@ -391,6 +450,207 @@ public class CustomDialogueUI : UIToolkitDialogueUI
     }
 
     // ─────────────────────────────────────────────
+    // Typewriter (UI Toolkit엔 내장 타이핑 효과가 없어서 직접 구현)
+    // ─────────────────────────────────────────────
+
+    private void InitializeTypewriterStates()
+    {
+        _typewriterStates.Clear();
+
+        var doc = GetUIDocument();
+        if (doc == null || doc.rootVisualElement == null) return;
+
+        var root = doc.rootVisualElement;
+
+        foreach (var config in typewriterLabelConfigs)
+        {
+            if (string.IsNullOrEmpty(config.labelName)) continue;
+
+            var label = root.Q<Label>(config.labelName);
+            if (label == null)
+            {
+                Debug.LogWarning($"[CustomDialogueUI] Typewriter target Label '{config.labelName}' not found.");
+                continue;
+            }
+
+            _typewriterStates.Add(new TypewriterState
+            {
+                label = label,
+                fullText = label.text,
+                isTyping = false,
+                coroutine = null,
+                currentActorName = null
+            });
+        }
+
+        if (typewriterAudioSource == null)
+        {
+            typewriterAudioSource = GetComponent<AudioSource>();
+            if (typewriterAudioSource == null)
+            {
+                typewriterAudioSource = gameObject.AddComponent<AudioSource>();
+                typewriterAudioSource.playOnAwake = false;
+                typewriterAudioSource.loop = false;
+            }
+        }
+
+        _typewriterStatesInitialized = true;
+    }
+
+    // Dialogue Entry의 "CharsPerSecond" 커스텀 필드를 확인해서, 있으면 그 값을,
+    // 없거나 파싱 실패/0 이하이면 기본값(charactersPerSecond)을 반환한다.
+    private float GetEffectiveCharsPerSecond(Subtitle subtitle)
+    {
+        var entry = subtitle?.dialogueEntry;
+        if (entry != null)
+        {
+            var fieldValue = Field.LookupValue(entry.fields, EntryCharsPerSecondFieldName);
+            if (!string.IsNullOrEmpty(fieldValue) &&
+                float.TryParse(fieldValue, out float overrideValue) &&
+                overrideValue > 0f)
+            {
+                return overrideValue;
+            }
+        }
+
+        return charactersPerSecond;
+    }
+
+    // ShowSubtitle에서 패널이 정해질 때 호출.
+    // 그 패널 안에 있는 타이핑 대상 Label들의 타이핑 코루틴을 (다시) 시작한다.
+    private void StartTypewriterForPanel(Subtitle subtitle, VisualElement panelElement)
+    {
+        if (!_typewriterStatesInitialized)
+        {
+            InitializeTypewriterStates();
+        }
+
+        string actorName = (subtitle != null && subtitle.speakerInfo != null)
+            ? subtitle.speakerInfo.Name
+            : null;
+
+        float effectiveCharsPerSecond = GetEffectiveCharsPerSecond(subtitle);
+
+        foreach (var state in _typewriterStates)
+        {
+            if (state.label == null) continue;
+            if (!panelElement.Contains(state.label)) continue;
+
+            // 이전에 재생 중이던 타이핑이 있으면 중단
+            if (state.coroutine != null)
+            {
+                StopCoroutine(state.coroutine);
+                state.coroutine = null;
+            }
+
+            state.currentActorName = actorName;
+            state.charactersPerSecond = effectiveCharsPerSecond;
+            // base.ShowSubtitle()이 이미 Label.text에 전체 텍스트를 넣어놓은 상태
+            state.fullText = state.label.text;
+
+            if (!enableTypewriter || string.IsNullOrEmpty(state.fullText))
+            {
+                state.isTyping = false;
+                continue;
+            }
+
+            state.label.text = "";
+            state.isTyping = true;
+            state.coroutine = StartCoroutine(TypewriterCoroutine(state));
+        }
+    }
+
+    private IEnumerator TypewriterCoroutine(TypewriterState state)
+    {
+        float cps = state.charactersPerSecond > 0f ? state.charactersPerSecond : charactersPerSecond;
+        float delay = cps > 0f ? 1f / cps : 0f;
+        int length = state.fullText.Length;
+
+        for (int i = 1; i <= length; i++)
+        {
+            state.label.text = state.fullText.Substring(0, i);
+            PlayTypewriterSound(state.currentActorName);
+
+            if (delay > 0f)
+            {
+                yield return new WaitForSeconds(delay);
+            }
+            else
+            {
+                yield return null;
+            }
+        }
+
+        state.isTyping = false;
+        state.coroutine = null;
+    }
+
+    // 현재 타이핑 중인 Label이 있으면 즉시 전체 텍스트로 완료시킨다.
+    // 하나라도 완료시켰으면 true를 반환 (호출부에서 이번 클릭은 "스킵"으로만 처리하고
+    // 대화를 넘기지 않도록 하기 위함).
+    private bool SkipTypewritersIfTyping()
+    {
+        bool skippedAny = false;
+
+        foreach (var state in _typewriterStates)
+        {
+            if (!state.isTyping) continue;
+
+            if (state.coroutine != null)
+            {
+                StopCoroutine(state.coroutine);
+                state.coroutine = null;
+            }
+
+            if (state.label != null)
+            {
+                state.label.text = state.fullText;
+            }
+
+            state.isTyping = false;
+            skippedAny = true;
+        }
+
+        return skippedAny;
+    }
+
+    private void PlayTypewriterSound(string actorName)
+    {
+        if (typewriterAudioSource == null) return;
+
+        AudioClip clip = GetActorTypewriterSound(actorName);
+        if (clip == null) return;
+
+        typewriterAudioSource.PlayOneShot(clip);
+    }
+
+    private AudioClip GetActorTypewriterSound(string actorName)
+    {
+        if (string.IsNullOrEmpty(actorName)) return defaultTypewriterSound;
+
+        if (_actorSoundCache.TryGetValue(actorName, out AudioClip cached))
+        {
+            return cached != null ? cached : defaultTypewriterSound;
+        }
+
+        string clipName = DialogueLua.GetActorField(actorName, ActorSoundFieldName).asString;
+        AudioClip clip = null;
+
+        if (!string.IsNullOrEmpty(clipName))
+        {
+            clip = Resources.Load<AudioClip>(clipName);
+            if (clip == null)
+            {
+                Debug.LogWarning($"[CustomDialogueUI] Actor '{actorName}'의 '{ActorSoundFieldName}' 필드값 " +
+                                  $"'{clipName}'에 해당하는 클립을 Resources 폴더에서 찾지 못했습니다.");
+            }
+        }
+
+        _actorSoundCache[actorName] = clip; // null이어도 캐싱해서 매번 재검색하지 않도록 함
+        return clip != null ? clip : defaultTypewriterSound;
+    }
+
+    // ─────────────────────────────────────────────
     // Continue Block
     // ─────────────────────────────────────────────
 
@@ -419,6 +679,14 @@ public class CustomDialogueUI : UIToolkitDialogueUI
         {
             return;
         }
+
+        // 타이핑 중이었다면 이번 클릭은 "즉시 전체 텍스트 표시"로만 처리하고
+        // 대화 자체는 넘기지 않는다. 이미 다 찍힌 상태에서 클릭하면 정상적으로 다음 대사로 진행.
+        if (SkipTypewritersIfTyping())
+        {
+            return;
+        }
+
         base.OnContinueConversation();
     }
 
