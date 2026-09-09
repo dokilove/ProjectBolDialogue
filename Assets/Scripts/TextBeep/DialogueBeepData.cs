@@ -41,5 +41,20 @@ namespace BeepSync
         [Tooltip("N글자마다 1번만 소리를 낼지 설정 (1 = 매 글자마다 재생, 2 = 2글자당 1번 재생)")]
         [Range(1, 5)]
         public int soundFrequency = 1;
+
+        [Header("Japanese Optimization Settings")]
+        [Tooltip("일본어일 때 요음(ゃ, ゅ, ょ 등), 촉음(っ), 장음(ー)을 무음으로 처리할지 여부")]
+        public bool muteSmallKanaInJapanese = true;
+
+        [Tooltip("일본어 한자(漢字) 출력 시 다중 비프음 및 체류 시간 가중치 적용 여부")]
+        public bool multiBeepForKanjiInJapanese = true;
+
+        [Range(1, 3)]
+        [Tooltip("일본어 한자 1글자당 재생할 비프음 횟수 (기본 2회)")]
+        public int kanjiBeepCount = 2;
+
+        [Range(1.0f, 2.5f)]
+        [Tooltip("일본어 한자 출력 시 딜레이 배율 (기본 1.6배)")]
+        public float kanjiDelayMultiplier = 1.6f;
     }
 }

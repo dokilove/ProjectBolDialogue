@@ -2371,9 +2371,9 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: CharsPerSecond
-        value: 
+        value: 0
         type: 1
-        typeString: 
+        typeString: CustomFieldType_Number
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -5196,8 +5196,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 1215.586, y: 77.67698}
-    canvasZoom: 0.9799994
+    canvasScrollPosition: {x: 0, y: 144.5209}
+    canvasZoom: 0.8599994
   - id: 3
     fields:
     - title: Title

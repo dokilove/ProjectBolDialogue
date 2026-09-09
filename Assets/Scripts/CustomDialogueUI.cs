@@ -128,7 +128,85 @@ public class CustomDialogueUI : UIToolkitDialogueUI
     [Tooltip("타이핑 사운드 재생용 AudioSource. 비워두면 이 오브젝트에서 자동으로 찾거나 추가합니다.")]
     [SerializeField] private AudioSource typewriterAudioSource;
 
-    private static readonly HashSet<char> PunctuationChars = new HashSet<char> { '.', ',', '!', '?', ';', ':', '…', '~' };
+    [Header("Japanese Localization Settings")]
+    [Tooltip("Dialogue System의 언어 설정이 일본어('ja', 'jp')일 때 일본어 최적화(요음/촉음 무음, 한자 다중 비프음)를 자동 적용합니다.")]
+    [SerializeField] private bool autoDetectJapanese = true;
+
+    [Tooltip("테스트용: Dialogue System 언어 설정과 무관하게 일본어 최적화 강제 활성화")]
+    [SerializeField] private bool forceJapaneseOptimization = false;
+
+    private static readonly HashSet<char> PunctuationChars = new HashSet<char>
+    {
+        '.', ',', '!', '?', ';', ':', '…', '~',
+        '。', '、', '！', '？', '〜', '～'
+    };
+
+    private static readonly HashSet<char> JapaneseMutedChars = new HashSet<char>
+    {
+        'ぁ', 'ぃ', 'ぅ', 'ぇ', 'ぉ', 'っ', 'ゃ', 'ゅ', 'ょ', 'ゎ', 'ヵ', 'ヶ',
+        'ァ', 'ィ', 'ゥ', 'ェ', 'ォ', 'ッ', 'ャ', 'ュ', 'ョ', 'ヮ', 'ヵ', 'ヶ',
+        'ー'
+    };
+
+    private static bool IsKanji(char c)
+    {
+        return (c >= 0x4E00 && c <= 0x9FFF) || (c >= 0x3400 && c <= 0x4DBF);
+    }
+
+    private bool IsJapaneseLocalization()
+    {
+        if (forceJapaneseOptimization) return true;
+        if (!autoDetectJapanese) return false;
+
+        string currentLanguage = null;
+
+        if (DialogueManager.displaySettings != null && DialogueManager.displaySettings.localizationSettings != null)
+        {
+            currentLanguage = DialogueManager.displaySettings.localizationSettings.language;
+        }
+
+        if (string.IsNullOrEmpty(currentLanguage))
+        {
+            currentLanguage = Localization.language;
+        }
+
+        if (string.IsNullOrEmpty(currentLanguage) && PixelCrushers.UILocalizationManager.instance != null)
+        {
+            currentLanguage = PixelCrushers.UILocalizationManager.instance.currentLanguage;
+        }
+
+        if (string.IsNullOrEmpty(currentLanguage)) return false;
+
+        return currentLanguage.StartsWith("ja", System.StringComparison.OrdinalIgnoreCase)
+            || currentLanguage.Equals("jp", System.StringComparison.OrdinalIgnoreCase)
+            || currentLanguage.IndexOf("japanese", System.StringComparison.OrdinalIgnoreCase) >= 0;
+    }
+
+    private bool IsJapaneseTextOrLocalization(string text)
+    {
+        if (forceJapaneseOptimization) return true;
+        if (!autoDetectJapanese) return false;
+
+        // 1. Dialogue System / Localization 언어 설정 확인
+        if (IsJapaneseLocalization()) return true;
+
+        // 2. 텍스트 자체에 일본어 고유 문자(히라가나/가타카나)가 포함되어 있는지 검사 (자동 감지 fallback)
+        if (!string.IsNullOrEmpty(text))
+        {
+            for (int i = 0; i < text.Length; i++)
+            {
+                char c = text[i];
+                // Hiragana: 0x3040 ~ 0x309F, Katakana: 0x30A0 ~ 0x30FF
+                if ((c >= 0x3040 && c <= 0x309F) || (c >= 0x30A0 && c <= 0x30FF))
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     private int _lastClipIndex = -1;
 
     private class TypewriterState
@@ -660,13 +738,21 @@ public class CustomDialogueUI : UIToolkitDialogueUI
         int soundFreq = (beep != null && beep.soundFrequency > 0) ? beep.soundFrequency : 1;
         bool playOnSpace = beep != null && beep.playOnWhitespace;
 
+        bool isJapanese = IsJapaneseTextOrLocalization(state.fullText);
+        bool muteSmallKana = isJapanese && (beep == null || beep.muteSmallKanaInJapanese);
+        bool handleKanji = isJapanese && (beep == null || beep.multiBeepForKanjiInJapanese);
+
+        if (debugBeepLogs)
+        {
+            Debug.Log($"[CustomDialogueUI] Typewriter: label='{state.label?.name}', isJapanese={isJapanese} | text='{state.fullText}'");
+        }
+
         int length = state.fullText.Length;
         int visibleCharCount = 0;
 
         for (int i = 1; i <= length; i++)
         {
             char c = state.fullText[i - 1];
-            visibleCharCount++;
 
             // 중앙/우측 정렬 시 글자 위치가 왼쪽으로 밀리는 현상(레이아웃 시프트)을 방지하기 위해
             // 아직 출력되지 않은 뒷부분 텍스트를 투명(<color=#00000000>)으로 채워 전체 문장 폭을 고정
@@ -679,27 +765,83 @@ public class CustomDialogueUI : UIToolkitDialogueUI
                 state.label.text = state.fullText;
             }
 
-            // 비프음 재생 조건 검사
+            // 문자 유형 판별
             bool isWhitespace = char.IsWhiteSpace(c);
-            bool shouldPlaySound = (!isWhitespace || playOnSpace) && (visibleCharCount % soundFreq == 0);
+            bool isMutedKana = muteSmallKana && JapaneseMutedChars.Contains(c);
+            bool isKanji = handleKanji && IsKanji(c);
 
-            if (shouldPlaySound)
+            // 소리가 나지 않는 공백이나 일본어 요음/촉음/장음은 비프 카운터에서 제외
+            if (!isWhitespace && !isMutedKana)
             {
-                PlayTypewriterBeep(state.beepData, state.currentActorName, basePitch, pitchRand);
+                visibleCharCount++;
             }
 
-            // 문장 부호 대기 또는 일반 글자 대기
-            if (PunctuationChars.Contains(c) && puncPause > 0f)
+            // 비프음 재생 조건 검사
+            bool shouldPlaySound = (!isWhitespace || playOnSpace) && !isMutedKana && (visibleCharCount % soundFreq == 0);
+
+            // 한자 딜레이 및 비프음 처리
+            if (isKanji)
             {
-                yield return new WaitForSeconds(charDelay + puncPause);
-            }
-            else if (charDelay > 0f)
-            {
-                yield return new WaitForSeconds(charDelay);
+                float multiplier = beep != null ? beep.kanjiDelayMultiplier : 1.6f;
+                // 최소 0.08초를 확보하여 두 비프음이 귀로 뚜렷하게 구분되도록 보장
+                float kanjiTotalDelay = Mathf.Max(charDelay * multiplier, 0.08f);
+
+                if (shouldPlaySound)
+                {
+                    int kanjiBeeps = beep != null ? Mathf.Max(1, beep.kanjiBeepCount) : 2;
+                    float stepDelay = kanjiTotalDelay / kanjiBeeps;
+
+                    if (debugBeepLogs) Debug.Log($"[CustomDialogueUI] Kanji '{c}' -> playing {kanjiBeeps} beeps (delay: {kanjiTotalDelay:F3}s)");
+
+                    for (int b = 0; b < kanjiBeeps; b++)
+                    {
+                        PlayTypewriterBeep(state.beepData, state.currentActorName, basePitch, pitchRand);
+                        if (b < kanjiBeeps - 1)
+                        {
+                            if (stepDelay > 0f) yield return new WaitForSeconds(stepDelay);
+                            else yield return null;
+                        }
+                    }
+
+                    if (stepDelay > 0f) yield return new WaitForSeconds(stepDelay);
+                    else yield return null;
+                }
+                else
+                {
+                    yield return new WaitForSeconds(kanjiTotalDelay);
+                }
             }
             else
             {
-                yield return null;
+                if (shouldPlaySound)
+                {
+                    PlayTypewriterBeep(state.beepData, state.currentActorName, basePitch, pitchRand);
+                }
+                else if (isMutedKana && debugBeepLogs)
+                {
+                    Debug.Log($"[CustomDialogueUI] Muted small kana / prolonged mark: '{c}' (No sound)");
+                }
+
+                float currentDelay = charDelay;
+                // 요음(ゃ, ゅ, ょ 등)은 앞 글자에 붙는 소리이므로 딜레이를 약간 단축하여 시각적으로 밀착
+                if (isMutedKana && c != 'っ' && c != 'ッ' && c != 'ー')
+                {
+                    currentDelay = charDelay * 0.5f;
+                }
+
+                // 문장 부호 대기 또는 일반 글자 대기
+                if (PunctuationChars.Contains(c) && puncPause > 0f)
+                {
+                    yield return new WaitForSeconds(currentDelay + puncPause);
+                }
+                else if (currentDelay > 0f)
+                {
+                    yield return new WaitForSeconds(currentDelay);
+                }
+                else
+                {
+                    yield return null;
+                }
             }
         }
 

@@ -35,7 +35,27 @@ namespace BeepSync
         public bool IsTyping => _isTyping;
         public DialogueBeepData BeepData { get => beepData; set => beepData = value; }
 
-        private static readonly HashSet<char> PunctuationChars = new HashSet<char> { '.', ',', '!', '?', ';', ':', '…', '~' };
+        [Header("Japanese Optimization")]
+        [Tooltip("일본어 텍스트 최적화(요음/촉음/장음 무음, 한자 다중 비프음) 활성화")]
+        public bool isJapanese = false;
+
+        private static readonly HashSet<char> PunctuationChars = new HashSet<char>
+        {
+            '.', ',', '!', '?', ';', ':', '…', '~',
+            '。', '、', '！', '？', '〜', '～'
+        };
+
+        private static readonly HashSet<char> JapaneseMutedChars = new HashSet<char>
+        {
+            'ぁ', 'ぃ', 'ぅ', 'ぇ', 'ぉ', 'っ', 'ゃ', 'ゅ', 'ょ', 'ゎ', 'ヵ', 'ヶ',
+            'ァ', 'ィ', 'ゥ', 'ェ', 'ォ', 'ッ', 'ャ', 'ュ', 'ョ', 'ヮ', 'ヵ', 'ヶ',
+            'ー'
+        };
+
+        private static bool IsKanji(char c)
+        {
+            return (c >= 0x4E00 && c <= 0x9FFF) || (c >= 0x3400 && c <= 0x4DBF);
+        }
 
         private void Awake()
         {
@@ -108,38 +128,103 @@ namespace BeepSync
             int soundFreq = (beepData != null && beepData.soundFrequency > 0) ? beepData.soundFrequency : 1;
             bool playOnSpace = beepData != null && beepData.playOnWhitespace;
 
+            bool effectiveIsJapanese = isJapanese;
+            if (!effectiveIsJapanese && !string.IsNullOrEmpty(text))
+            {
+                for (int chIdx = 0; chIdx < text.Length; chIdx++)
+                {
+                    char ch = text[chIdx];
+                    if ((ch >= 0x3040 && ch <= 0x309F) || (ch >= 0x30A0 && ch <= 0x30FF))
+                    {
+                        effectiveIsJapanese = true;
+                        break;
+                    }
+                }
+            }
+
+            bool muteSmallKana = effectiveIsJapanese && (beepData == null || beepData.muteSmallKanaInJapanese);
+            bool handleKanji = effectiveIsJapanese && (beepData == null || beepData.multiBeepForKanjiInJapanese);
+
             int visibleCharCount = 0;
 
             for (int i = 0; i < text.Length; i++)
             {
                 char c = text[i];
-                visibleCharCount++;
 
 #if TMPro_PRESENT || UNITY_2019_1_OR_NEWER
                 if (targetTMPText != null)
                 {
-                    targetTMPText.maxVisibleCharacters = visibleCharCount;
+                    targetTMPText.maxVisibleCharacters = i + 1;
                 }
 #endif
                 onCharacterTyped?.Invoke(c);
 
-                // Check sound playback condition
+                // 문자 유형 판별
                 bool isWhitespace = char.IsWhiteSpace(c);
-                bool shouldPlaySound = (!isWhitespace || playOnSpace) && (visibleCharCount % soundFreq == 0);
+                bool isMutedKana = muteSmallKana && JapaneseMutedChars.Contains(c);
+                bool isKanji = handleKanji && IsKanji(c);
 
-                if (shouldPlaySound)
+                if (!isWhitespace && !isMutedKana)
                 {
-                    PlayBeepSound(basePitch, pitchRand);
+                    visibleCharCount++;
                 }
 
-                // Check punctuation delay
-                if (PunctuationChars.Contains(c))
+                bool shouldPlaySound = (!isWhitespace || playOnSpace) && !isMutedKana && (visibleCharCount % soundFreq == 0);
+
+                // 한자 딜레이 및 비프음 처리
+                if (isKanji)
                 {
-                    yield return new WaitForSeconds(charDelay + puncPause);
+                    float multiplier = beepData != null ? beepData.kanjiDelayMultiplier : 1.6f;
+                    float kanjiTotalDelay = Mathf.Max(charDelay * multiplier, 0.08f);
+
+                    if (shouldPlaySound)
+                    {
+                        int kanjiBeeps = beepData != null ? Mathf.Max(1, beepData.kanjiBeepCount) : 2;
+                        float stepDelay = kanjiTotalDelay / kanjiBeeps;
+
+                        for (int b = 0; b < kanjiBeeps; b++)
+                        {
+                            PlayBeepSound(basePitch, pitchRand);
+                            if (b < kanjiBeeps - 1)
+                            {
+                                if (stepDelay > 0f) yield return new WaitForSeconds(stepDelay);
+                                else yield return null;
+                            }
+                        }
+
+                        if (stepDelay > 0f) yield return new WaitForSeconds(stepDelay);
+                        else yield return null;
+                    }
+                    else
+                    {
+                        yield return new WaitForSeconds(kanjiTotalDelay);
+                    }
                 }
                 else
                 {
-                    yield return new WaitForSeconds(charDelay);
+                    if (shouldPlaySound)
+                    {
+                        PlayBeepSound(basePitch, pitchRand);
+                    }
+
+                    float currentDelay = charDelay;
+                    if (isMutedKana && c != 'っ' && c != 'ッ' && c != 'ー')
+                    {
+                        currentDelay = charDelay * 0.5f;
+                    }
+
+                    if (PunctuationChars.Contains(c) && puncPause > 0f)
+                    {
+                        yield return new WaitForSeconds(currentDelay + puncPause);
+                    }
+                    else if (currentDelay > 0f)
+                    {
+                        yield return new WaitForSeconds(currentDelay);
+                    }
+                    else
+                    {
+                        yield return null;
+                    }
                 }
             }
 

@@ -24,3 +24,7 @@ MonoBehaviour:
   volume: 0.8
   playOnWhitespace: 0
   soundFrequency: 1
+  muteSmallKanaInJapanese: 1
+  multiBeepForKanjiInJapanese: 1
+  kanjiBeepCount: 3
+  kanjiDelayMultiplier: 1.3
