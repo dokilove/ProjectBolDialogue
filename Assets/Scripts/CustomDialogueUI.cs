@@ -272,6 +272,14 @@ public class CustomDialogueUI : UIToolkitDialogueUI
         Instance = this;
     }
 
+    public virtual void OnDestroy()
+    {
+        if (Instance == this)
+        {
+            Instance = null;
+        }
+    }
+
     public override void Start()
     {
         base.Start();
@@ -279,8 +287,27 @@ public class CustomDialogueUI : UIToolkitDialogueUI
         InitializeTypewriterStates();
     }
 
+    private Vector2 GetCurrentPointerPosition()
+    {
+        if (UnityEngine.InputSystem.Pointer.current != null)
+        {
+            return UnityEngine.InputSystem.Pointer.current.position.ReadValue();
+        }
+        if (UnityEngine.InputSystem.Mouse.current != null)
+        {
+            return UnityEngine.InputSystem.Mouse.current.position.ReadValue();
+        }
+        if (UnityEngine.InputSystem.Touchscreen.current != null)
+        {
+            return UnityEngine.InputSystem.Touchscreen.current.primaryTouch.position.ReadValue();
+        }
+        return Vector2.zero;
+    }
+
     public bool IsPointerOverDialogueArea()
     {
+        if (!DialogueManager.isConversationActive) return false;
+
         var activePanel = GetActivePanelElement();
         if (activePanel == null) return false;
 
@@ -298,18 +325,12 @@ public class CustomDialogueUI : UIToolkitDialogueUI
             }
         }
 
-        Vector2 pointerPos = Vector2.zero;
-        if (UnityEngine.InputSystem.Pointer.current != null)
-        {
-            pointerPos = UnityEngine.InputSystem.Pointer.current.position.ReadValue();
-        }
-        else
-        {
-            pointerPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-        }
+        Vector2 pointerPos = GetCurrentPointerPosition();
 
-        // UI Toolkit: (0,0)이 좌상단 / Screen: (0,0)이 좌하단
-        Vector2 panelPos = new Vector2(pointerPos.x, Screen.height - pointerPos.y);
+        Vector2 panelPos = targetAreaElement.panel != null
+            ? RuntimePanelUtils.ScreenToPanel(targetAreaElement.panel, pointerPos)
+            : new Vector2(pointerPos.x, Screen.height - pointerPos.y);
+
         return targetAreaElement.worldBound.Contains(panelPos);
     }
 
@@ -930,31 +951,48 @@ public class CustomDialogueUI : UIToolkitDialogueUI
 
     private bool WasPointerPressedThisFrame()
     {
-        if (UnityEngine.InputSystem.Pointer.current != null)
+        if (UnityEngine.InputSystem.Pointer.current != null && UnityEngine.InputSystem.Pointer.current.press.wasPressedThisFrame)
         {
-            return UnityEngine.InputSystem.Pointer.current.press.wasPressedThisFrame;
+            return true;
         }
-        return Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began);
+        if (UnityEngine.InputSystem.Mouse.current != null && UnityEngine.InputSystem.Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            return true;
+        }
+        if (UnityEngine.InputSystem.Touchscreen.current != null && UnityEngine.InputSystem.Touchscreen.current.primaryTouch.press.wasPressedThisFrame)
+        {
+            return true;
+        }
+        return false;
     }
 
     private bool WasPointerReleasedThisFrame()
     {
-        if (UnityEngine.InputSystem.Pointer.current != null)
+        if (UnityEngine.InputSystem.Pointer.current != null && UnityEngine.InputSystem.Pointer.current.press.wasReleasedThisFrame)
         {
-            return UnityEngine.InputSystem.Pointer.current.press.wasReleasedThisFrame;
+            return true;
         }
-        return Input.GetMouseButtonUp(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended);
+        if (UnityEngine.InputSystem.Mouse.current != null && UnityEngine.InputSystem.Mouse.current.leftButton.wasReleasedThisFrame)
+        {
+            return true;
+        }
+        if (UnityEngine.InputSystem.Touchscreen.current != null && UnityEngine.InputSystem.Touchscreen.current.primaryTouch.press.wasReleasedThisFrame)
+        {
+            return true;
+        }
+        return false;
     }
 
     public override void OnContinueConversation()
     {
         bool isOverPanelBg = IsPointerOverPanelBackground();
+        bool isWorldInteractable = IsWorldPointerOverInteractable();
 
         // PanelBackground 영역 밖(= ContinueButton 영역)에서만 오브젝트 상호작용 우선을 위해 대화 넘김 차단
         // PanelBackground 위라면 오브젝트가 뒤에 있더라도 대사 넘김/타이핑 스킵 우선 진행
         if (!isOverPanelBg)
         {
-            if (Time.time - _lastBlockedTime < 0.3f || IsWorldPointerOverInteractable())
+            if (Time.time - _lastBlockedTime < 0.3f || isWorldInteractable)
             {
                 return;
             }
@@ -988,7 +1026,7 @@ public class CustomDialogueUI : UIToolkitDialogueUI
                           ?? panelElement.Q<VisualElement>("NPCPanelBackground")
                           ?? panelElement.Q<VisualElement>("ShoutPanelBackground")
                           ?? panelElement.Q<VisualElement>("ThoughtPanelBackground");
-                    return bg ?? panelElement;
+                    return bg;
                 }
             }
         }
@@ -1000,22 +1038,18 @@ public class CustomDialogueUI : UIToolkitDialogueUI
     /// </summary>
     public bool IsPointerOverPanelBackground()
     {
+        if (!DialogueManager.isConversationActive) return false;
+
         var panelBg = GetActivePanelBackgroundElement();
         if (panelBg == null) return false;
 
-        Vector2 pointerPos = Vector2.zero;
-        if (UnityEngine.InputSystem.Pointer.current != null)
-        {
-            pointerPos = UnityEngine.InputSystem.Pointer.current.position.ReadValue();
-        }
-        else
-        {
-            pointerPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-        }
+        Vector2 pointerPos = GetCurrentPointerPosition();
 
-        // Screen 좌표계(좌하단 원점) -> UI Toolkit 좌표계(좌상단 원점)
-        Vector2 uiPos = new Vector2(pointerPos.x, Screen.height - pointerPos.y);
-        return panelBg.worldBound.Contains(uiPos);
+        Vector2 panelPos = panelBg.panel != null
+            ? RuntimePanelUtils.ScreenToPanel(panelBg.panel, pointerPos)
+            : new Vector2(pointerPos.x, Screen.height - pointerPos.y);
+
+        return panelBg.worldBound.Contains(panelPos);
     }
 
     private VisualElement GetActivePanelElement()
@@ -1042,15 +1076,7 @@ public class CustomDialogueUI : UIToolkitDialogueUI
     {
         if (Camera.main == null) return false;
 
-        Vector2 pointerPos = Vector2.zero;
-        if (UnityEngine.InputSystem.Pointer.current != null)
-        {
-            pointerPos = UnityEngine.InputSystem.Pointer.current.position.ReadValue();
-        }
-        else
-        {
-            pointerPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-        }
+        Vector2 pointerPos = GetCurrentPointerPosition();
 
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(new Vector3(pointerPos.x, pointerPos.y, 0f));
 

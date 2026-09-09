@@ -39,9 +39,18 @@ public class Drag2DObject : MonoBehaviour
     private Camera cam;
     private Vector3 localOffset; // 로컬 오프셋
 
+    private Camera GetCamera()
+    {
+        if (cam == null || !cam.isActiveAndEnabled)
+        {
+            cam = Camera.main;
+        }
+        return cam;
+    }
+
     void Awake()
     {
-        cam = Camera.main;
+        cam = GetCamera();
         // startLocalPosition은 Awake에서 자신의 현재 로컬 위치로 설정됩니다.
         // referenceTransform은 드래그 경계 및 복귀 위치 계산에 사용됩니다.
         startLocalPosition = transform.localPosition;
@@ -49,21 +58,97 @@ public class Drag2DObject : MonoBehaviour
 
     void OnEnable()
     {
-        pointAction.action.Enable();
-        clickAction.action.Enable();
-        clickAction.action.performed += HandleClick;
+        if (pointAction != null && pointAction.action != null)
+        {
+            pointAction.action.Enable();
+        }
+        if (clickAction != null && clickAction.action != null)
+        {
+            clickAction.action.Enable();
+            clickAction.action.performed -= HandleClick;
+            clickAction.action.performed += HandleClick;
+        }
     }
 
     void OnDisable()
     {
-        pointAction.action.Disable();
-        clickAction.action.Disable();
-        clickAction.action.performed -= HandleClick;
+        if (clickAction != null && clickAction.action != null)
+        {
+            clickAction.action.performed -= HandleClick;
+        }
+        if (dragging)
+        {
+            StartReturn();
+        }
+    }
+
+    private bool WasPointerPressedThisFrame()
+    {
+        if (clickAction != null && clickAction.action != null && clickAction.action.WasPressedThisFrame())
+        {
+            return true;
+        }
+        if (UnityEngine.InputSystem.Pointer.current != null && UnityEngine.InputSystem.Pointer.current.press.wasPressedThisFrame)
+        {
+            return true;
+        }
+        if (UnityEngine.InputSystem.Mouse.current != null && UnityEngine.InputSystem.Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            return true;
+        }
+        if (UnityEngine.InputSystem.Touchscreen.current != null && UnityEngine.InputSystem.Touchscreen.current.primaryTouch.press.wasPressedThisFrame)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private bool WasPointerReleasedThisFrame()
+    {
+        if (clickAction != null && clickAction.action != null && clickAction.action.WasReleasedThisFrame())
+        {
+            return true;
+        }
+        if (UnityEngine.InputSystem.Pointer.current != null && UnityEngine.InputSystem.Pointer.current.press.wasReleasedThisFrame)
+        {
+            return true;
+        }
+        if (UnityEngine.InputSystem.Mouse.current != null && UnityEngine.InputSystem.Mouse.current.leftButton.wasReleasedThisFrame)
+        {
+            return true;
+        }
+        if (UnityEngine.InputSystem.Touchscreen.current != null && UnityEngine.InputSystem.Touchscreen.current.primaryTouch.press.wasReleasedThisFrame)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private Vector2 GetPointerPosition()
+    {
+        if (pointAction != null && pointAction.action != null && pointAction.action.enabled)
+        {
+            return pointAction.action.ReadValue<Vector2>();
+        }
+        if (UnityEngine.InputSystem.Pointer.current != null)
+        {
+            return UnityEngine.InputSystem.Pointer.current.position.ReadValue();
+        }
+        if (UnityEngine.InputSystem.Mouse.current != null)
+        {
+            return UnityEngine.InputSystem.Mouse.current.position.ReadValue();
+        }
+        if (UnityEngine.InputSystem.Touchscreen.current != null)
+        {
+            return UnityEngine.InputSystem.Touchscreen.current.primaryTouch.position.ReadValue();
+        }
+        return Vector2.zero;
     }
 
     private void HandleClick(InputAction.CallbackContext context)
     {
-        if (context.ReadValue<float>() > 0.5f) // 버튼을 눌렀을 때
+        float val = context.ReadValue<float>();
+        if (val > 0.5f) // 버튼을 눌렀을 때
         {
             TryStartDrag();
         }
@@ -75,23 +160,29 @@ public class Drag2DObject : MonoBehaviour
 
     void TryStartDrag()
     {
+        if (dragging) return;
+
         // 대사창 PanelBackground 영역 위라면 오브젝트 터치/드래그 차단!
         if (CustomDialogueUI.Instance != null && CustomDialogueUI.Instance.IsPointerOverPanelBackground())
         {
             return;
         }
 
-        Vector2 mousePos = pointAction.action.ReadValue<Vector2>();
-        float z = cam.WorldToScreenPoint(transform.position).z; // 오브젝트의 월드 Z 깊이
-        Vector3 mouseWorldPos = cam.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, z));
+        Camera currentCam = GetCamera();
+        if (currentCam == null) return;
+
+        Vector2 mousePos = GetPointerPosition();
+
+        float z = currentCam.WorldToScreenPoint(transform.position).z; // 오브젝트의 월드 Z 깊이
+        Vector3 mouseWorldPos = currentCam.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, z));
 
         // 마우스 월드 위치를 부모를 기준으로 한 로컬 위치로 변환
-        Vector3 mouseLocalPos = transform.parent.InverseTransformPoint(mouseWorldPos);
+        Vector3 mouseLocalPos = transform.parent != null ? transform.parent.InverseTransformPoint(mouseWorldPos) : mouseWorldPos;
 
         // OverlapPoint는 월드 좌표를 사용하므로, 현재 오브젝트의 월드 위치를 사용
         Collider2D hitCollider = Physics2D.OverlapPoint(mouseWorldPos);
 
-        if (hitCollider != null && hitCollider.gameObject == this.gameObject)
+        if (hitCollider != null && (hitCollider.gameObject == this.gameObject || hitCollider.transform.IsChildOf(transform) || transform.IsChildOf(hitCollider.transform)))
         {
             dragging = true;
             isReturning = false;
@@ -121,12 +212,26 @@ public class Drag2DObject : MonoBehaviour
 
     void Update()
     {
+        // 1. 이벤트 콜백이 유실되더라도 Update 폴링으로 확실하게 클릭 및 릴리즈 감지
+        if (!dragging && WasPointerPressedThisFrame())
+        {
+            TryStartDrag();
+        }
+        else if (dragging && WasPointerReleasedThisFrame())
+        {
+            StartReturn();
+        }
+
         if (dragging)
         {
-            Vector2 mousePos = pointAction.action.ReadValue<Vector2>();
-            float z = cam.WorldToScreenPoint(transform.position).z;
-            Vector3 mouseWorldPos = cam.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, z));
-            Vector3 mouseLocalPos = transform.parent.InverseTransformPoint(mouseWorldPos);
+            Camera currentCam = GetCamera();
+            if (currentCam == null) return;
+
+            Vector2 mousePos = GetPointerPosition();
+
+            float z = currentCam.WorldToScreenPoint(transform.position).z;
+            Vector3 mouseWorldPos = currentCam.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, z));
+            Vector3 mouseLocalPos = transform.parent != null ? transform.parent.InverseTransformPoint(mouseWorldPos) : mouseWorldPos;
 
             // 드래그 중인 임시 목표 로컬 위치
             Vector3 targetLocalPosition = mouseLocalPos + localOffset;
