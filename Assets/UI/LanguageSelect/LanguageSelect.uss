@@ -1,0 +1,133 @@
+.root-container {
+    flex-grow: 1;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(20, 21, 28);
+}
+
+.menu-box {
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(32, 34, 46, 0.95);
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
+    border-bottom-right-radius: 24px;
+    border-bottom-left-radius: 24px;
+    padding-top: 48px;
+    padding-right: 64px;
+    padding-bottom: 48px;
+    padding-left: 64px;
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    border-left-color: rgba(255, 255, 255, 0.12);
+    border-right-color: rgba(255, 255, 255, 0.12);
+    border-top-color: rgba(255, 255, 255, 0.12);
+    border-bottom-color: rgba(255, 255, 255, 0.12);
+}
+
+.title-label {
+    font-size: 36px;
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    margin-bottom: 12px;
+    -unity-text-align: middle-center;
+    -unity-font-definition: url("project://database/Assets/Fonts/ONE%20Mobile%20POP.ttf?fileID=12800000&guid=b200cf65c4953c8409682a204a1dda8a&type=3#ONE Mobile POP");
+}
+
+.subtitle-label {
+    font-size: 18px;
+    color: rgb(160, 168, 185);
+    margin-bottom: 36px;
+    -unity-text-align: middle-center;
+    -unity-font-definition: url("project://database/Assets/Fonts/ONE%20Mobile%20POP.ttf?fileID=12800000&guid=b200cf65c4953c8409682a204a1dda8a&type=3#ONE Mobile POP");
+}
+
+.button-row {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.lang-button {
+    width: 200px;
+    height: 72px;
+    font-size: 26px;
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+    border-bottom-left-radius: 16px;
+    margin-left: 14px;
+    margin-right: 14px;
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    transition-property: scale, background-color;
+    transition-duration: 0.15s, 0.15s;
+    transition-timing-function: ease-out, ease-out;
+    -unity-font-definition: url("project://database/Assets/Fonts/ONE%20Mobile%20POP.ttf?fileID=12800000&guid=b200cf65c4953c8409682a204a1dda8a&type=3#ONE Mobile POP");
+}
+
+.ko-button {
+    background-color: rgb(52, 92, 160);
+}
+
+.ko-button:hover {
+    background-color: rgb(70, 120, 205);
+    scale: 1.05 1.05;
+}
+
+.ko-button:active {
+    background-color: rgb(40, 70, 125);
+    scale: 0.97 0.97;
+}
+
+.ja-button {
+    background-color: rgb(170, 65, 95);
+}
+
+.ja-button:hover {
+    background-color: rgb(210, 80, 120);
+    scale: 1.05 1.05;
+}
+
+.ja-button:active {
+    background-color: rgb(135, 50, 75);
+    scale: 0.97 0.97;
+}
+
+.subtitle-label_jp {
+    font-size: 18px;
+    color: rgb(160, 168, 185);
+    margin-bottom: 36px;
+    -unity-text-align: middle-center;
+    -unity-font-definition: url("project://database/Assets/Fonts/ONE%20Mobile%20POP.ttf?fileID=12800000&guid=b200cf65c4953c8409682a204a1dda8a&type=3#ONE Mobile POP");
+}
+
+.lang-button_jp {
+    width: 200px;
+    height: 72px;
+    font-size: 26px;
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+    border-bottom-left-radius: 16px;
+    margin-left: 14px;
+    margin-right: 14px;
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    transition-property: scale, background-color;
+    transition-duration: 0.15s, 0.15s;
+    transition-timing-function: ease-out, ease-out;
+    -unity-font-definition: url("project://database/Assets/Fonts/%E3%81%91%E3%81%84%E3%81%AA%E3%82%93%E3%83%9D%E3%83%83%E3%83%97%E4%BD%93JP%E4%BF%AE%E6%AD%A3%E7%89%88.ttf?fileID=12800000&guid=b7e09a0549155b149b965e2f78ccb305&type=3#けいなんポップ体JP修正版");
+}

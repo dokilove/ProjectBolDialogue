@@ -1,0 +1,16 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/LanguageSelect/LanguageSelect.uss?fileID=7433441132597879392&amp;guid=b48f2fec002b41539bf8bfd850d1d6c7&amp;type=3#LanguageSelect" />
+    <ui:VisualElement name="Root" class="root-container">
+        <ui:VisualElement class="menu-box">
+            <ui:Label text="Select Language" class="title-label" />
+            <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
+                <ui:Label text="언어를 선택해주세요 /" class="subtitle-label" />
+                <ui:Label text="言語を選択してください" class="subtitle-label_jp" style="-unity-font-definition: url(&quot;project://database/Assets/Fonts/%E3%81%91%E3%81%84%E3%81%AA%E3%82%93%E3%83%9D%E3%83%83%E3%83%97%E4%BD%93JP%E4%BF%AE%E6%AD%A3%E7%89%88.ttf?fileID=12800000&amp;guid=b7e09a0549155b149b965e2f78ccb305&amp;type=3#けいなんポップ体JP修正版&quot;);" />
+            </ui:VisualElement>
+            <ui:VisualElement class="button-row">
+                <ui:Button text="한국어" name="KoreanButton" class="lang-button ko-button" />
+                <ui:Button text="日本語" name="JapaneseButton" class="ja-button lang-button_jp" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

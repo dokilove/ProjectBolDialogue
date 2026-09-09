@@ -75,6 +75,12 @@ public class Drag2DObject : MonoBehaviour
 
     void TryStartDrag()
     {
+        // 대사창 PanelBackground 영역 위라면 오브젝트 터치/드래그 차단!
+        if (CustomDialogueUI.Instance != null && CustomDialogueUI.Instance.IsPointerOverPanelBackground())
+        {
+            return;
+        }
+
         Vector2 mousePos = pointAction.action.ReadValue<Vector2>();
         float z = cam.WorldToScreenPoint(transform.position).z; // 오브젝트의 월드 Z 깊이
         Vector3 mouseWorldPos = cam.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, z));

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 935899b62f48ae5498594680ed17d133, type: 3}
-  m_Name: Dialogue Database
+  m_Name: Dialogue Database2
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::PixelCrushers.DialogueSystem.Wrappers.DialogueDatabase
   version: 
   author: 
@@ -1611,6 +1611,8 @@ MonoBehaviour:
 
           SpineFocus(Fafnir);
 
+          CinemachineFocus(Fafnir_Cam);
+
 
           CinemachineZoom(5,
           1.0);'
@@ -1755,7 +1757,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 241.66177
+        x: 242.47809
         y: 467.76898
         width: 160
         height: 30
@@ -1853,7 +1855,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 468.40256
-        y: 124.64107
+        y: 123.82474
         width: 160
         height: 30
     - id: 10
@@ -1993,7 +1995,9 @@ MonoBehaviour:
         type: 4
         typeString: CustomFieldType_Localization
       - title: Sequence
-        value: SpineFocus(Fafnir);
+        value: 'SpineFocus(Fafnir);
+
+          CinemachineFocus(Fafnir_Cam);'
         type: 0
         typeString: 
       - title: Menu Text ko
@@ -2038,7 +2042,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 469.13925
-        y: 295.6004
+        y: 294.7841
         width: 160
         height: 30
     - id: 12
@@ -2084,7 +2088,9 @@ MonoBehaviour:
       - title: Sequence
         value: 'SpineTrack(Chona, face, Expression_Curious);
 
-          SpineFocus(Chona);'
+          SpineFocus(Chona);
+
+          CinemachineFocus(Chona_Cam);'
         type: 0
         typeString: 
       - title: Menu Text ko
@@ -2175,7 +2181,9 @@ MonoBehaviour:
       - title: Sequence
         value: 'SpineTrack(Fafnir, face, Expression_Proud);
 
-          SpineFocus(Fafnir)'
+          SpineFocus(Fafnir);
+
+          CinemachineFocus(Fafnir_Cam);'
         type: 0
         typeString: 
       - title: Menu Text ko
@@ -2354,7 +2362,9 @@ MonoBehaviour:
         value: 'SpineTrack(Chona, face, Expression_Neutral);
 
           SpineFocus(Chona,
-          keep)'
+          keep);
+
+          CinemachineFocus(Chona_Cam);'
         type: 0
         typeString: 
       - title: Menu Text ko
@@ -2536,7 +2546,9 @@ MonoBehaviour:
       - title: Sequence
         value: 'SpineTrack(Fafnir, face, Expression_Annoyed);
 
-          SpineFocus(Fafnir)'
+          SpineFocus(Fafnir);
+
+          CinemachineFocus(Fafnir_Cam);'
         type: 0
         typeString: 
       - title: Menu Text ko
@@ -2805,7 +2817,9 @@ MonoBehaviour:
         type: 4
         typeString: CustomFieldType_Localization
       - title: Sequence
-        value: SpineFocus(Fafnir)
+        value: 'SpineFocus(Fafnir);
+
+          CinemachineFocus(Fafnir_Cam);'
         type: 0
         typeString: CustomFieldType_Text
       - title: Menu Text ko
@@ -3259,7 +3273,9 @@ MonoBehaviour:
         type: 4
         typeString: CustomFieldType_Localization
       - title: Sequence
-        value: SpineFocus(Janghwa)
+        value: 'SpineFocus(Janghwa);
+
+          CinemachineFocus(Janghwa_Cam);'
         type: 0
         typeString: 
       - title: Menu Text ko
@@ -3348,7 +3364,9 @@ MonoBehaviour:
         type: 4
         typeString: CustomFieldType_Localization
       - title: Sequence
-        value: SpineFocus(none)
+        value: 'SpineFocus(none);
+
+          CinemachineFocus(Wide_Cam);'
         type: 0
         typeString: CustomFieldType_Text
       - title: Menu Text ko
@@ -3437,7 +3455,9 @@ MonoBehaviour:
         type: 4
         typeString: CustomFieldType_Localization
       - title: Sequence
-        value: SpineFocus(Vargr)
+        value: 'SpineFocus(Vargr);
+
+          CinemachineFocus(Vargr_Cam);'
         type: 0
         typeString: 
       - title: Menu Text ko
@@ -3526,7 +3546,9 @@ MonoBehaviour:
         type: 4
         typeString: CustomFieldType_Localization
       - title: Sequence
-        value: SpineFocus(none)
+        value: 'SpineFocus(none);
+
+          CinemachineFocus(Wide_Cam);'
         type: 0
         typeString: 
       - title: Menu Text ko
@@ -3706,7 +3728,9 @@ MonoBehaviour:
       - title: Sequence
         value: 'SpineTrack(Fafnir, face, Expression_Proud);
 
-          SpineFocus(Fafnir)'
+          SpineFocus(Fafnir);
+
+          CinemachineFocus(Fafnir_Cam);'
         type: 0
         typeString: 
       - title: Menu Text ko
@@ -3795,7 +3819,9 @@ MonoBehaviour:
         type: 4
         typeString: CustomFieldType_Localization
       - title: Sequence
-        value: SpineFocus(none)
+        value: 'SpineFocus(none);
+
+          CinemachineFocus(Wide_Cam);'
         type: 0
         typeString: 
       - title: Menu Text ko
@@ -3815,9 +3841,9 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: CharsPerSecond
-        value: 
+        value: 0
         type: 1
-        typeString: 
+        typeString: CustomFieldType_Number
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -3971,7 +3997,9 @@ MonoBehaviour:
         type: 4
         typeString: CustomFieldType_Localization
       - title: Sequence
-        value: SpineFocus(Vargr)
+        value: 'SpineFocus(Vargr);
+
+          CinemachineFocus(Vargr_Cam);'
         type: 0
         typeString: 
       - title: Menu Text ko
@@ -4062,7 +4090,9 @@ MonoBehaviour:
         type: 4
         typeString: CustomFieldType_Localization
       - title: Sequence
-        value: SpineFocus(Fafnir)
+        value: 'SpineFocus(Fafnir);
+
+          CinemachineFocus(Fafnir_Cam);'
         type: 0
         typeString: 
       - title: Menu Text ko
@@ -4158,7 +4188,12 @@ MonoBehaviour:
           SpineTrack(Chona,
           extra, Extra_FingerCount_1);
 
-          SpineFocus(none)'
+          SpineFocus(none);
+
+          CinemachineFocus(Chona_Cam);
+
+          CinemachineZoom(2,
+          1.0);'
         type: 0
         typeString: 
       - title: Menu Text ko
@@ -4181,6 +4216,10 @@ MonoBehaviour:
         value: 0
         type: 1
         typeString: CustomFieldType_Number
+      - title: Response Menu Sequence
+        value: 
+        type: 0
+        typeString: 
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -4249,7 +4288,12 @@ MonoBehaviour:
       - title: Sequence
         value: 'SpineTrack(Fafnir, face, Expression_Smug);
 
-          SpineFocus(Fafnir)'
+          SpineFocus(Fafnir);
+
+          CinemachineFocus(Fafnir_Cam);
+
+          CinemachineZoom(3.5,
+          1.0);'
         type: 0
         typeString: 
       - title: Menu Text ko
@@ -4340,7 +4384,9 @@ MonoBehaviour:
       - title: Sequence
         value: 'SpineTrack(Vargr, face, Expression_EyeClosed);
 
-          SpineFocus(Vargr)'
+          SpineFocus(Vargr);
+
+          CinemachineFocus(Vargr_Cam);'
         type: 0
         typeString: 
       - title: Menu Text ko
@@ -4433,7 +4479,12 @@ MonoBehaviour:
       - title: Sequence
         value: 'SpineTrack(Chona, extra, Extra_FingerCount_2);
 
-          SpineFocus(none)'
+          SpineFocus(none);
+
+          CinemachineFocus(Chona_Cam);
+
+          CinemachineZoom(2,
+          1.0);'
         type: 0
         typeString: 
       - title: Menu Text ko
@@ -4477,7 +4528,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1593.955
+        x: 1593.1385
         y: 476.25732
         width: 160
         height: 30
@@ -4522,7 +4573,12 @@ MonoBehaviour:
         type: 4
         typeString: CustomFieldType_Localization
       - title: Sequence
-        value: SpineFocus(Fafnir)
+        value: 'SpineFocus(Fafnir);
+
+          CinemachineFocus(Fafnir_Cam);
+
+          CinemachineZoom(3.5,
+          1.0);'
         type: 0
         typeString: 
       - title: Menu Text ko
@@ -4615,7 +4671,9 @@ MonoBehaviour:
       - title: Sequence
         value: 'SpineTrack(Vargr, face, Expression_Dignified);
 
-          SpineFocus(Vargr)'
+          SpineFocus(Vargr);
+
+          CinemachineFocus(Vargr_Cam);'
         type: 0
         typeString: 
       - title: Menu Text ko
@@ -4708,7 +4766,12 @@ MonoBehaviour:
       - title: Sequence
         value: 'SpineTrack(Chona, extra, Extra_FingerCount_3);
 
-          SpineFocus(none)'
+          SpineFocus(none);
+
+          CinemachineFocus(Chona_Cam);
+
+          CinemachineZoom(2,
+          1.0);'
         type: 0
         typeString: 
       - title: Menu Text ko
@@ -4795,7 +4858,12 @@ MonoBehaviour:
         type: 4
         typeString: CustomFieldType_Localization
       - title: Sequence
-        value: SpineFocus(Fafnir)
+        value: 'SpineFocus(Fafnir);
+
+          CinemachineFocus(Fafnir_Cam);
+
+          CinemachineZoom(3.5,
+          1.0);'
         type: 0
         typeString: 
       - title: Menu Text ko
@@ -4839,7 +4907,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1812.4352
+        x: 1811.6189
         y: 458.7275
         width: 160
         height: 30
@@ -4884,7 +4952,9 @@ MonoBehaviour:
       - title: Sequence
         value: 'SpineTrack(Vargr, face, Expression_Angry);
 
-          SpineFocus(Vargr)'
+          SpineFocus(Vargr);
+
+          CinemachineFocus(Vargr_Cam);'
         type: 0
         typeString: 
       - title: Menu Text ko
@@ -4980,7 +5050,12 @@ MonoBehaviour:
           SpineTrack(Chona,
           extra, Extra_Enlightened);
 
-          SpineFocus(none)'
+          SpineFocus(none);
+
+          CinemachineFocus(Chona_Cam);
+
+          CinemachineZoom(2,
+          1.0);'
         type: 0
         typeString: 
       - title: Menu Text ko
@@ -5000,9 +5075,9 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: CharsPerSecond
-        value: 
+        value: 0
         type: 1
-        typeString: 
+        typeString: CustomFieldType_Number
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -5025,7 +5100,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 2022.3191
-        y: 265.12668
+        y: 264.31033
         width: 160
         height: 30
     - id: 46
@@ -5067,7 +5142,12 @@ MonoBehaviour:
         type: 4
         typeString: CustomFieldType_Localization
       - title: Sequence
-        value: 
+        value: '
+
+          CinemachineFocus(Wide_Cam);
+
+          CinemachineZoom(7,
+          3.0);'
         type: 0
         typeString: 
       - title: Menu Text ko
@@ -5087,9 +5167,9 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: CharsPerSecond
-        value: 
+        value: 0
         type: 1
-        typeString: 
+        typeString: CustomFieldType_Number
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -5106,7 +5186,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 2022.0579
-        y: 350.10214
+        y: 350.91846
         width: 160
         height: 30
     - id: 47
@@ -5150,7 +5230,9 @@ MonoBehaviour:
         type: 4
         typeString: CustomFieldType_Localization
       - title: Sequence
-        value: SpineFocus(Fafnir)
+        value: 'SpineFocus(Fafnir);
+
+          CinemachineFocus(Fafnir_Cam);'
         type: 0
         typeString: CustomFieldType_Text
       - title: Menu Text ko
@@ -5199,8 +5281,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 28.571457}
-    canvasZoom: 0.97999936
+    canvasScrollPosition: {x: 1084.2931, y: 294.41428}
+    canvasZoom: 0.58000004
   - id: 3
     fields:
     - title: Title

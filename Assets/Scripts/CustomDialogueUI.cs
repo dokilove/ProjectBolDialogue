@@ -948,10 +948,16 @@ public class CustomDialogueUI : UIToolkitDialogueUI
 
     public override void OnContinueConversation()
     {
-        // 상호작용 또는 대화창 오픈 직후 0.3초 동안의 릴리즈/클릭 및 인터랙터블 위에 마우스가 있을 때 대화 넘김 차단
-        if (Time.time - _lastBlockedTime < 0.3f || IsWorldPointerOverInteractable())
+        bool isOverPanelBg = IsPointerOverPanelBackground();
+
+        // PanelBackground 영역 밖(= ContinueButton 영역)에서만 오브젝트 상호작용 우선을 위해 대화 넘김 차단
+        // PanelBackground 위라면 오브젝트가 뒤에 있더라도 대사 넘김/타이핑 스킵 우선 진행
+        if (!isOverPanelBg)
         {
-            return;
+            if (Time.time - _lastBlockedTime < 0.3f || IsWorldPointerOverInteractable())
+            {
+                return;
+            }
         }
 
         // 타이핑 중이었다면 이번 클릭은 "즉시 전체 텍스트 표시"로만 처리하고
@@ -962,6 +968,54 @@ public class CustomDialogueUI : UIToolkitDialogueUI
         }
 
         base.OnContinueConversation();
+    }
+
+    public VisualElement GetActivePanelBackgroundElement()
+    {
+        var doc = GetUIDocument();
+        if (doc == null || doc.rootVisualElement == null) return null;
+
+        var uiDialogueElements = dialogueControls as UIToolkitDialogueElements;
+        if (uiDialogueElements != null && uiDialogueElements.SubtitlePanelElements != null)
+        {
+            foreach (var panel in uiDialogueElements.SubtitlePanelElements)
+            {
+                var panelElement = doc.rootVisualElement.Q<VisualElement>(panel.SubtitlePanelName);
+                if (panelElement != null && panelElement.resolvedStyle.display != DisplayStyle.None)
+                {
+                    // 패널 안에서 class="panelBackground" 또는 특정 패널 배경 이름 검색
+                    var bg = panelElement.Q<VisualElement>(className: "panelBackground")
+                          ?? panelElement.Q<VisualElement>("NPCPanelBackground")
+                          ?? panelElement.Q<VisualElement>("ShoutPanelBackground")
+                          ?? panelElement.Q<VisualElement>("ThoughtPanelBackground");
+                    return bg ?? panelElement;
+                }
+            }
+        }
+        return null;
+    }
+
+    /// <summary>
+    /// 현재 마우스/터치 포인터가 활성화된 대화창 PanelBackground 영역 내부에 있는지 확인합니다.
+    /// </summary>
+    public bool IsPointerOverPanelBackground()
+    {
+        var panelBg = GetActivePanelBackgroundElement();
+        if (panelBg == null) return false;
+
+        Vector2 pointerPos = Vector2.zero;
+        if (UnityEngine.InputSystem.Pointer.current != null)
+        {
+            pointerPos = UnityEngine.InputSystem.Pointer.current.position.ReadValue();
+        }
+        else
+        {
+            pointerPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        }
+
+        // Screen 좌표계(좌하단 원점) -> UI Toolkit 좌표계(좌상단 원점)
+        Vector2 uiPos = new Vector2(pointerPos.x, Screen.height - pointerPos.y);
+        return panelBg.worldBound.Contains(uiPos);
     }
 
     private VisualElement GetActivePanelElement()
