@@ -18,6 +18,7 @@ public class SequencerCommandSpineRotate : SequencerCommand
 {
     private bool isDone = false;
     private CharacterRootController controller;
+    private int actionId = -1;
 
     void Start()
     {
@@ -136,12 +137,12 @@ public class SequencerCommandSpineRotate : SequencerCommand
 
         if (duration <= 0f)
         {
-            controller.EnqueueRotate(targetAngle, 0f, normalizedPivot, null, easeType);
+            actionId = controller.EnqueueRotate(targetAngle, 0f, normalizedPivot, null, easeType);
             Stop();
         }
         else
         {
-            controller.EnqueueRotate(targetAngle, duration, normalizedPivot, () => isDone = true, easeType);
+            actionId = controller.EnqueueRotate(targetAngle, duration, normalizedPivot, () => isDone = true, easeType);
         }
     }
 
@@ -155,9 +156,9 @@ public class SequencerCommandSpineRotate : SequencerCommand
 
     void OnDestroy()
     {
-        if (!isDone && controller != null)
+        if (!isDone && controller != null && actionId != -1)
         {
-            controller.SkipAllRotations();
+            controller.CancelOrSnapAction(actionId);
         }
     }
 

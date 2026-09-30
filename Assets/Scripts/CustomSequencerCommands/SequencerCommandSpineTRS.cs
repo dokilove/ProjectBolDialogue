@@ -57,6 +57,7 @@ public class SequencerCommandSpineTRS : SequencerCommand
 {
     private bool isDone = false;
     private CharacterRootController controller;
+    private int actionId = -1;
 
     void Start()
     {
@@ -211,12 +212,12 @@ public class SequencerCommandSpineTRS : SequencerCommand
 
         if (duration <= 0f)
         {
-            controller.TransformTo(targetPos, targetAngle, scaleVec, 0f, normalizedPivot, bounceHeight, squash, autoFlip, flipDuration, easeType, null);
+            actionId = controller.TransformTo(targetPos, targetAngle, scaleVec, 0f, normalizedPivot, bounceHeight, squash, autoFlip, flipDuration, easeType, null);
             Stop();
         }
         else
         {
-            controller.EnqueueTransform(targetPos, targetAngle, scaleVec, duration, normalizedPivot, bounceHeight, squash, autoFlip, flipDuration, easeType, () => isDone = true);
+            actionId = controller.EnqueueTransform(targetPos, targetAngle, scaleVec, duration, normalizedPivot, bounceHeight, squash, autoFlip, flipDuration, easeType, () => isDone = true);
         }
     }
 
@@ -230,9 +231,9 @@ public class SequencerCommandSpineTRS : SequencerCommand
 
     void OnDestroy()
     {
-        if (!isDone && controller != null)
+        if (!isDone && controller != null && actionId != -1)
         {
-            controller.SkipAllTransforms();
+            controller.CancelOrSnapAction(actionId);
         }
     }
 

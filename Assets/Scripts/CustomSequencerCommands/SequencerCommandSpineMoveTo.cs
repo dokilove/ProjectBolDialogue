@@ -8,6 +8,7 @@ public class SequencerCommandSpineMoveTo : SequencerCommand
 {
     private bool isDone = false;
     private CharacterRootController controller;
+    private int actionId = -1;
 
     void Start()
     {
@@ -38,7 +39,7 @@ public class SequencerCommandSpineMoveTo : SequencerCommand
         // The target's Z position should be the root's current Z position.
         Vector3 target = new Vector3(targetX, targetY, actorTransform.position.z);
         
-        controller.EnqueueMove(target, duration, bounceHeight, squash, autoFlip, flipDuration, onComplete: () => { isDone = true; });
+        actionId = controller.EnqueueMove(target, duration, bounceHeight, squash, autoFlip, flipDuration, onComplete: () => { isDone = true; });
     }
 
     void Update()
@@ -51,10 +52,10 @@ public class SequencerCommandSpineMoveTo : SequencerCommand
 
     void OnDestroy()
     {
-        // If the sequence is stopped early, skip the move.
-        if (!isDone && controller != null)
+        // If the sequence is stopped early, skip/snap this specific move.
+        if (!isDone && controller != null && actionId != -1)
         {
-            controller.SkipAllMoves();
+            controller.CancelOrSnapAction(actionId);
         }
     }
 }

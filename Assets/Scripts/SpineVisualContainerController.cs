@@ -17,13 +17,40 @@ public class SpineVisualContainerController : MonoBehaviour
     public float CurrentDepthScale { get { return depthScaleFactor; } }
     public float CurrentTargetOffsetY { get; private set; } = 0f; // The targetOffsetY set by SetDepth command
 
+    private bool isInitialized = false;
+
+    private void EnsureInitialized()
+    {
+        if (!isInitialized)
+        {
+            if (modelController == null)
+            {
+                modelController = GetComponentInChildren<SpineDualLayerController>();
+            }
+            originalY = transform.localPosition.y;
+            isInitialized = true;
+        }
+    }
+
+    public float TargetPosY
+    {
+        get
+        {
+            EnsureInitialized();
+            return originalY + CurrentTargetOffsetY + ExternalOffsetY;
+        }
+    }
+
+    public void ResetToDefaultLocalTransform()
+    {
+        EnsureInitialized();
+        transform.localPosition = new Vector3(0f, TargetPosY, transform.localPosition.z);
+        transform.localRotation = Quaternion.identity;
+    }
+
     void Awake()
     {
-        if (modelController == null)
-        {
-            modelController = GetComponentInChildren<SpineDualLayerController>();
-        }
-        originalY = transform.localPosition.y; // Store original LOCAL Y of this container
+        EnsureInitialized();
     }
 
     // Public method to set the depth (scale and Y offset)
