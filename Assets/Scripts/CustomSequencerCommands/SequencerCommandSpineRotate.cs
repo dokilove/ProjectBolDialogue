@@ -1,11 +1,52 @@
-// Syntax: SpineRotate(actor, angle, [duration], [pivotX], [pivotY], [easeType])
-// Syntax: SpineRotate(actor, angle, [duration], [pivotString], [easeType]) e.g., SpineRotate(Chona, 15, 1.0, "0.5, 0.0", "EaseOut")
-// Syntax: SpineRotate(actor, angle, [duration], [easeType]) e.g., SpineRotate(Chona, 15, 1.0, "EaseOut")
-// actor: Target actor / transform (e.g. Chona, speaker, listener)
-// angle: Target rotation angle in degrees (Z-axis)
-// duration: Rotation transition time in seconds (default 0 = instant)
-// pivot: Normalized pivot ratio (0.0 ~ 1.0, default 0.5, 0.5)
-// easeType: Linear, EaseIn, EaseOut, EaseInOut, EaseOutBack, EaseInBack (default EaseInOut)
+// =================================================================================================
+// [SpineRotate]
+// 캐릭터의 비주얼을 지정한 각도(angle)로 회전(기울임)시키는 시퀀서 커맨드.
+// 피벗(회전 중심축)과 이징(EaseType)을 자유롭게 지정할 수 있으며,
+// CharacterRootController의 통합 액션 큐(actionQueue)에 등록되어 이동/반전과 순차적으로 실행됩니다.
+//
+// 문법:
+//   SpineRotate(actor, angle, [duration], [pivot], [easeType])
+//   - pivot 파라미터는 "bottom", "center" 같은 키워드 또는 "0.5, 0.0" 형태의 좌표 문자열을 지원합니다.
+//   - duration, pivot, easeType은 순서에 구애받지 않고 스마트하게 자동 인식됩니다.
+//
+// 파라미터 설명:
+//   - actor       : 대상 캐릭터 [필수] (예: Janghwa, Chona, speaker, listener)
+//   - angle       : 목표 회전 각도(Z축 도 단위) [필수] (예: 15 = 반시계 회전, -15 = 시계 회전, 0 = 직립)
+//   - duration    : 회전 소요 시간(초) [선택, 기본값 0 = 즉시 회전]
+//   - pivot       : 회전 중심 피벗 [선택, 기본값 "center" / (0.5, 0.5)]
+//                   * 키워드 지원: "bottom" / "feet" (발바닥 중심), "center" / "middle" (중심),
+//                                  "top" / "head" (머리), "bottomleft", "bottomright" 등
+//                   * 직접 좌표 지정: "0.5, 0" (발바닥), "0.5, 1.0" (정수리) 등
+//   - easeType    : Linear, EaseIn, EaseOut, EaseInOut, EaseOutBack, EaseInBack [선택, 기본값 EaseInOut]
+//
+// 상황별 실전 예시 (Sequence 필드에 복사해서 사용 가능):
+//   1. 발바닥을 축으로 0.5초 동안 오른쪽으로 15도 기울이기 (인사, 갸우뚱, 놀람) [추천]:
+//      SpineRotate(Chona, -15, 0.5, "bottom");
+//
+//   2. 탄력 있는 EaseOutBack 이징으로 0.6초 동안 발바닥 축 회전:
+//      SpineRotate(Chona, 20, 0.6, "feet", "EaseOutBack");
+//
+//   3. 즉시 각도를 0도로 리셋하여 똑바로 서기 (duration 0):
+//      SpineRotate(Chona, 0);
+//
+//   4. 중심(center) 축으로 0.3초 동안 회전:
+//      SpineRotate(Chona, 10, 0.3, "center", "EaseOut");
+//
+//   5. 머리를 축(top)으로 시계추처럼 흔들리기:
+//      SpineRotate(Chona, 15, 0.4, "top", "EaseInOut");
+//
+//   6. 좌표로 직접 피벗 지정 ("0.5, 0.0" = 발바닥 중심):
+//      SpineRotate(Chona, -12, 0.8, "0.5, 0.0", "EaseInOut");
+//
+//   7. 이동과 연계하여 걷다가 멈추며 인사하기:
+//      SpineMoveTo(Chona, 2.0, 0, 1.0);
+//      SpineRotate(Chona, 15, 0.5, "bottom", "EaseOut");
+//      required SpineRotate(Chona, 0, 0.3, "bottom")@1.6;
+//
+// 스킵(Skip) 동작 특성:
+//   - 대화 스킵 시 CancelOrSnapAction(actionId)에 의해 목표 각도로 즉시 스냅(Snap)되며,
+//     0도로 복귀하는 회전의 경우 Visual Container가 초기 기본 위치와 각도로 완전 무결하게 복구됩니다.
+// =================================================================================================
 
 using System;
 using System.Collections;
@@ -14,6 +55,10 @@ using UnityEngine;
 using PixelCrushers.DialogueSystem;
 using PixelCrushers.DialogueSystem.SequencerCommands;
 
+/// <summary>
+/// 캐릭터의 비주얼을 지정한 각도로 회전(기울임)시키는 시퀀서 커맨드.
+/// 예: SpineRotate(Chona, 15, 0.5, "bottom", "EaseOutBack")
+/// </summary>
 public class SequencerCommandSpineRotate : SequencerCommand
 {
     private bool isDone = false;

@@ -1334,30 +1334,15 @@ MonoBehaviour:
           //SpineMoveTo(Janghwa, -5, 0, 1, 0.2, true, 0.06,
           0.5);
 
-          SpineTRS(Janghwa, -7, 0, 40, 1.6, 1.2, "0, 0", "EaseOut");
+          //SpineTRS(Janghwa, -7, 0, 40, 1.6, 1.2, "0, 0", "EaseOut");
 
-          SpineTRS(Janghwa,
-          -5, 0, -90, 1.6, 1.4, "1, 0", "EaseOut");
-
-          SpineTRS(Janghwa,
-          -5, 0, -180, 1.6, 1.4, "1, 0", "EaseOut");
-
-          SpineTRS(Janghwa,
-          -5, 0, -270, 1.6, 1.4, "1, 0", "EaseOut");
-
-          SpineTRS(Janghwa,
-          -5, 0, 0, 1.6, 1.4, "1, 0", "EaseOut");
-
-          SpineRotate(Janghwa,
+          //SpineRotate(Janghwa,
           90, 1.6, "0, 1", "EaseOut");
 
-          SpineRotate(Janghwa, 180, 1.6,
-          "0, 1", "EaseOut");
+          SpineFlip(Janghwa, right, 1.5);
 
-          SpineRotate(Janghwa, 270, 1.6, "0, 1", "EaseOut");
-
-          SpineRotate(Janghwa,
-          0, 1.6, "0, 1", "EaseOut");
+          SpineFlip(Janghwa,
+          left, 1.5);
 
 
 
@@ -1409,7 +1394,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 245.28519
-        y: 115.96912
+        y: 114.58981
         width: 160
         height: 30
     - id: 5

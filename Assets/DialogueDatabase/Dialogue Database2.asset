@@ -1309,47 +1309,19 @@ MonoBehaviour:
           body, Body_Idle);
 
 
-
-          SpineFocus(Janghwa);
-
-          CinemachineFocus(Janghwa_Cam);
-
-          //SpineDepth(Janghwa,
-          0.6, 2, 0);
-
-          //SpineDepth(Chona, 0.6, 2, 0);
-
-          //SpineDepth(Vargr,
-          0.6, 2, 0);
-
-          SpineDepth(Fafnir, 1.6, -3, 0);
+          SpineFocus(Janghwa, keep);
 
 
-          CinemachineTarget(Janghwa_Cam,
-          Janghwa_Focus);
+          CinemachineFocus(Wide_Cam);
 
-          //SpineMoveTo(Janghwa, -7, 0, 1, 0.2, true,
-          0.06, 0.5);
+          CinemachinePosition(Wide_Cam,
+          -5, 4);
 
-          //SpineMoveTo(Janghwa, -5, 0, 1, 0.2, true, 0.06,
-          0.5);
-
-          //SpineTRS(Janghwa, -7, 0, 40, 1.6, 1.2, "0, 0", "EaseOut");
-
-          //SpineRotate(Janghwa,
-          90, 1.6, "0, 1", "EaseOut");
-
-          SpineFlip(Janghwa, right, 1.5);
-
-          SpineFlip(Janghwa,
-          left, 1.5);
+          CinemachineZoom(3);
 
 
-
-          //CinemachineZoom(1.0, 3.0);
-
-          //CinemachineZoom(3.0,
-          3.0);'
+          SpineMoveTo(Janghwa,
+          -5, 0, 1, 0.5, true, 0.06, 0.5);'
         type: 0
         typeString: CustomFieldType_Text
       - title: Menu Text ko
@@ -1394,7 +1366,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 245.28519
-        y: 114.58981
+        y: 111.680695
         width: 160
         height: 30
     - id: 5
@@ -1438,7 +1410,17 @@ MonoBehaviour:
       - title: Sequence
         value: 'SpineFocus(Chona, keep);
 
-          CinemachineFocus(Chona_Cam);'
+
+          CinemachineFocus(Wide_Cam);
+
+          CinemachinePosition(Wide_Cam,
+          2, 4);
+
+          CinemachineZoom(3);
+
+
+          SpineMoveTo(Chona, 2,
+          0, 1, 0.5, true, 0.06, 0.5);'
         type: 0
         typeString: CustomFieldType_Text
       - title: Menu Text ko
@@ -1531,7 +1513,12 @@ MonoBehaviour:
       - title: Sequence
         value: 'SpineFocus(Fafnir);
 
-          CinemachineFocus(Fafnir_Cam);'
+
+          CinemachineFocus(Fafnir_Cam);
+
+          CinemachineZoom(2);
+
+'
         type: 0
         typeString: CustomFieldType_Text
       - title: Menu Text ko
@@ -1622,11 +1609,13 @@ MonoBehaviour:
 
           SpineFocus(Fafnir);
 
+
           CinemachineFocus(Fafnir_Cam);
 
-
           CinemachineZoom(5,
-          1.0);'
+          1.0);
+
+'
         type: 0
         typeString: CustomFieldType_Text
       - title: Menu Text ko
@@ -1671,7 +1660,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 242.88828
-        y: 375.06262
+        y: 373.6081
         width: 160
         height: 30
     - id: 8
@@ -1718,13 +1707,15 @@ MonoBehaviour:
           SpineFocus(Chona,
           keep);
 
+
           CinemachineFocus(Chona_Cam);
+
 
           SpineDepth(Chona,
           1.2, -1, 0.5);
 
 
-          CinemachineZoom(3.5, 1.0);'
+          CinemachineZoom(3, 1.0);'
         type: 0
         typeString: CustomFieldType_Text
       - title: Menu Text ko
@@ -5293,7 +5284,7 @@ MonoBehaviour:
         height: 30
     entryGroups: []
     canvasScrollPosition: {x: 0, y: 0}
-    canvasZoom: 0.58
+    canvasZoom: 0.55
   - id: 3
     fields:
     - title: Title

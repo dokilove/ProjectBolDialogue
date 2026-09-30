@@ -1,45 +1,53 @@
 // =================================================================================================
 // [SpineTRS / SpineTransform / SpineMoveRotate]
-// Move(이동), Rotate(회전), Scale(크기)을 TRS 순서로 한 번에 동시에 보간 변환하는 시퀀서 커맨드
+// Move(이동), Rotate(회전), Scale(크기)의 TRS 변형을 한 번에 동시에 보간 변형하는 만능 시퀀서 커맨드.
+// CharacterRootController의 통합 액션 큐(actionQueue)에 등록되어 순차적으로 실행됩니다.
 //
-// ■ 문법:
+// 문법:
 //   SpineTRS(actor, x, y, angle, [duration], [scale], [pivot], [easeType], [bounceHeight], [autoFlip], [squash], [flipDuration])
 //   SpineTransform(...) 및 SpineMoveRotate(...)로도 동일하게 사용 가능합니다.
 //
-// ■ 파라미터 설명:
-//   - actor       : 대상 캐릭터 (예: Chona, speaker, listener) [필수]
-//   - x, y        : 목표 월드 좌표 (Z축은 기존 유지) [필수]
-//   - angle       : 목표 회전 각도 (Z축 도 단위, 예: 15, -10, 0) [필수]
-//   - duration    : 이동 및 회전 소요 시간(초, 기본값 1.0, 0 = 즉시 스냅)
-//   - scale       : 목표 크기 배율 (생략 시 현재 크기 유지, 예: 1.2, 0.8)
-//   - pivot       : 정규화 회전 피벗 (예: "0.5, 0.0" = 발바닥 중심, "0.5, 0.5" = 몸 중심)
-//   - easeType    : Linear, EaseIn, EaseOut, EaseInOut, EaseOutBack, EaseInBack (기본값 EaseInOut)
-//   - bounceHeight: 이동 중 통통 튀는 높이 (기본값 0)
-//   - autoFlip    : 이동 방향에 따라 좌우 자동 반전 (기본값 true)
+// 파라미터 설명:
+//   - actor       : 대상 캐릭터 [필수] (예: Janghwa, Chona, speaker, listener)
+//   - x, y        : 목표 월드 좌표 [필수] (Z축은 기존 유지)
+//   - angle       : 목표 회전 각도 [필수] (Z축 각도 단위, 예: 15, -10, 0)
+//   - duration    : 이동 및 회전 소요 시간(초) [선택, 기본값 1.0, 0 = 즉시 스냅]
+//   - scale       : 목표 크기 배율 [선택, 생략 시 현재 크기 유지] (예: 1.2, 0.8)
+//   - pivot       : 정규화 회전 피벗 [선택, 기본값 "0.5, 0.5" = 중심]
+//                   (키워드: "bottom" / "feet" = 발바닥, "center" = 중심, "top" = 머리, "0.5, 0" 등)
+//   - easeType    : Linear, EaseIn, EaseOut, EaseInOut, EaseOutBack, EaseInBack [선택, 기본값 EaseInOut]
+//   - bounceHeight: 이동 중 통통 튀는 높이 [선택, 기본값 0]
+//   - autoFlip    : 이동 방향에 따라 좌우 자동 반전 [선택, 기본값 true]
+//   - squash      : 바운스 시 찌그러짐/늘어남 강도 [선택, 기본값 0]
+//   - flipDuration: 반전 시 부드러운 회전 시간 [선택, 기본값 0]
 //
-// ■ 상황별 실전 예시 (Sequence 필드에 복사해서 사용 가능):
+// 상황별 실전 예시 (Sequence 필드에 복사해서 사용 가능):
 //   1. 가장 단순한 이동 + 기울이기 (1초 기본):
-//      SpineTRS(Chona, 2.5, 0, 15)
+//      SpineTRS(Chona, 2.5, 0, 15);
 //
-//   2. 빠르게 휙 이동하며 회전 (0.4초 + 감속 EaseOut):
-//      SpineTRS(Chona, 2.5, 0, -10, 0.4, "EaseOut")
+//   2. 빠르게 이동하며 회전 (0.4초 + 감속 EaseOut):
+//      SpineTRS(Chona, 2.5, 0, -10, 0.4, "EaseOut");
 //
-//   3. 발바닥을 축으로 자연스럽게 기울어지며 이동 (피벗 "0.5, 0", 탄력 EaseOutBack) ★추천:
-//      SpineTRS(Chona, 3, 0, 20, 0.8, "0.5, 0", "EaseOutBack")
+//   3. 발바닥을 축으로 자연스럽게 기울이며 이동 (피벗 "0.5, 0", 탄력 EaseOutBack) [추천]:
+//      SpineTRS(Chona, 3, 0, 20, 0.8, "0.5, 0", "EaseOutBack");
 //
 //   4. 이동 + 회전 + 크기 확대 (완전한 TRS 연출, 1.2배 확대):
-//      SpineTRS(Chona, 1.5, 0, 10, 0.6, 1.2, "0.5, 0", "EaseOut")
+//      SpineTRS(Chona, 1.5, 0, 10, 0.6, 1.2, "0.5, 0", "EaseOut");
 //
 //   5. 통통 튀면서 회전 이동 (바운스 높이 0.25):
-//      SpineTRS(Chona, 4, 0, -15, 1.2, "0.5, 0", 0.25)
+//      SpineTRS(Chona, 4, 0, -15, 1.2, "0.5, 0", 0.25);
 //
 //   6. 즉시 원래 위치/각도(0도)로 복귀 (duration 0):
-//      SpineTRS(Chona, 0, 0, 0, 0)
+//      SpineTRS(Chona, 0, 0, 0, 0);
 //
 //   7. 다른 커맨드와 조합 (카메라 줌인 + 캐릭터 이동/회전 후 원위치):
 //      CinemachineZoom(4.0, 0.8, "EaseOut");
 //      SpineTRS(Chona, 1.5, 0, 10, 0.8, "0.5, 0", "EaseOut");
-//      SpineTRS(Chona, 1.5, 0, 0, 0.5, "EaseOut")@1.0;
+//      required SpineTRS(Chona, 1.5, 0, 0, 0.5, "EaseOut")@1.0;
+//
+// 스킵(Skip) 동작 특성:
+//   - 스킵 시 CancelOrSnapAction(actionId)을 통해 목표 위치, 각도(0도 복귀 시 완벽한 원점 복귀),
+//     스케일로 즉시 칼같이 스냅(Snap)되어 오차가 누적되지 않습니다.
 // =================================================================================================
 
 using System;
@@ -50,7 +58,7 @@ using PixelCrushers.DialogueSystem;
 using PixelCrushers.DialogueSystem.SequencerCommands;
 
 /// <summary>
-/// Move(이동), Rotate(회전), Scale(크기)을 TRS 순서로 동시에 보간 변환하는 Dialogue System 시퀀서 커맨드.
+/// Move(이동), Rotate(회전), Scale(크기)을 동시에 보간 변형하는 만능 시퀀서 커맨드.
 /// 예: SpineTRS(Chona, 3, 0, 20, 0.8, "0.5, 0", "EaseOutBack")
 /// </summary>
 public class SequencerCommandSpineTRS : SequencerCommand
@@ -85,18 +93,17 @@ public class SequencerCommandSpineTRS : SequencerCommand
         float targetX = GetParameterAsFloat(1, subject.position.x);
         float targetY = GetParameterAsFloat(2, subject.position.y);
         float targetAngle = GetParameterAsFloat(3, 0f);
+
+        // Defaults for optional parameters
         float duration = 1.0f;
         float? targetScale = null;
         Vector2 normalizedPivot = new Vector2(0.5f, 0.5f);
         EaseType easeType = EaseType.EaseInOut;
         float bounceHeight = 0f;
         bool autoFlip = true;
-        float squash = 0.06f;
+        float squash = 0f;
         float flipDuration = 0f;
 
-        // Parse optional parameters from index 4 onwards
-        // Note: Dialogue System sequence parser splits parameters on every comma, even inside quotes!
-        // E.g. "0, 0" becomes two parameters: "\"0" and "0\"". We stitch them back together and strip quotes.
         List<string> tokens = new List<string>();
         int numParams = Parameters != null ? Parameters.Length : 0;
         for (int i = 4; i < numParams; i++)
@@ -327,23 +334,15 @@ public class SequencerCommandSpineTRS : SequencerCommand
     private static EaseType ParseEaseType(string str, EaseType defaultType = EaseType.EaseInOut)
     {
         if (string.IsNullOrEmpty(str)) return defaultType;
-        string clean = CleanParam(str).ToLowerInvariant().Replace("_", "").Replace(" ", "");
+        string clean = str.Trim().ToLowerInvariant().Replace("_", "").Replace(" ", "");
         switch (clean)
         {
             case "linear": return EaseType.Linear;
-            case "easein":
-            case "in": return EaseType.EaseIn;
-            case "easeout":
-            case "out": return EaseType.EaseOut;
-            case "easeinout":
-            case "inout":
-            case "smooth": return EaseType.EaseInOut;
-            case "easeoutback":
-            case "outback":
-            case "backout": return EaseType.EaseOutBack;
-            case "easeinback":
-            case "inback":
-            case "backin": return EaseType.EaseInBack;
+            case "easein": return EaseType.EaseIn;
+            case "easeout": return EaseType.EaseOut;
+            case "easeinout": return EaseType.EaseInOut;
+            case "easeoutback": return EaseType.EaseOutBack;
+            case "easeinback": return EaseType.EaseInBack;
             default: return defaultType;
         }
     }
