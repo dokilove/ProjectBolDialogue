@@ -88,7 +88,16 @@ public class SequencerCommandSpineMoveTo : SequencerCommand
         float targetY = GetParameterAsFloat(2);
         float duration = GetParameterAsFloat(3, 1f);
         float bounceHeight = GetParameterAsFloat(4, 0.2f);
-        bool autoFlip = string.IsNullOrEmpty(GetParameter(5)) || GetParameterAsBool(5, true);
+        string p5 = GetParameter(5);
+        bool autoFlip = true;
+        if (!string.IsNullOrEmpty(p5))
+        {
+            string c5 = p5.Trim().ToLowerInvariant();
+            if (c5 == "false" || c5 == "noflip" || c5 == "keep" || c5 == "keepflip")
+                autoFlip = false;
+            else
+                autoFlip = GetParameterAsBool(5, true);
+        }
         float squash = GetParameterAsFloat(6, 0.06f);
         float flipDuration = GetParameterAsFloat(7, 0f);
 

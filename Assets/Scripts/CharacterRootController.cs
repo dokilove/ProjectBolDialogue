@@ -635,19 +635,20 @@ public class CharacterRootController : MonoBehaviour
             root.position = currentRootPos;
 
             // 2. Scale root
-            float scaleMultiplier = 1f;
+            Vector3 currentScaleRatio = Vector3.one;
             if (doScale)
             {
                 root.localScale = Vector3.Lerp(startScale, destScale, easedRatio);
-                if (Mathf.Abs(startScale.x) > 0.0001f)
-                {
-                    scaleMultiplier = root.localScale.x / startScale.x;
-                }
+                currentScaleRatio = new Vector3(
+                    Mathf.Abs(startScale.x) > 0.0001f ? root.localScale.x / startScale.x : 1f,
+                    Mathf.Abs(startScale.y) > 0.0001f ? root.localScale.y / startScale.y : 1f,
+                    1f
+                );
             }
 
             // 3. Rotate visual around moving pivot
             float currentDelta = deltaAngle * easedRatio;
-            Vector3 rotatedOffset = Quaternion.Euler(0, 0, currentDelta) * (initialOffset * scaleMultiplier);
+            Vector3 rotatedOffset = Quaternion.Euler(0, 0, currentDelta) * Vector3.Scale(initialOffset, currentScaleRatio);
             Vector3 currentPivot = initialPivot + rootDelta;
 
             visual.position = currentPivot + rotatedOffset;

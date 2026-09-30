@@ -12,12 +12,14 @@
 //   - x, y        : 목표 월드 좌표 [필수] (Z축은 기존 유지)
 //   - angle       : 목표 회전 각도 [필수] (Z축 각도 단위, 예: 15, -10, 0)
 //   - duration    : 이동 및 회전 소요 시간(초) [선택, 기본값 1.0, 0 = 즉시 스냅]
-//   - scale       : 목표 크기 배율 [선택, 생략 시 현재 크기 유지] (예: 1.2, 0.8)
+//   - scale       : 목표 크기 배율 [선택, 생략 시 현재 크기 유지]
+//                   (단일 배율: 1.2, 0.8 또는 2D 비균등 크기: "1, 1.2", "scale:1, 1.2")
 //   - pivot       : 정규화 회전 피벗 [선택, 기본값 "0.5, 0.5" = 중심]
 //                   (키워드: "bottom" / "feet" = 발바닥, "center" = 중심, "top" = 머리, "0.5, 0" 등)
 //   - easeType    : Linear, EaseIn, EaseOut, EaseInOut, EaseOutBack, EaseInBack [선택, 기본값 EaseInOut]
 //   - bounceHeight: 이동 중 통통 튀는 높이 [선택, 기본값 0]
 //   - autoFlip    : 이동 방향에 따라 좌우 자동 반전 [선택, 기본값 true]
+//                   (false, "noflip", "keep" 입력 시 이동 방향과 상관없이 현재 바라보는 방향 유지)
 //   - squash      : 바운스 시 찌그러짐/늘어남 강도 [선택, 기본값 0]
 //   - flipDuration: 반전 시 부드러운 회전 시간 [선택, 기본값 0]
 //
@@ -25,19 +27,23 @@
 //   1. 가장 단순한 이동 + 기울이기 (1초 기본):
 //      SpineTRS(Chona, 2.5, 0, 15);
 //
-//   2. 빠르게 이동하며 회전 (0.4초 + 감속 EaseOut):
+//   2. 몸을 뒤집지 않고 뒷걸음질하듯 이동 (autoFlip = false 또는 "noflip"):
+//      SpineTRS(Chona, -3.0, 0, 10, 0.8, false);
+//      SpineTRS(Chona, -3.0, 0, 10, 0.8, "noflip");
+//
+//   3. 빠르게 이동하며 회전 (0.4초 + 감속 EaseOut):
 //      SpineTRS(Chona, 2.5, 0, -10, 0.4, "EaseOut");
 //
-//   3. 발바닥을 축으로 자연스럽게 기울이며 이동 (피벗 "0.5, 0", 탄력 EaseOutBack) [추천]:
+//   4. 발바닥을 축으로 자연스럽게 기울이며 이동 (피벗 "0.5, 0", 탄력 EaseOutBack) [추천]:
 //      SpineTRS(Chona, 3, 0, 20, 0.8, "0.5, 0", "EaseOutBack");
 //
-//   4. 이동 + 회전 + 크기 확대 (완전한 TRS 연출, 1.2배 확대):
+//   5. 이동 + 회전 + 크기 확대 (완전한 TRS 연출, 1.2배 확대):
 //      SpineTRS(Chona, 1.5, 0, 10, 0.6, 1.2, "0.5, 0", "EaseOut");
 //
-//   5. 통통 튀면서 회전 이동 (바운스 높이 0.25):
+//   6. 통통 튀면서 회전 이동 (바운스 높이 0.25):
 //      SpineTRS(Chona, 4, 0, -15, 1.2, "0.5, 0", 0.25);
 //
-//   6. 즉시 원래 위치/각도(0도)로 복귀 (duration 0):
+//   7. 즉시 원래 위치/각도(0도)로 복귀 (duration 0):
 //      SpineTRS(Chona, 0, 0, 0, 0);
 //
 //   7. 다른 커맨드와 조합 (카메라 줌인 + 캐릭터 이동/회전 후 원위치):
@@ -96,7 +102,7 @@ public class SequencerCommandSpineTRS : SequencerCommand
 
         // Defaults for optional parameters
         float duration = 1.0f;
-        float? targetScale = null;
+        Vector2? targetScale2D = null;
         Vector2 normalizedPivot = new Vector2(0.5f, 0.5f);
         EaseType easeType = EaseType.EaseInOut;
         float bounceHeight = 0f;
@@ -155,18 +161,35 @@ public class SequencerCommandSpineTRS : SequencerCommand
                 continue;
             }
 
-            // 4. "x,y" Pivot check (e.g. "0,0", "1,0", "0.5,0")
-            if (tok.Contains(","))
+            // 4. "x,y" Vector check (Scale vs Pivot)
+            if (TryParseVector2(tok, out Vector2 v2))
             {
-                string[] parts = tok.Split(',');
-                if (parts.Length >= 2 &&
-                    float.TryParse(parts[0].Trim(), NumberStyles.Float, CultureInfo.InvariantCulture, out float px) &&
-                    float.TryParse(parts[1].Trim(), NumberStyles.Float, CultureInfo.InvariantCulture, out float py))
+                // Explicit prefix
+                if (tok.StartsWith("scale:", StringComparison.OrdinalIgnoreCase) || tok.StartsWith("s:", StringComparison.OrdinalIgnoreCase))
                 {
-                    normalizedPivot = new Vector2(px, py);
+                    targetScale2D = v2;
+                    scaleSet = true;
+                    continue;
+                }
+                if (tok.StartsWith("pivot:", StringComparison.OrdinalIgnoreCase) || tok.StartsWith("p:", StringComparison.OrdinalIgnoreCase))
+                {
+                    normalizedPivot = v2;
                     pivotSet = true;
                     continue;
                 }
+
+                // If scale is not yet set, and there is another pivot token later or pivot was already set, this is scale
+                if (!scaleSet && (pivotSet || HasAnotherPivotToken(tokens, i)))
+                {
+                    targetScale2D = v2;
+                    scaleSet = true;
+                    continue;
+                }
+
+                // Otherwise, treat as pivot
+                normalizedPivot = v2;
+                pivotSet = true;
+                continue;
             }
 
             // 5. Numeric values: duration, scale, pivot pair, or bounce
@@ -183,7 +206,7 @@ public class SequencerCommandSpineTRS : SequencerCommand
                 {
                     if (!scaleSet && i + 2 < tokens.Count && float.TryParse(tokens[i + 2], NumberStyles.Float, CultureInfo.InvariantCulture, out _))
                     {
-                        targetScale = val;
+                        targetScale2D = new Vector2(val, val);
                         scaleSet = true;
                     }
                     else
@@ -195,7 +218,7 @@ public class SequencerCommandSpineTRS : SequencerCommand
                 }
                 else if (!scaleSet)
                 {
-                    targetScale = val;
+                    targetScale2D = new Vector2(val, val);
                     scaleSet = true;
                 }
                 else if (bounceHeight == 0f)
@@ -211,11 +234,11 @@ public class SequencerCommandSpineTRS : SequencerCommand
 
         if (DialogueDebug.logInfo)
         {
-            Debug.Log($"[SpineTRS] Subject: '{subject.name}', TargetPos: ({targetX}, {targetY}), Angle: {targetAngle}, Duration: {duration}, Scale: {(targetScale.HasValue ? targetScale.Value.ToString() : "none")}, Pivot: ({normalizedPivot.x}, {normalizedPivot.y}), Ease: {easeType}");
+            Debug.Log($"[SpineTRS] Subject: '{subject.name}', TargetPos: ({targetX}, {targetY}), Angle: {targetAngle}, Duration: {duration}, Scale: {(targetScale2D.HasValue ? targetScale2D.Value.ToString() : "none")}, Pivot: ({normalizedPivot.x}, {normalizedPivot.y}), Ease: {easeType}");
         }
 
         Vector3 targetPos = new Vector3(targetX, targetY, subject.position.z);
-        Vector3? scaleVec = targetScale.HasValue ? new Vector3(targetScale.Value, targetScale.Value, subject.localScale.z) : (Vector3?)null;
+        Vector3? scaleVec = targetScale2D.HasValue ? new Vector3(targetScale2D.Value.x, targetScale2D.Value.y, subject.localScale.z) : (Vector3?)null;
 
         if (duration <= 0f)
         {
@@ -311,13 +334,14 @@ public class SequencerCommandSpineTRS : SequencerCommand
     {
         if (string.IsNullOrEmpty(str)) return false;
         string s = CleanParam(str).ToLowerInvariant();
-        return s == "true" || s == "false";
+        return s == "true" || s == "false" || s == "noflip" || s == "keepflip" || s == "keep" || s == "autoflip";
     }
 
     private static bool ParseBool(string str)
     {
         if (string.IsNullOrEmpty(str)) return true;
-        return CleanParam(str).ToLowerInvariant() == "true";
+        string s = CleanParam(str).ToLowerInvariant();
+        return s == "true" || s == "autoflip";
     }
 
     private static bool IsEaseTypeString(string str)
@@ -345,5 +369,42 @@ public class SequencerCommandSpineTRS : SequencerCommand
             case "easeinback": return EaseType.EaseInBack;
             default: return defaultType;
         }
+    }
+
+    private static bool HasAnotherPivotToken(List<string> tokens, int currentIndex)
+    {
+        for (int j = currentIndex + 1; j < tokens.Count; j++)
+        {
+            string t = tokens[j];
+            if (string.IsNullOrEmpty(t)) continue;
+            if (t.StartsWith("pivot:", StringComparison.OrdinalIgnoreCase) || t.StartsWith("p:", StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (TryGetNamedPivot(t, out _))
+                return true;
+            if (t.Contains(","))
+                return true;
+        }
+        return false;
+    }
+
+    private static bool TryParseVector2(string str, out Vector2 result)
+    {
+        result = Vector2.zero;
+        if (string.IsNullOrEmpty(str) || !str.Contains(",")) return false;
+        string clean = CleanParam(str);
+        if (clean.StartsWith("scale:", StringComparison.OrdinalIgnoreCase)) clean = clean.Substring("scale:".Length).Trim();
+        else if (clean.StartsWith("s:", StringComparison.OrdinalIgnoreCase)) clean = clean.Substring("s:".Length).Trim();
+        else if (clean.StartsWith("pivot:", StringComparison.OrdinalIgnoreCase)) clean = clean.Substring("pivot:".Length).Trim();
+        else if (clean.StartsWith("p:", StringComparison.OrdinalIgnoreCase)) clean = clean.Substring("p:".Length).Trim();
+
+        string[] parts = clean.Split(',');
+        if (parts.Length >= 2 &&
+            float.TryParse(parts[0].Trim(), NumberStyles.Float, CultureInfo.InvariantCulture, out float x) &&
+            float.TryParse(parts[1].Trim(), NumberStyles.Float, CultureInfo.InvariantCulture, out float y))
+        {
+            result = new Vector2(x, y);
+            return true;
+        }
+        return false;
     }
 }
