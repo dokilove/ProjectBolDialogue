@@ -53,6 +53,38 @@ public class SpineVisualContainerController : MonoBehaviour
         EnsureInitialized();
     }
 
+    public int CurrentSortingOrder
+    {
+        get
+        {
+            EnsureInitialized();
+            var meshRenderer = (modelController != null) ? modelController.GetComponent<MeshRenderer>() : null;
+            return meshRenderer != null ? meshRenderer.sortingOrder : 0;
+        }
+    }
+
+    // Public method to set only the sorting order (preserving scale and Y offset)
+    public void SetSortingOrder(int targetSortingOrder, float duration = 0f, Action onComplete = null)
+    {
+        EnsureInitialized();
+        SetDepth(CurrentDepthScale, CurrentTargetOffsetY, targetSortingOrder, duration, onComplete);
+    }
+
+    public void SnapSortingOrder(int targetSortingOrder)
+    {
+        EnsureInitialized();
+        if (activeDepthCoroutine != null)
+        {
+            StopCoroutine(activeDepthCoroutine);
+            activeDepthCoroutine = null;
+        }
+        var meshRenderer = (modelController != null) ? modelController.GetComponent<MeshRenderer>() : null;
+        if (meshRenderer != null)
+        {
+            meshRenderer.sortingOrder = targetSortingOrder;
+        }
+    }
+
     // Public method to set the depth (scale and Y offset)
     public void SetDepth(float targetDepthScale, float targetOffsetY, int targetSortingOrder, float duration, Action onComplete = null)
     {

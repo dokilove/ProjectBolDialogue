@@ -1309,6 +1309,12 @@ MonoBehaviour:
           body, Body_Idle);
 
 
+          SpineDepth(Fafnir, 1.2, -1.2, 0);
+
+          SpineOrder(Fafnir,
+          3);
+
+
           SpineFocus(Janghwa, keep);
 
 
@@ -1366,7 +1372,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 245.28519
-        y: 111.680695
+        y: 105.86249
         width: 160
         height: 30
     - id: 5
@@ -1464,7 +1470,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 236.70047
+        x: 235.24591
         y: 207.55203
         width: 160
         height: 30
