@@ -20,6 +20,8 @@ public class CharacterRootController : MonoBehaviour
         public bool autoFlip;
         public bool isMoveOnly;
         public bool isRotateOnly;
+        public bool isFlipOnly;
+        public bool targetFacing;
     }
 
     private int actionIdCounter = 0;
@@ -46,6 +48,10 @@ public class CharacterRootController : MonoBehaviour
 
     // ===================== Flip Logic =====================
 
+    public bool IsFacingRight => spinFactor < 0f;
+    public float SpinFactor => spinFactor;
+    public bool LastQueuedFacing => lastQueuedAutoFlip;
+
     public void SetFacing(bool faceRight)
     {
         if (activeFlipCoroutine != null)
@@ -54,6 +60,7 @@ public class CharacterRootController : MonoBehaviour
             activeFlipCoroutine = null;
         }
         spinFactor = faceRight ? -1f : 1f;
+        lastQueuedAutoFlip = faceRight;
         if (visualContainerController != null && visualContainerController.modelController != null)
         {
             visualContainerController.modelController.SetSpinFactor(spinFactor);
@@ -107,8 +114,12 @@ public class CharacterRootController : MonoBehaviour
 
     public int EnqueueMove(Vector3 target, float duration, float bounceHeight, float squash, bool autoFlip, float flipDuration = 0f, Action onComplete = null)
     {
+        Vector3 prevPos = lastQueuedTarget.HasValue ? lastQueuedTarget.Value : transform.position;
+        if (autoFlip && Mathf.Abs(target.x - prevPos.x) > 0.01f)
+        {
+            lastQueuedAutoFlip = target.x > prevPos.x;
+        }
         lastQueuedTarget = target;
-        lastQueuedAutoFlip = autoFlip;
 
         int actionId = ++actionIdCounter;
         var action = new QueuedAction
@@ -122,7 +133,8 @@ public class CharacterRootController : MonoBehaviour
             pivot = lastQueuedRotate.HasValue ? lastQueuedRotate.Value.pivot : new Vector2(0.5f, 0.5f),
             autoFlip = autoFlip,
             isMoveOnly = true,
-            isRotateOnly = false
+            isRotateOnly = false,
+            isFlipOnly = false
         };
 
         actionQueue.Enqueue(action);
@@ -153,7 +165,8 @@ public class CharacterRootController : MonoBehaviour
             pivot = normalizedPivot,
             autoFlip = lastQueuedAutoFlip,
             isMoveOnly = false,
-            isRotateOnly = true
+            isRotateOnly = true,
+            isFlipOnly = false
         };
 
         actionQueue.Enqueue(action);
@@ -172,9 +185,13 @@ public class CharacterRootController : MonoBehaviour
 
     public int EnqueueTransform(Vector3 targetPos, float targetAngle, Vector3? targetScale, float duration, Vector2 normalizedPivot, float bounceHeight = 0f, float squash = 0f, bool autoFlip = true, float flipDuration = 0f, EaseType easeType = EaseType.EaseInOut, Action onComplete = null)
     {
+        Vector3 prevPos = lastQueuedTarget.HasValue ? lastQueuedTarget.Value : transform.position;
+        if (autoFlip && Mathf.Abs(targetPos.x - prevPos.x) > 0.01f)
+        {
+            lastQueuedAutoFlip = targetPos.x > prevPos.x;
+        }
         lastQueuedTarget = targetPos;
         lastQueuedRotate = (targetAngle, normalizedPivot);
-        lastQueuedAutoFlip = autoFlip;
         lastQueuedScale = targetScale;
 
         int actionId = ++actionIdCounter;
@@ -193,7 +210,8 @@ public class CharacterRootController : MonoBehaviour
             pivot = normalizedPivot,
             autoFlip = autoFlip,
             isMoveOnly = false,
-            isRotateOnly = false
+            isRotateOnly = false,
+            isFlipOnly = false
         };
 
         actionQueue.Enqueue(action);
@@ -207,6 +225,45 @@ public class CharacterRootController : MonoBehaviour
     private IEnumerator InstantTransformWrapper(Vector3 targetPos, float targetAngle, Vector3? targetScale, Vector2 normalizedPivot, bool autoFlip)
     {
         SnapTo(targetPos, targetAngle, targetScale, normalizedPivot, autoFlip);
+        yield break;
+    }
+
+    public int EnqueueFlip(bool faceRight, float duration, Action onComplete = null)
+    {
+        lastQueuedAutoFlip = faceRight;
+
+        int actionId = ++actionIdCounter;
+        IEnumerator routine = (duration <= 0f)
+            ? InstantFlipWrapper(faceRight)
+            : FlipRoutine(faceRight, duration);
+
+        var action = new QueuedAction
+        {
+            id = actionId,
+            routine = routine,
+            onComplete = onComplete,
+            targetPos = lastQueuedTarget ?? transform.position,
+            targetAngle = lastQueuedRotate.HasValue ? lastQueuedRotate.Value.angle : TargetVisualTransform.eulerAngles.z,
+            targetScale = lastQueuedScale,
+            pivot = lastQueuedRotate.HasValue ? lastQueuedRotate.Value.pivot : new Vector2(0.5f, 0.5f),
+            autoFlip = false,
+            isMoveOnly = false,
+            isRotateOnly = false,
+            isFlipOnly = true,
+            targetFacing = faceRight
+        };
+
+        actionQueue.Enqueue(action);
+        if (!isProcessingActionQueue)
+        {
+            actionQueueCoroutine = StartCoroutine(ProcessActionQueue());
+        }
+        return actionId;
+    }
+
+    private IEnumerator InstantFlipWrapper(bool faceRight)
+    {
+        SetFacing(faceRight);
         yield break;
     }
 
@@ -260,6 +317,10 @@ public class CharacterRootController : MonoBehaviour
             {
                 ApplyRotationInstant(actionToSnap.targetAngle, actionToSnap.pivot);
             }
+            else if (actionToSnap.isFlipOnly)
+            {
+                SetFacing(actionToSnap.targetFacing);
+            }
             else
             {
                 SnapTo(actionToSnap.targetPos, actionToSnap.targetAngle, actionToSnap.targetScale, actionToSnap.pivot, actionToSnap.autoFlip);
@@ -308,6 +369,10 @@ public class CharacterRootController : MonoBehaviour
             {
                 ApplyRotationInstant(matchedWaiting.targetAngle, matchedWaiting.pivot);
             }
+            else if (matchedWaiting.isFlipOnly)
+            {
+                SetFacing(matchedWaiting.targetFacing);
+            }
             else
             {
                 SnapTo(matchedWaiting.targetPos, matchedWaiting.targetAngle, matchedWaiting.targetScale, matchedWaiting.pivot, matchedWaiting.autoFlip);
@@ -341,20 +406,28 @@ public class CharacterRootController : MonoBehaviour
         while (actionQueue.Count > 0)
         {
             var item = actionQueue.Dequeue();
-            finalPos = item.targetPos;
-            if (!item.isMoveOnly)
+            if (item.isFlipOnly)
             {
-                finalAngle = item.targetAngle;
-                finalPivot = item.pivot;
+                finalAutoFlip = item.targetFacing;
             }
-            if (item.targetScale.HasValue) finalScale = item.targetScale;
-            finalAutoFlip = item.autoFlip;
+            else
+            {
+                finalPos = item.targetPos;
+                if (!item.isMoveOnly)
+                {
+                    finalAngle = item.targetAngle;
+                    finalPivot = item.pivot;
+                }
+                if (item.targetScale.HasValue) finalScale = item.targetScale;
+                finalAutoFlip = item.autoFlip;
+            }
             item.onComplete?.Invoke();
         }
 
         isProcessingActionQueue = false;
 
         SnapTo(finalPos, finalAngle, finalScale, finalPivot, finalAutoFlip);
+        SetFacing(finalAutoFlip);
 
         lastQueuedTarget = null;
         lastQueuedRotate = null;
