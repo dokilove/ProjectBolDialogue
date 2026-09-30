@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using PixelCrushers.DialogueSystem;
 using PixelCrushers.DialogueSystem.SequencerCommands;
@@ -42,57 +43,96 @@ public class SequencerCommandSpineRotate : SequencerCommand
         }
 
         float targetAngle = GetParameterAsFloat(1, 0f);
-        float duration = GetParameterAsFloat(2, 0f);
-
-        float pivotX = 0.5f;
-        float pivotY = 0.5f;
+        float duration = 0f;
+        Vector2 normalizedPivot = new Vector2(0.5f, 0.5f);
         EaseType easeType = EaseType.EaseInOut;
 
-        string param3 = GetParameter(3);
-        string param4 = GetParameter(4);
-        string param5 = GetParameter(5);
+        // Parse optional parameters from index 2 onwards: duration, pivot, easeType
+        // Stitch together parameters that were split by comma inside quotes
+        List<string> tokens = new List<string>();
+        int numParams = Parameters != null ? Parameters.Length : 0;
+        for (int i = 2; i < numParams; i++)
+        {
+            string raw = Parameters[i];
+            if (string.IsNullOrEmpty(raw)) continue;
+            raw = raw.Trim();
 
-        if (!string.IsNullOrEmpty(param3) && IsEaseTypeString(param3))
-        {
-            easeType = ParseEaseType(param3);
-        }
-        else if (!string.IsNullOrEmpty(param3))
-        {
-            if (param3.Contains(","))
+            if ((raw.StartsWith("\"") || raw.StartsWith("'")) && !(raw.EndsWith("\"") || raw.EndsWith("'")) && i + 1 < numParams)
             {
-                string[] parts = param3.Split(',');
-                if (parts.Length >= 2)
-                {
-                    float.TryParse(parts[0].Trim(), System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out pivotX);
-                    float.TryParse(parts[1].Trim(), System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out pivotY);
-                }
-                if (!string.IsNullOrEmpty(param4))
-                {
-                    easeType = ParseEaseType(param4);
-                }
+                string nextRaw = Parameters[i + 1].Trim();
+                tokens.Add(CleanParam(raw) + "," + CleanParam(nextRaw));
+                i++;
             }
             else
             {
-                pivotX = GetParameterAsFloat(3, 0.5f);
-                if (!string.IsNullOrEmpty(param4))
+                tokens.Add(CleanParam(raw));
+            }
+        }
+
+        bool durationSet = false;
+        bool pivotSet = false;
+
+        for (int i = 0; i < tokens.Count; i++)
+        {
+            string tok = tokens[i];
+            if (string.IsNullOrEmpty(tok)) continue;
+
+            // 1. EaseType check
+            if (IsEaseTypeString(tok))
+            {
+                easeType = ParseEaseType(tok);
+                continue;
+            }
+
+            // 2. Named Pivot check
+            if (TryGetNamedPivot(tok, out Vector2 namedP))
+            {
+                normalizedPivot = namedP;
+                pivotSet = true;
+                continue;
+            }
+
+            // 3. "x,y" Pivot check
+            if (tok.Contains(","))
+            {
+                string[] parts = tok.Split(',');
+                if (parts.Length >= 2 &&
+                    float.TryParse(parts[0].Trim(), System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out float px) &&
+                    float.TryParse(parts[1].Trim(), System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out float py))
                 {
-                    if (IsEaseTypeString(param4))
-                    {
-                        easeType = ParseEaseType(param4);
-                    }
-                    else
-                    {
-                        pivotY = GetParameterAsFloat(4, 0.5f);
-                        if (!string.IsNullOrEmpty(param5))
-                        {
-                            easeType = ParseEaseType(param5);
-                        }
-                    }
+                    normalizedPivot = new Vector2(px, py);
+                    pivotSet = true;
+                    continue;
+                }
+            }
+
+            // 4. Numeric: duration or pivot pair
+            if (float.TryParse(tok, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out float num))
+            {
+                if (!durationSet)
+                {
+                    duration = num;
+                    durationSet = true;
+                }
+                else if (!pivotSet && i + 1 < tokens.Count &&
+                         float.TryParse(tokens[i + 1], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out float nextNum) &&
+                         !IsEaseTypeString(tokens[i + 1]))
+                {
+                    normalizedPivot = new Vector2(num, nextNum);
+                    pivotSet = true;
+                    i++;
+                }
+                else if (!pivotSet)
+                {
+                    normalizedPivot = new Vector2(num, normalizedPivot.y);
                 }
             }
         }
 
-        Vector2 normalizedPivot = new Vector2(pivotX, pivotY);
+        if (DialogueDebug.logInfo)
+        {
+            Debug.Log($"[SpineRotate] Subject: '{subject.name}', Angle: {targetAngle}, Duration: {duration}, Pivot: ({normalizedPivot.x}, {normalizedPivot.y}), Ease: {easeType}");
+        }
 
         if (duration <= 0f)
         {
@@ -121,10 +161,73 @@ public class SequencerCommandSpineRotate : SequencerCommand
         }
     }
 
+    private static string CleanParam(string str)
+    {
+        if (string.IsNullOrEmpty(str)) return string.Empty;
+        return str.Trim(' ', '\"', '\'', '\t', '\r', '\n');
+    }
+
+    private static bool TryGetNamedPivot(string str, out Vector2 pivot)
+    {
+        pivot = new Vector2(0.5f, 0.5f);
+        if (string.IsNullOrEmpty(str)) return false;
+        string clean = CleanParam(str).ToLowerInvariant().Replace("_", "").Replace(" ", "").Replace("-", "");
+
+        switch (clean)
+        {
+            case "bottom":
+            case "feet":
+            case "foot":
+            case "down":
+                pivot = new Vector2(0.5f, 0.0f);
+                return true;
+            case "bottomleft":
+            case "leftbottom":
+            case "bl":
+            case "leftfoot":
+                pivot = new Vector2(0.0f, 0.0f);
+                return true;
+            case "bottomright":
+            case "rightbottom":
+            case "br":
+            case "rightfoot":
+                pivot = new Vector2(1.0f, 0.0f);
+                return true;
+            case "top":
+            case "head":
+            case "up":
+                pivot = new Vector2(0.5f, 1.0f);
+                return true;
+            case "topleft":
+            case "lefttop":
+            case "tl":
+                pivot = new Vector2(0.0f, 1.0f);
+                return true;
+            case "topright":
+            case "righttop":
+            case "tr":
+                pivot = new Vector2(1.0f, 1.0f);
+                return true;
+            case "center":
+            case "middle":
+            case "mid":
+                pivot = new Vector2(0.5f, 0.5f);
+                return true;
+            case "left":
+                pivot = new Vector2(0.0f, 0.5f);
+                return true;
+            case "right":
+                pivot = new Vector2(1.0f, 0.5f);
+                return true;
+            default:
+                return false;
+        }
+    }
+
     private static bool IsEaseTypeString(string str)
     {
         if (string.IsNullOrEmpty(str)) return false;
-        string clean = str.Trim().ToLowerInvariant().Replace("_", "").Replace(" ", "");
+        string clean = CleanParam(str).ToLowerInvariant().Replace("_", "").Replace(" ", "");
         return clean == "linear" || clean == "easein" || clean == "in" ||
                clean == "easeout" || clean == "out" || clean == "easeinout" ||
                clean == "inout" || clean == "smooth" || clean == "easeoutback" ||

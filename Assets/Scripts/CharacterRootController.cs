@@ -12,6 +12,7 @@ public class CharacterRootController : MonoBehaviour
     private Vector3? lastQueuedTarget = null;
     private bool lastQueuedAutoFlip = true;
     private (float angle, Vector2 pivot)? lastQueuedRotate = null;
+    private Vector3? lastQueuedScale = null;
     private float spinFactor = 1f;
 
     private Queue<(IEnumerator routine, Action onComplete)> actionQueue = new Queue<(IEnumerator, Action)>();
@@ -126,6 +127,52 @@ public class CharacterRootController : MonoBehaviour
         yield break;
     }
 
+    /// <summary>
+    /// 이동(Move), 회전(Rotate), 스케일(Scale)을 지정된 시간 동안 동시에 보간 변환하는 액션을 큐에 추가합니다.
+    /// 회전 피벗(normalizedPivot)은 이동 중에도 캐릭터와 함께 이동하도록 보정됩니다.
+    /// 예: EnqueueTransform(new Vector3(3, 0, 0), 20f, 1.2f, 0.8f, new Vector2(0.5f, 0f), bounceHeight: 0.2f, easeType: EaseType.EaseOut);
+    /// </summary>
+    public void EnqueueTransform(Vector3 targetPos, float targetAngle, Vector3? targetScale, float duration, Vector2 normalizedPivot, float bounceHeight = 0f, float squash = 0f, bool autoFlip = true, float flipDuration = 0f, EaseType easeType = EaseType.EaseInOut, Action onComplete = null)
+    {
+        lastQueuedTarget = targetPos;
+        lastQueuedRotate = (targetAngle, normalizedPivot);
+        lastQueuedAutoFlip = autoFlip;
+        lastQueuedScale = targetScale;
+
+        if (duration <= 0f)
+        {
+            actionQueue.Enqueue((InstantTransformWrapper(targetPos, targetAngle, targetScale, normalizedPivot, autoFlip), onComplete));
+        }
+        else
+        {
+            actionQueue.Enqueue((TransformRoutine(targetPos, targetAngle, targetScale, duration, normalizedPivot, bounceHeight, squash, autoFlip, flipDuration, easeType), onComplete));
+        }
+
+        if (!isProcessingActionQueue)
+        {
+            actionQueueCoroutine = StartCoroutine(ProcessActionQueue());
+        }
+    }
+
+    private IEnumerator InstantTransformWrapper(Vector3 targetPos, float targetAngle, Vector3? targetScale, Vector2 normalizedPivot, bool autoFlip)
+    {
+        if (autoFlip && Mathf.Abs(targetPos.x - transform.position.x) > 0.01f)
+        {
+            SetFacing(targetPos.x > transform.position.x);
+        }
+        transform.position = targetPos;
+        if (targetScale.HasValue)
+        {
+            transform.localScale = targetScale.Value;
+        }
+        ApplyRotationInstant(targetAngle, normalizedPivot);
+        if (visualContainerController != null && visualContainerController.modelController != null)
+        {
+            visualContainerController.modelController.ResetSquashAndStretch();
+        }
+        yield break;
+    }
+
     private IEnumerator ProcessActionQueue()
     {
         isProcessingActionQueue = true;
@@ -140,6 +187,7 @@ public class CharacterRootController : MonoBehaviour
         isProcessingActionQueue = false;
         lastQueuedTarget = null;
         lastQueuedRotate = null;
+        lastQueuedScale = null;
     }
 
     public void SkipAllActions()
@@ -169,6 +217,11 @@ public class CharacterRootController : MonoBehaviour
             }
         }
 
+        if (lastQueuedScale.HasValue)
+        {
+            transform.localScale = lastQueuedScale.Value;
+        }
+
         if (lastQueuedRotate.HasValue)
         {
             ApplyRotationInstant(lastQueuedRotate.Value.angle, lastQueuedRotate.Value.pivot);
@@ -176,6 +229,7 @@ public class CharacterRootController : MonoBehaviour
 
         lastQueuedTarget = null;
         lastQueuedRotate = null;
+        lastQueuedScale = null;
     }
 
     public void SkipAllMoves() => SkipAllActions();
@@ -183,6 +237,7 @@ public class CharacterRootController : MonoBehaviour
     public void SkipAllRotations() => SkipAllActions();
     public void ClearRotateQueue() => SkipAllActions();
     public void StopRotation() => SkipAllActions();
+    public void SkipAllTransforms() => SkipAllActions();
 
     IEnumerator MoveRoutine(Vector3 target, float duration, float bounceHeight, float squash, bool autoFlip, float flipDuration)
     {
@@ -245,6 +300,17 @@ public class CharacterRootController : MonoBehaviour
 
     public Vector3 GetPivotWorldPoint(Vector2 normalizedPivot)
     {
+        MeshFilter meshFilter = GetComponentInChildren<MeshFilter>();
+        if (meshFilter != null && meshFilter.sharedMesh != null)
+        {
+            Bounds b = meshFilter.sharedMesh.bounds;
+            float lx = Mathf.Lerp(b.min.x, b.max.x, normalizedPivot.x);
+            float ly = Mathf.Lerp(b.min.y, b.max.y, normalizedPivot.y);
+            Vector3 worldPt = meshFilter.transform.TransformPoint(new Vector3(lx, ly, 0f));
+            worldPt.z = TargetVisualTransform.position.z;
+            return worldPt;
+        }
+
         MeshRenderer meshRenderer = GetComponentInChildren<MeshRenderer>();
         if (meshRenderer != null)
         {
@@ -260,6 +326,109 @@ public class CharacterRootController : MonoBehaviour
     {
         SkipAllActions();
         EnqueueRotate(targetAngle, duration, normalizedPivot, onComplete, easeType);
+    }
+
+    /// <summary>
+    /// 기존 모든 액션을 즉시 중단 및 건너뛰고, 새로운 이동/회전/스케일 보간 변환을 시작합니다.
+    /// </summary>
+    public void TransformTo(Vector3 targetPos, float targetAngle, Vector3? targetScale, float duration, Vector2 normalizedPivot, float bounceHeight = 0f, float squash = 0f, bool autoFlip = true, float flipDuration = 0f, EaseType easeType = EaseType.EaseInOut, Action onComplete = null)
+    {
+        SkipAllActions();
+        EnqueueTransform(targetPos, targetAngle, targetScale, duration, normalizedPivot, bounceHeight, squash, autoFlip, flipDuration, easeType, onComplete);
+    }
+
+    private IEnumerator TransformRoutine(Vector3 targetPos, float targetAngle, Vector3? targetScale, float duration, Vector2 normalizedPivot, float bounceHeight, float squash, bool autoFlip, float flipDuration, EaseType easeType)
+    {
+        Transform root = this.transform;
+        Transform visual = TargetVisualTransform;
+
+        Vector3 startRootPos = root.position;
+        Vector3 startScale = root.localScale;
+        Vector3 destScale = targetScale ?? startScale;
+        bool doScale = targetScale.HasValue;
+
+        if (autoFlip && Mathf.Abs(targetPos.x - startRootPos.x) > 0.01f)
+        {
+            bool faceRight = targetPos.x > startRootPos.x;
+            if (flipDuration > 0f)
+                SetFacingOverTime(faceRight, flipDuration);
+            else
+                SetFacing(faceRight);
+        }
+
+        float distance = Mathf.Abs(targetPos.x - startRootPos.x);
+        int steps = Mathf.Max(2, Mathf.RoundToInt(distance / 1.2f));
+
+        Vector3 initialPivot = GetPivotWorldPoint(normalizedPivot);
+        Vector3 initialOffset = visual.position - initialPivot;
+        float startAngle = visual.eulerAngles.z;
+        float deltaAngle = (Mathf.Abs(targetAngle) >= 360f) ? (targetAngle - startAngle) : Mathf.DeltaAngle(startAngle, targetAngle);
+        Quaternion startRotation = visual.rotation;
+
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float ratio = Mathf.Clamp01(elapsed / duration);
+            float easedRatio = EvaluateEase(easeType, ratio);
+
+            // 1. Move root
+            Vector3 currentRootPos = Vector3.Lerp(startRootPos, targetPos, easedRatio);
+            Vector3 rootDelta = currentRootPos - startRootPos;
+            root.position = currentRootPos;
+
+            // 2. Scale root
+            float scaleMultiplier = 1f;
+            if (doScale)
+            {
+                root.localScale = Vector3.Lerp(startScale, destScale, easedRatio);
+                if (Mathf.Abs(startScale.x) > 0.0001f)
+                {
+                    scaleMultiplier = root.localScale.x / startScale.x;
+                }
+            }
+
+            // 3. Rotate visual around moving pivot
+            float currentDelta = deltaAngle * easedRatio;
+            Vector3 rotatedOffset = Quaternion.Euler(0, 0, currentDelta) * (initialOffset * scaleMultiplier);
+            Vector3 currentPivot = initialPivot + rootDelta;
+
+            visual.position = currentPivot + rotatedOffset;
+            visual.rotation = Quaternion.Euler(startRotation.eulerAngles.x, startRotation.eulerAngles.y, startAngle + currentDelta);
+
+            // 4. Bounce & squash
+            if (bounceHeight > 0f)
+            {
+                float cycle = (ratio * steps) % 1f;
+                float bounce = Mathf.Sin(cycle * Mathf.PI) * bounceHeight;
+                if (visualContainerController != null && visualContainerController.modelController != null)
+                {
+                    visualContainerController.modelController.ApplyBounceAndSquash(bounce, squash);
+                }
+            }
+
+            yield return null;
+        }
+
+        // Final snap
+        root.position = targetPos;
+        if (doScale)
+        {
+            root.localScale = destScale;
+        }
+
+        Vector3 finalRootDelta = targetPos - startRootPos;
+        Vector3 finalPivot = initialPivot + finalRootDelta;
+        float finalScaleMult = (doScale && Mathf.Abs(startScale.x) > 0.0001f) ? (destScale.x / startScale.x) : 1f;
+        Vector3 finalOffset = Quaternion.Euler(0, 0, deltaAngle) * (initialOffset * finalScaleMult);
+
+        visual.position = finalPivot + finalOffset;
+        visual.rotation = Quaternion.Euler(startRotation.eulerAngles.x, startRotation.eulerAngles.y, targetAngle);
+
+        if (visualContainerController != null && visualContainerController.modelController != null)
+        {
+            visualContainerController.modelController.ResetSquashAndStretch();
+        }
     }
 
     private void ApplyRotationInstant(float targetAngle, Vector2 normalizedPivot)

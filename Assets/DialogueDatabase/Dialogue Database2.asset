@@ -1221,9 +1221,9 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: CharsPerSecond
-        value: 
+        value: 0
         type: 1
-        typeString: 
+        typeString: CustomFieldType_Number
       conversationID: 2
       isRoot: 1
       isGroup: 0
@@ -1328,17 +1328,43 @@ MonoBehaviour:
           CinemachineTarget(Janghwa_Cam,
           Janghwa_Focus);
 
-          SpineMoveTo(Janghwa, -7, 0, 1, 0.2, true, 0.06,
+          //SpineMoveTo(Janghwa, -7, 0, 1, 0.2, true,
+          0.06, 0.5);
+
+          //SpineMoveTo(Janghwa, -5, 0, 1, 0.2, true, 0.06,
           0.5);
 
-          SpineMoveTo(Janghwa, -5, 0, 1, 0.2, true, 0.06, 0.5);
+          SpineTRS(Janghwa, -7, 0, 40, 1.6, 1.2, "0, 0", "EaseOut");
+
+          SpineTRS(Janghwa,
+          -5, 0, -90, 1.6, 1.4, "1, 0", "EaseOut");
+
+          SpineTRS(Janghwa,
+          -5, 0, -180, 1.6, 1.4, "1, 0", "EaseOut");
+
+          SpineTRS(Janghwa,
+          -5, 0, -270, 1.6, 1.4, "1, 0", "EaseOut");
+
+          SpineTRS(Janghwa,
+          -5, 0, 0, 1.6, 1.4, "1, 0", "EaseOut");
+
+          SpineRotate(Janghwa,
+          90, 1.6, "0, 1", "EaseOut");
+
+          SpineRotate(Janghwa, 180, 1.6,
+          "0, 1", "EaseOut");
+
+          SpineRotate(Janghwa, 270, 1.6, "0, 1", "EaseOut");
+
+          SpineRotate(Janghwa,
+          0, 1.6, "0, 1", "EaseOut");
 
 
 
-          //CinemachineZoom(1.0,
-          3.0);
+          //CinemachineZoom(1.0, 3.0);
 
-          //CinemachineZoom(3.0, 3.0);'
+          //CinemachineZoom(3.0,
+          3.0);'
         type: 0
         typeString: CustomFieldType_Text
       - title: Menu Text ko
@@ -1447,9 +1473,9 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: CharsPerSecond
-        value: 
+        value: 0
         type: 1
-        typeString: 
+        typeString: CustomFieldType_Number
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -1659,7 +1685,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 243.98416
+        x: 242.88828
         y: 375.06262
         width: 160
         height: 30
@@ -1758,7 +1784,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 242.47809
-        y: 467.76898
+        y: 466.57495
         width: 160
         height: 30
     - id: 9
@@ -5281,8 +5307,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 1084.2931, y: 294.41428}
-    canvasZoom: 0.58000004
+    canvasScrollPosition: {x: 0, y: 0}
+    canvasZoom: 0.58
   - id: 3
     fields:
     - title: Title
