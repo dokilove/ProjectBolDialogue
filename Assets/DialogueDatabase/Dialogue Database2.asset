@@ -5277,8 +5277,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 2022.3191
-        y: 262.57123
+        x: 2016
+        y: 264
         width: 160
         height: 30
     - id: 46
@@ -5325,9 +5325,9 @@ MonoBehaviour:
           CinemachineFocus(Wide_Cam, 0);
 
           CinemachinePosition(Wide_Cam,
-          7, 4);
+          7, 5);
 
-          CinemachineZoom(6);'
+          CinemachineZoom(7);'
         type: 0
         typeString: 
       - title: Menu Text ko
@@ -5365,8 +5365,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 2022.0579
-        y: 352.6576
+        x: 2016
+        y: 348
         width: 160
         height: 30
     - id: 47

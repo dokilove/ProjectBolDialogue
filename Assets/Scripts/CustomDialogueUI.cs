@@ -257,8 +257,8 @@ public class CustomDialogueUI : UIToolkitDialogueUI
     [Tooltip("타이핑과 시퀀스가 끝난 뒤 자동으로 다음 대사로 넘어가기까지의 대기 시간(초)")]
     [SerializeField] private float autoAdvanceDelay = 1.0f;
 
-    [SerializeField] private string autoAdvanceButtonTextKo = "자동진행";
-    [SerializeField] private string autoAdvanceButtonTextJa = "自動進行";
+    [SerializeField] private string autoAdvanceButtonTextKo = "AUTO";
+    [SerializeField] private string autoAdvanceButtonTextJa = "AUTO";
 
     [Header("Sound Button")]
     [Tooltip("'사운드 On/Off' 버튼을 표시합니다.")]
@@ -294,6 +294,9 @@ public class CustomDialogueUI : UIToolkitDialogueUI
     private Button _backlogButton;
     private Button _autoAdvanceButton;
     private Button _soundButton;
+    private VisualElement _backlogSlot;
+    private VisualElement _autoAdvanceSlot;
+    private VisualElement _soundSlot;
 
     // 자동진행
     private bool _autoAdvanceEnabled;
@@ -1304,6 +1307,11 @@ public class CustomDialogueUI : UIToolkitDialogueUI
         // 버튼은 UIToolkitDialogueUIDialogueTemplate.uxml에 정적으로 배치되어 있다.
         var root = doc.rootVisualElement;
 
+        // 그림자까지 같이 숨기기 위해 버튼을 감싸는 슬롯도 함께 찾는다.
+        _backlogSlot = root.Q<VisualElement>("BacklogButtonSlot");
+        _autoAdvanceSlot = root.Q<VisualElement>("AutoAdvanceButtonSlot");
+        _soundSlot = root.Q<VisualElement>("SoundButtonSlot");
+
         if (!IsBound(_backlogButton))
         {
             _backlogButton = root.Q<Button>("BacklogButton");
@@ -1347,6 +1355,11 @@ public class CustomDialogueUI : UIToolkitDialogueUI
             return;
         }
 
+        // 슬롯 이름이 바뀌어도 버튼의 부모(슬롯)를 사용하도록 보정한다.
+        if (_backlogSlot == null) _backlogSlot = GetButtonSlot(_backlogButton);
+        if (_autoAdvanceSlot == null) _autoAdvanceSlot = GetButtonSlot(_autoAdvanceButton);
+        if (_soundSlot == null) _soundSlot = GetButtonSlot(_soundButton);
+
         _topButtonsMissingLogged = false;
 
         UpdateTopButtonTexts();
@@ -1361,6 +1374,12 @@ public class CustomDialogueUI : UIToolkitDialogueUI
     private static bool IsBound(Button button)
     {
         return button != null && button.panel != null;
+    }
+
+    private static VisualElement GetButtonSlot(Button button)
+    {
+        var parent = button != null ? button.parent : null;
+        return (parent != null && parent.ClassListContains("topButtonSlot")) ? parent : null;
     }
 
     private bool IsJapaneseUI()
@@ -1378,9 +1397,11 @@ public class CustomDialogueUI : UIToolkitDialogueUI
     {
         bool japanese = IsJapaneseUI();
 
+        // 이전 대사/사운드 버튼은 이미지로만 표시하고 라벨은 사용하지 않는다.
         if (_backlogButton != null)
         {
-            _backlogButton.text = japanese ? backlogButtonTextJa : backlogButtonTextKo;
+            _backlogButton.text = string.Empty;
+            _backlogButton.tooltip = japanese ? backlogButtonTextJa : backlogButtonTextKo;
         }
 
         if (_autoAdvanceButton != null)
@@ -1390,7 +1411,8 @@ public class CustomDialogueUI : UIToolkitDialogueUI
 
         if (_soundButton != null)
         {
-            _soundButton.text = _soundEnabled
+            _soundButton.text = string.Empty;
+            _soundButton.tooltip = _soundEnabled
                 ? (japanese ? soundOnButtonTextJa : soundOnButtonTextKo)
                 : (japanese ? soundOffButtonTextJa : soundOffButtonTextKo);
         }
@@ -1439,13 +1461,37 @@ public class CustomDialogueUI : UIToolkitDialogueUI
         button.style.unityFontDefinition = new StyleFontDefinition(fontDefinition);
     }
 
+    private static void SetSlotDisplay(Button button, VisualElement slot, DisplayStyle display)
+    {
+        if (slot != null)
+        {
+            slot.style.display = display;
+        }
+        else if (button != null)
+        {
+            button.style.display = display;
+        }
+    }
+
+    private static void SetSlotOpacity(Button button, VisualElement slot, float opacity)
+    {
+        if (slot != null)
+        {
+            slot.style.opacity = opacity;
+        }
+        else if (button != null)
+        {
+            button.style.opacity = opacity;
+        }
+    }
+
     private void SetTopButtonsDisplay(bool visible)
     {
         var display = visible ? DisplayStyle.Flex : DisplayStyle.None;
 
-        if (_backlogButton != null) _backlogButton.style.display = display;
-        if (_autoAdvanceButton != null) _autoAdvanceButton.style.display = display;
-        if (_soundButton != null) _soundButton.style.display = display;
+        SetSlotDisplay(_backlogButton, _backlogSlot, display);
+        SetSlotDisplay(_autoAdvanceButton, _autoAdvanceSlot, display);
+        SetSlotDisplay(_soundButton, _soundSlot, display);
     }
 
     private void UpdateTopButtonStates()
@@ -1456,24 +1502,30 @@ public class CustomDialogueUI : UIToolkitDialogueUI
         if (_backlogButton != null)
         {
             bool showBacklog = conversationActive && enableBacklogRewind;
-            _backlogButton.style.display = showBacklog ? DisplayStyle.Flex : DisplayStyle.None;
+            SetSlotDisplay(_backlogButton, _backlogSlot, showBacklog ? DisplayStyle.Flex : DisplayStyle.None);
             _backlogButton.SetEnabled(canRewind);
-            _backlogButton.style.opacity = canRewind ? 1f : 0.45f;
+            SetSlotOpacity(_backlogButton, _backlogSlot, canRewind ? 1f : 0.45f);
+            _backlogButton.EnableInClassList("active", canRewind);
         }
 
         if (_autoAdvanceButton != null)
         {
-            _autoAdvanceButton.style.display =
-                (conversationActive && enableAutoAdvanceButton) ? DisplayStyle.Flex : DisplayStyle.None;
+            SetSlotDisplay(
+                _autoAdvanceButton,
+                _autoAdvanceSlot,
+                (conversationActive && enableAutoAdvanceButton) ? DisplayStyle.Flex : DisplayStyle.None);
             _autoAdvanceButton.SetEnabled(conversationActive);
-            _autoAdvanceButton.EnableInClassList("is-active", _autoAdvanceEnabled);
+            _autoAdvanceButton.EnableInClassList("active", _autoAdvanceEnabled);
         }
 
         if (_soundButton != null)
         {
-            _soundButton.style.display =
-                (conversationActive && enableSoundButton) ? DisplayStyle.Flex : DisplayStyle.None;
+            SetSlotDisplay(
+                _soundButton,
+                _soundSlot,
+                (conversationActive && enableSoundButton) ? DisplayStyle.Flex : DisplayStyle.None);
             _soundButton.SetEnabled(conversationActive);
+            _soundButton.EnableInClassList("active", _soundEnabled);
         }
     }
 
@@ -1560,6 +1612,7 @@ public class CustomDialogueUI : UIToolkitDialogueUI
         }
 
         UpdateTopButtonTexts();
+        UpdateTopButtonStates();
     }
 
     private void ApplySoundState()
