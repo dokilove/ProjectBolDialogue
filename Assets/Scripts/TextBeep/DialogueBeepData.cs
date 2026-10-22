@@ -56,5 +56,19 @@ namespace BeepSync
         [Range(1.0f, 2.5f)]
         [Tooltip("일본어 한자 출력 시 딜레이 배율 (기본 1.6배)")]
         public float kanjiDelayMultiplier = 1.6f;
+
+        [Range(1.0f, 3.0f)]
+        [Tooltip("일본어 대사 전체의 글자당 출력 시간 배율 (1 = 한국어와 동일, 1.5 = 1.5배 느리게).\n" +
+                 "일본어는 한 글자가 담는 정보량이 많아 짧게 느껴지므로 한국어보다 느리게 출력합니다.")]
+        public float japaneseDelayMultiplier = 1.5f;
+
+        [Range(1, 6)]
+        [Tooltip("일본어 말줄임표('…') 1개당 재생할 비프음 수.\n" +
+                 "일본어는 '...' 대신 '…' 한 글자를 쓰기 때문에 비프음이 적게 들리는 것을 보정합니다.")]
+        public int ellipsisBeepCount = 3;
+
+        [Range(0.01f, 0.2f)]
+        [Tooltip("비프음 사이의 최소 간격(초). 한자 다중 비프음이 한 번의 소리처럼 뭉개지지 않게 합니다.")]
+        public float minBeepInterval = 0.045f;
     }
 }

@@ -90,10 +90,13 @@ public class SpineDualLayerController : MonoBehaviour
     }
     public void ClearFaceAndSetBodyAnimation(string animName)
     {
-        animState.ClearTrack(0);
         animState.ClearTrack(1);
         currentFaceAnim = string.Empty;
+
+        // 같은 body 애니메이션이면 트랙을 지우지 않고 그대로 유지한다.
         if (currentBodyAnim == animName) return;
+
+        animState.ClearTrack(0);
         animState.SetAnimation(0, animName, true);
         currentBodyAnim = animName;
     }
@@ -179,5 +182,86 @@ public class SpineDualLayerController : MonoBehaviour
         squashXFactor = 1f;
         stretchYFactor = 1f;
         ApplyScale();
+    }
+
+    public struct VisualState
+    {
+        public float SpinFactor;
+        public float SquashXFactor;
+        public float StretchYFactor;
+        public string BodyAnimation;
+        public string FaceAnimation;
+        public string ExtraAnimation;
+        public string PrevBodyAnimation;
+        public string PrevFaceAnimation;
+        public string PrevExtraAnimation;
+        public Color Color;
+    }
+
+    public VisualState CaptureState()
+    {
+        Color color = Color.white;
+        if (skeletonAnimation != null && skeletonAnimation.skeleton != null)
+        {
+            color = skeletonAnimation.skeleton.GetColor();
+        }
+
+        return new VisualState
+        {
+            SpinFactor = spinFactor,
+            SquashXFactor = squashXFactor,
+            StretchYFactor = stretchYFactor,
+            BodyAnimation = currentBodyAnim,
+            FaceAnimation = currentFaceAnim,
+            ExtraAnimation = currentExtraAnim,
+            PrevBodyAnimation = prevBodyAnim,
+            PrevFaceAnimation = prevFaceAnim,
+            PrevExtraAnimation = prevExtraAnim,
+            Color = color
+        };
+    }
+
+    public void RestoreState(VisualState state)
+    {
+        spinFactor = state.SpinFactor;
+        squashXFactor = state.SquashXFactor;
+        stretchYFactor = state.StretchYFactor;
+        currentBodyAnim = state.BodyAnimation;
+        currentFaceAnim = state.FaceAnimation;
+        currentExtraAnim = state.ExtraAnimation;
+        prevBodyAnim = state.PrevBodyAnimation;
+        prevFaceAnim = state.PrevFaceAnimation;
+        prevExtraAnim = state.PrevExtraAnimation;
+
+        if (animState != null)
+        {
+            RestoreTrack(0, state.BodyAnimation);
+            RestoreTrack(1, state.FaceAnimation);
+            RestoreTrack(2, state.ExtraAnimation);
+        }
+
+        ApplyScale();
+
+        if (skeletonAnimation != null && skeletonAnimation.skeleton != null)
+        {
+            skeletonAnimation.skeleton.SetColor(state.Color);
+        }
+    }
+
+    private void RestoreTrack(int trackIndex, string animName)
+    {
+        if (animState == null) return;
+
+        if (string.IsNullOrEmpty(animName))
+        {
+            animState.ClearTrack(trackIndex);
+            return;
+        }
+
+        var entry = animState.SetAnimation(trackIndex, animName, true);
+        if (entry != null)
+        {
+            entry.MixDuration = 0.1f;
+        }
     }
 }

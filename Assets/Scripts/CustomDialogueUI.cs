@@ -234,6 +234,79 @@ public class CustomDialogueUI : UIToolkitDialogueUI
     private UIDocument _uiDocument;
 
     // ─────────────────────────────────────────────
+    // Dialogue Top Buttons (Backlog / Auto / Sound)
+    // ─────────────────────────────────────────────
+
+    [Header("Backlog Rewind")]
+    [Tooltip("대화 중 화면 우측 상단에 '이전 대사' 버튼을 표시합니다.")]
+    [SerializeField] private bool enableBacklogRewind = true;
+
+    [Tooltip("한국어 버튼 문구")]
+    [SerializeField] private string backlogButtonTextKo = "이전 대사";
+
+    [Tooltip("일본어 버튼 문구")]
+    [SerializeField] private string backlogButtonTextJa = "前のセリフ";
+
+    [Tooltip("되감기 기록을 유지할 최대 대사 수")]
+    [SerializeField] private int backlogMaxEntries = 200;
+
+    [Header("Auto Advance Button")]
+    [Tooltip("'자동진행' 버튼을 표시합니다.")]
+    [SerializeField] private bool enableAutoAdvanceButton = true;
+
+    [Tooltip("타이핑과 시퀀스가 끝난 뒤 자동으로 다음 대사로 넘어가기까지의 대기 시간(초)")]
+    [SerializeField] private float autoAdvanceDelay = 1.0f;
+
+    [SerializeField] private string autoAdvanceButtonTextKo = "자동진행";
+    [SerializeField] private string autoAdvanceButtonTextJa = "自動進行";
+
+    [Header("Sound Button")]
+    [Tooltip("'사운드 On/Off' 버튼을 표시합니다.")]
+    [SerializeField] private bool enableSoundButton = true;
+
+    public enum SoundToggleScope
+    {
+        // 게임 전체 오디오(AudioListener)와 대사 비프음을 모두 끕니다.
+        AllAudio,
+        // 대사 타이핑 비프음만 끕니다.
+        TypewriterOnly
+    }
+
+    [Tooltip("사운드 버튼이 끄는 대상")]
+    [SerializeField] private SoundToggleScope soundToggleScope = SoundToggleScope.AllAudio;
+
+    [Tooltip("사운드 On/Off 상태를 PlayerPrefs에 저장해 다음 실행에도 유지합니다.")]
+    [SerializeField] private bool rememberSoundSetting = true;
+
+    [SerializeField] private string soundOnButtonTextKo = "사운드 On";
+    [SerializeField] private string soundOnButtonTextJa = "サウンド On";
+    [SerializeField] private string soundOffButtonTextKo = "사운드 Off";
+    [SerializeField] private string soundOffButtonTextJa = "サウンド Off";
+
+    private const string SoundEnabledPrefsKey = "DialogueUI.SoundEnabled";
+
+    // 실제로 표시된 대사(DialogueEntry) 기록. 마지막 항목이 현재 대사.
+    private readonly List<DialogueEntry> _backlogEntries = new List<DialogueEntry>();
+    // 각 대사가 표시되기 직전(시퀀스 재생 전)의 캐릭터 월드 상태.
+    private readonly List<DialogueWorldState> _backlogWorldStates = new List<DialogueWorldState>();
+    private bool _isBacklogNavigating;
+    private bool _topButtonsMissingLogged;
+    private Button _backlogButton;
+    private Button _autoAdvanceButton;
+    private Button _soundButton;
+
+    // 자동진행
+    private bool _autoAdvanceEnabled;
+    private float _autoAdvanceTimer;
+    private bool _continueButtonVisible;
+    private bool _responseMenuVisible;
+
+    // 사운드
+    private bool _soundEnabled = true;
+    private float _volumeBeforeMute = 1f;
+    private bool _mutedByThisUI;
+
+    // ─────────────────────────────────────────────
     // UIDocument 가져오기
     // ─────────────────────────────────────────────
 
@@ -272,6 +345,16 @@ public class CustomDialogueUI : UIToolkitDialogueUI
         Instance = this;
     }
 
+    private void OnEnable()
+    {
+        PixelCrushers.UILocalizationManager.languageChanged += OnLanguageChanged;
+    }
+
+    private void OnDisable()
+    {
+        PixelCrushers.UILocalizationManager.languageChanged -= OnLanguageChanged;
+    }
+
     public virtual void OnDestroy()
     {
         if (Instance == this)
@@ -285,6 +368,9 @@ public class CustomDialogueUI : UIToolkitDialogueUI
         base.Start();
         InitializeTextSync();
         InitializeTypewriterStates();
+        LoadSoundSetting();
+        ApplySoundState();
+        EnsureTopRightButtons();
     }
 
     private Vector2 GetCurrentPointerPosition()
@@ -345,11 +431,29 @@ public class CustomDialogueUI : UIToolkitDialogueUI
         base.Open();
         // NPC 상호작용 등으로 대화가 시작될 때, 버튼을 떼는(Mouse UP) 순간 대화가 넘어가버리지 않도록 차단
         _lastBlockedTime = Time.time;
+
+        ClearBacklogHistory();
+        EnsureTopRightButtons();
+        UpdateTopButtonStates();
+    }
+
+    public override void Close()
+    {
+        ClearBacklogHistory();
+        SetTopButtonsDisplay(false);
+        _autoAdvanceTimer = 0f;
+        _responseMenuVisible = false;
+        _continueButtonVisible = false;
+        base.Close();
     }
 
     public override void Update()
     {
         base.Update();
+
+        EnsureTopRightButtons();
+        UpdateTopButtonStates();
+        UpdateAutoAdvance();
 
         // 타이프라이터 효과 중에도 target label 텍스트를 동기화
         if (DialogueManager.isConversationActive)
@@ -375,6 +479,17 @@ public class CustomDialogueUI : UIToolkitDialogueUI
         base.ShowSubtitle(subtitle);
 
         if (subtitle == null) return;
+
+        // 새 대사가 표시되면 자동진행 대기 시간을 초기화한다.
+        _autoAdvanceTimer = 0f;
+        _continueButtonVisible = false;
+
+        // 되감기용 기록: 화면에 실제로 표시된 대사만 저장한다.
+        // (_isBacklogNavigating 중에는 GotoState가 다시 호출한 것이므로 중복 기록하지 않음)
+        if (!_isBacklogNavigating && !string.IsNullOrEmpty(subtitle.formattedText.text))
+        {
+            RecordBacklogEntry(subtitle.dialogueEntry);
+        }
 
         var doc = GetUIDocument();
         if (doc == null || doc.rootVisualElement == null) return;
@@ -763,6 +878,14 @@ public class CustomDialogueUI : UIToolkitDialogueUI
         bool muteSmallKana = isJapanese && (beep == null || beep.muteSmallKanaInJapanese);
         bool handleKanji = isJapanese && (beep == null || beep.multiBeepForKanjiInJapanese);
 
+        // 일본어는 한 글자가 담는 정보량이 많아 같은 글자 수라도 한국어/영어보다
+        // 금방 끝나 보인다. 글자당 출력 시간을 배율만큼 늘려 비프음이 충분히 이어지게 한다.
+        if (isJapanese)
+        {
+            float japaneseMultiplier = beep != null ? Mathf.Max(1f, beep.japaneseDelayMultiplier) : 1.5f;
+            charDelay *= japaneseMultiplier;
+        }
+
         if (debugBeepLogs)
         {
             Debug.Log($"[CustomDialogueUI] Typewriter: label='{state.label?.name}', isJapanese={isJapanese} | text='{state.fullText}'");
@@ -804,14 +927,14 @@ public class CustomDialogueUI : UIToolkitDialogueUI
             if (isKanji)
             {
                 float multiplier = beep != null ? beep.kanjiDelayMultiplier : 1.6f;
-                // 최소 0.08초를 확보하여 두 비프음이 귀로 뚜렷하게 구분되도록 보장
-                float kanjiTotalDelay = Mathf.Max(charDelay * multiplier, 0.08f);
+                int kanjiBeeps = beep != null ? Mathf.Max(1, beep.kanjiBeepCount) : 2;
+                // 비프음 사이에 최소 간격을 확보해 여러 번의 소리로 뚜렷하게 구분되게 한다.
+                float minBeepInterval = beep != null ? Mathf.Max(0.01f, beep.minBeepInterval) : 0.045f;
+                float kanjiTotalDelay = Mathf.Max(charDelay * multiplier, minBeepInterval * kanjiBeeps);
+                float stepDelay = kanjiTotalDelay / kanjiBeeps;
 
                 if (shouldPlaySound)
                 {
-                    int kanjiBeeps = beep != null ? Mathf.Max(1, beep.kanjiBeepCount) : 2;
-                    float stepDelay = kanjiTotalDelay / kanjiBeeps;
-
                     if (debugBeepLogs) Debug.Log($"[CustomDialogueUI] Kanji '{c}' -> playing {kanjiBeeps} beeps (delay: {kanjiTotalDelay:F3}s)");
 
                     for (int b = 0; b < kanjiBeeps; b++)
@@ -834,15 +957,6 @@ public class CustomDialogueUI : UIToolkitDialogueUI
             }
             else
             {
-                if (shouldPlaySound)
-                {
-                    PlayTypewriterBeep(state.beepData, state.currentActorName, basePitch, pitchRand);
-                }
-                else if (isMutedKana && debugBeepLogs)
-                {
-                    Debug.Log($"[CustomDialogueUI] Muted small kana / prolonged mark: '{c}' (No sound)");
-                }
-
                 float currentDelay = charDelay;
                 // 요음(ゃ, ゅ, ょ 등)은 앞 글자에 붙는 소리이므로 딜레이를 약간 단축하여 시각적으로 밀착
                 if (isMutedKana && c != 'っ' && c != 'ッ' && c != 'ー')
@@ -850,18 +964,66 @@ public class CustomDialogueUI : UIToolkitDialogueUI
                     currentDelay = charDelay * 0.5f;
                 }
 
+                bool isEllipsis = isJapanese && c == '…';
+
                 // 문장 부호 대기 또는 일반 글자 대기
                 if (PunctuationChars.Contains(c) && puncPause > 0f)
                 {
-                    yield return new WaitForSeconds(currentDelay + puncPause);
-                }
-                else if (currentDelay > 0f)
-                {
-                    yield return new WaitForSeconds(currentDelay);
+                    float pauseDuration = currentDelay + puncPause;
+
+                    if (isEllipsis)
+                    {
+                        // 일본어는 '...' 대신 '…' 한 글자를 쓰기 때문에 비프음이 적게 들린다.
+                        // 멈춤 시간 동안 여러 번 나눠 재생해 한국어 '...'와 비슷한 느낌을 준다.
+                        int beepCount = beep != null ? Mathf.Max(1, beep.ellipsisBeepCount) : 3;
+                        float stepDelay = pauseDuration / beepCount;
+
+                        for (int b = 0; b < beepCount; b++)
+                        {
+                            PlayTypewriterBeep(state.beepData, state.currentActorName, basePitch, pitchRand);
+                            if (b < beepCount - 1)
+                            {
+                                if (stepDelay > 0f) yield return new WaitForSeconds(stepDelay);
+                                else yield return null;
+                            }
+                        }
+
+                        if (stepDelay > 0f) yield return new WaitForSeconds(stepDelay);
+                        else yield return null;
+                    }
+                    else
+                    {
+                        if (shouldPlaySound)
+                        {
+                            PlayTypewriterBeep(state.beepData, state.currentActorName, basePitch, pitchRand);
+                        }
+                        else if (isMutedKana && debugBeepLogs)
+                        {
+                            Debug.Log($"[CustomDialogueUI] Muted small kana / prolonged mark: '{c}' (No sound)");
+                        }
+
+                        yield return new WaitForSeconds(pauseDuration);
+                    }
                 }
                 else
                 {
-                    yield return null;
+                    if (shouldPlaySound)
+                    {
+                        PlayTypewriterBeep(state.beepData, state.currentActorName, basePitch, pitchRand);
+                    }
+                    else if (isMutedKana && debugBeepLogs)
+                    {
+                        Debug.Log($"[CustomDialogueUI] Muted small kana / prolonged mark: '{c}' (No sound)");
+                    }
+
+                    if (currentDelay > 0f)
+                    {
+                        yield return new WaitForSeconds(currentDelay);
+                    }
+                    else
+                    {
+                        yield return null;
+                    }
                 }
             }
         }
@@ -911,6 +1073,13 @@ public class CustomDialogueUI : UIToolkitDialogueUI
         }
 
         if (typewriterAudioSource == null) return;
+
+        // 사운드 Off 상태면 비프음을 재생하지 않는다.
+        if (!_soundEnabled)
+        {
+            typewriterAudioSource.mute = true;
+            return;
+        }
 
         // 2D 오디오 및 볼륨 안전장치
         typewriterAudioSource.spatialBlend = 0f;
@@ -1111,6 +1280,480 @@ public class CustomDialogueUI : UIToolkitDialogueUI
     }
 
     // ─────────────────────────────────────────────
+    // Dialogue Top Buttons (Backlog / Auto / Sound)
+    // ─────────────────────────────────────────────
+
+    private void OnLanguageChanged(string language)
+    {
+        UpdateTopButtonTexts();
+
+        // 폰트 로컬라이저가 먼저/나중에 실행될 수 있으므로 다음 프레임에 다시 복사한다.
+        ScheduleFontCopy();
+    }
+
+    private void EnsureTopRightButtons()
+    {
+        if (IsBound(_backlogButton) && IsBound(_autoAdvanceButton) && IsBound(_soundButton))
+        {
+            return;
+        }
+
+        var doc = GetUIDocument();
+        if (doc == null || doc.rootVisualElement == null) return;
+
+        // 버튼은 UIToolkitDialogueUIDialogueTemplate.uxml에 정적으로 배치되어 있다.
+        var root = doc.rootVisualElement;
+
+        if (!IsBound(_backlogButton))
+        {
+            _backlogButton = root.Q<Button>("BacklogButton");
+            if (_backlogButton != null)
+            {
+                _backlogButton.focusable = false;
+                _backlogButton.clicked -= OnBacklogButtonClicked;
+                _backlogButton.clicked += OnBacklogButtonClicked;
+            }
+        }
+
+        if (!IsBound(_autoAdvanceButton))
+        {
+            _autoAdvanceButton = root.Q<Button>("AutoAdvanceButton");
+            if (_autoAdvanceButton != null)
+            {
+                _autoAdvanceButton.focusable = false;
+                _autoAdvanceButton.clicked -= OnAutoAdvanceButtonClicked;
+                _autoAdvanceButton.clicked += OnAutoAdvanceButtonClicked;
+            }
+        }
+
+        if (!IsBound(_soundButton))
+        {
+            _soundButton = root.Q<Button>("SoundButton");
+            if (_soundButton != null)
+            {
+                _soundButton.focusable = false;
+                _soundButton.clicked -= OnSoundButtonClicked;
+                _soundButton.clicked += OnSoundButtonClicked;
+            }
+        }
+
+        if (!IsBound(_backlogButton) || !IsBound(_autoAdvanceButton) || !IsBound(_soundButton))
+        {
+            if (!_topButtonsMissingLogged)
+            {
+                Debug.LogWarning("[CustomDialogueUI] Dialogue UXML에서 우측 상단 버튼(BacklogButton / AutoAdvanceButton / SoundButton)을 모두 찾지 못했습니다.");
+                _topButtonsMissingLogged = true;
+            }
+            return;
+        }
+
+        _topButtonsMissingLogged = false;
+
+        UpdateTopButtonTexts();
+        ApplySubtitleFontToTopButtons();
+
+        // 로컬라이저가 폰트를 적용한 뒤 한 번 더 복사
+        ScheduleFontCopy();
+
+        UpdateTopButtonStates();
+    }
+
+    private static bool IsBound(Button button)
+    {
+        return button != null && button.panel != null;
+    }
+
+    private bool IsJapaneseUI()
+    {
+        string language = (PixelCrushers.UILocalizationManager.instance != null)
+            ? PixelCrushers.UILocalizationManager.instance.currentLanguage
+            : null;
+
+        return !string.IsNullOrEmpty(language)
+            && (language.Equals("ja", System.StringComparison.OrdinalIgnoreCase)
+                || language.Equals("jp", System.StringComparison.OrdinalIgnoreCase));
+    }
+
+    private void UpdateTopButtonTexts()
+    {
+        bool japanese = IsJapaneseUI();
+
+        if (_backlogButton != null)
+        {
+            _backlogButton.text = japanese ? backlogButtonTextJa : backlogButtonTextKo;
+        }
+
+        if (_autoAdvanceButton != null)
+        {
+            _autoAdvanceButton.text = japanese ? autoAdvanceButtonTextJa : autoAdvanceButtonTextKo;
+        }
+
+        if (_soundButton != null)
+        {
+            _soundButton.text = _soundEnabled
+                ? (japanese ? soundOnButtonTextJa : soundOnButtonTextKo)
+                : (japanese ? soundOffButtonTextJa : soundOffButtonTextKo);
+        }
+    }
+
+    private void ScheduleFontCopy()
+    {
+        if (_backlogButton != null && _backlogButton.panel != null)
+        {
+            _backlogButton.schedule.Execute(ApplySubtitleFontToTopButtons).ExecuteLater(0);
+        }
+        else if (_autoAdvanceButton != null && _autoAdvanceButton.panel != null)
+        {
+            _autoAdvanceButton.schedule.Execute(ApplySubtitleFontToTopButtons).ExecuteLater(0);
+        }
+        else if (_soundButton != null && _soundButton.panel != null)
+        {
+            _soundButton.schedule.Execute(ApplySubtitleFontToTopButtons).ExecuteLater(0);
+        }
+    }
+
+    private void ApplySubtitleFontToTopButtons()
+    {
+        var doc = GetUIDocument();
+        if (doc == null || doc.rootVisualElement == null) return;
+
+        var root = doc.rootVisualElement;
+        var sample = root.Q<Label>("NPCSubtitleLabel")
+                     ?? root.Q<Label>("PCSubtitleLabel")
+                     ?? root.Q<Label>("ShoutSubtitleLabel")
+                     ?? root.Q<Label>("ThoughtSubtitleLabel");
+
+        if (sample == null) return;
+
+        var fontDefinition = sample.style.unityFontDefinition.value;
+        if (fontDefinition.font == null && fontDefinition.fontAsset == null) return;
+
+        ApplyFont(_backlogButton, fontDefinition);
+        ApplyFont(_autoAdvanceButton, fontDefinition);
+        ApplyFont(_soundButton, fontDefinition);
+    }
+
+    private static void ApplyFont(Button button, FontDefinition fontDefinition)
+    {
+        if (button == null) return;
+        button.style.unityFontDefinition = new StyleFontDefinition(fontDefinition);
+    }
+
+    private void SetTopButtonsDisplay(bool visible)
+    {
+        var display = visible ? DisplayStyle.Flex : DisplayStyle.None;
+
+        if (_backlogButton != null) _backlogButton.style.display = display;
+        if (_autoAdvanceButton != null) _autoAdvanceButton.style.display = display;
+        if (_soundButton != null) _soundButton.style.display = display;
+    }
+
+    private void UpdateTopButtonStates()
+    {
+        bool conversationActive = DialogueManager.isConversationActive;
+        bool canRewind = conversationActive && _backlogEntries.Count >= 2;
+
+        if (_backlogButton != null)
+        {
+            bool showBacklog = conversationActive && enableBacklogRewind;
+            _backlogButton.style.display = showBacklog ? DisplayStyle.Flex : DisplayStyle.None;
+            _backlogButton.SetEnabled(canRewind);
+            _backlogButton.style.opacity = canRewind ? 1f : 0.45f;
+        }
+
+        if (_autoAdvanceButton != null)
+        {
+            _autoAdvanceButton.style.display =
+                (conversationActive && enableAutoAdvanceButton) ? DisplayStyle.Flex : DisplayStyle.None;
+            _autoAdvanceButton.SetEnabled(conversationActive);
+            _autoAdvanceButton.EnableInClassList("is-active", _autoAdvanceEnabled);
+        }
+
+        if (_soundButton != null)
+        {
+            _soundButton.style.display =
+                (conversationActive && enableSoundButton) ? DisplayStyle.Flex : DisplayStyle.None;
+            _soundButton.SetEnabled(conversationActive);
+        }
+    }
+
+    // ─────────────────────────────────────────────
+    // Auto Advance
+    // ─────────────────────────────────────────────
+
+    private void OnAutoAdvanceButtonClicked()
+    {
+        _autoAdvanceEnabled = !_autoAdvanceEnabled;
+        _autoAdvanceTimer = 0f;
+        UpdateTopButtonStates();
+    }
+
+    private void UpdateAutoAdvance()
+    {
+        if (!_autoAdvanceEnabled || !DialogueManager.isConversationActive)
+        {
+            _autoAdvanceTimer = 0f;
+            return;
+        }
+
+        // 응답 메뉴/되감기 중에는 자동 진행하지 않는다.
+        if (_responseMenuVisible || _isBacklogNavigating)
+        {
+            _autoAdvanceTimer = 0f;
+            return;
+        }
+
+        // 타이핑이 끝나고, 시퀀스 연출과 컨티뉴 버튼 표시가 끝난 뒤에만 진행한다.
+        if (IsAnyTypewriterTyping() || IsConversationSequencerPlaying() || !_continueButtonVisible)
+        {
+            _autoAdvanceTimer = 0f;
+            return;
+        }
+
+        _autoAdvanceTimer += Time.deltaTime;
+        if (_autoAdvanceTimer < Mathf.Max(0f, autoAdvanceDelay)) return;
+
+        _autoAdvanceTimer = 0f;
+
+        // 월드 클릭 판정(오브젝트 상호작용)을 건너뛰고 대화만 넘긴다.
+        base.OnContinueConversation();
+    }
+
+    private bool IsAnyTypewriterTyping()
+    {
+        for (int i = 0; i < _typewriterStates.Count; i++)
+        {
+            if (_typewriterStates[i] != null && _typewriterStates[i].isTyping) return true;
+        }
+        return false;
+    }
+
+    private static bool IsConversationSequencerPlaying()
+    {
+        var controller = DialogueManager.conversationController;
+        if (controller == null) return false;
+
+        var view = controller.conversationView;
+        if (view == null || view.sequencer == null) return false;
+
+        return view.sequencer.isPlaying;
+    }
+
+    // ─────────────────────────────────────────────
+    // Sound On/Off
+    // ─────────────────────────────────────────────
+
+    private void LoadSoundSetting()
+    {
+        _soundEnabled = !rememberSoundSetting || PlayerPrefs.GetInt(SoundEnabledPrefsKey, 1) != 0;
+    }
+
+    private void OnSoundButtonClicked()
+    {
+        _soundEnabled = !_soundEnabled;
+        ApplySoundState();
+
+        if (rememberSoundSetting)
+        {
+            PlayerPrefs.SetInt(SoundEnabledPrefsKey, _soundEnabled ? 1 : 0);
+            PlayerPrefs.Save();
+        }
+
+        UpdateTopButtonTexts();
+    }
+
+    private void ApplySoundState()
+    {
+        if (soundToggleScope == SoundToggleScope.AllAudio)
+        {
+            if (_soundEnabled)
+            {
+                // 이 UI 때문에 음소거한 경우에만 원래 볼륨으로 되돌린다.
+                if (_mutedByThisUI)
+                {
+                    AudioListener.volume = _volumeBeforeMute;
+                    _mutedByThisUI = false;
+                }
+            }
+            else
+            {
+                if (!_mutedByThisUI)
+                {
+                    _volumeBeforeMute = AudioListener.volume > 0f ? AudioListener.volume : 1f;
+                    _mutedByThisUI = true;
+                }
+                AudioListener.volume = 0f;
+            }
+        }
+
+        if (typewriterAudioSource != null)
+        {
+            typewriterAudioSource.mute = !_soundEnabled;
+        }
+    }
+
+    private void RecordBacklogEntry(DialogueEntry entry)
+    {
+        if (entry == null) return;
+
+        // 같은 대사가 연속으로 다시 표시되는 경우(리마인더 등) 중복 기록 방지
+        if (_backlogEntries.Count > 0 && _backlogEntries[_backlogEntries.Count - 1] == entry) return;
+
+        // ShowSubtitle은 시퀀스 재생 전에 호출되므로 이 시점의 상태가
+        // 해당 대사 시퀀스의 시작 상태가 된다.
+        // 단, 이전 대사를 중간에 넘겼다면 그 액션들은 한 프레임 뒤에야 최종값으로 스냅되므로,
+        // 중간값이 저장되지 않도록 먼저 정착시킨 뒤 캡처한다.
+        DialogueWorldState.SettlePendingActions();
+        _backlogWorldStates.Add(DialogueWorldState.Capture());
+        _backlogEntries.Add(entry);
+
+        int maxEntries = Mathf.Max(2, backlogMaxEntries);
+        while (_backlogEntries.Count > maxEntries)
+        {
+            _backlogEntries.RemoveAt(0);
+            if (_backlogWorldStates.Count > 0) _backlogWorldStates.RemoveAt(0);
+        }
+
+        // 예외 상황에서 두 리스트의 길이가 어긋나지 않도록 보정
+        while (_backlogWorldStates.Count > _backlogEntries.Count)
+        {
+            _backlogWorldStates.RemoveAt(_backlogWorldStates.Count - 1);
+        }
+    }
+
+    private void ClearBacklogHistory()
+    {
+        _backlogEntries.Clear();
+        _backlogWorldStates.Clear();
+        _isBacklogNavigating = false;
+    }
+
+    private void OnBacklogButtonClicked()
+    {
+        if (!enableBacklogRewind) return;
+        if (_isBacklogNavigating) return;
+        if (!DialogueManager.isConversationActive) return;
+        if (_backlogEntries.Count < 2) return;
+
+        var controller = DialogueManager.conversationController;
+        if (controller == null) return;
+
+        var model = controller.conversationModel;
+        var view = controller.conversationView;
+        if (model == null || view == null) return;
+
+        int previousIndex = _backlogEntries.Count - 2;
+        var previousEntry = _backlogEntries[previousIndex];
+        DialogueWorldState previousWorldState =
+            (previousIndex < _backlogWorldStates.Count) ? _backlogWorldStates[previousIndex] : null;
+
+        // skipExecution: 이전 대사의 Lua Script/OnExecute를 다시 실행하지 않는다.
+        // (시퀀스는 GotoState -> StartSubtitle에서 정상적으로 다시 재생됨)
+        var previousState = model.GetState(previousEntry, true, false, true);
+        if (previousState == null || previousState.subtitle == null) return;
+
+        // 이 클릭이 대화 넘김/월드 상호작용으로 중복 처리되지 않도록 차단 시간 갱신
+        _lastBlockedTime = Time.time;
+
+        // 응답 메뉴가 열려 있었다면 닫고, 응답 메뉴 시퀀스의 콜백 상태도 복구한다.
+        StopResponseMenuIfOpen(view);
+
+        // 현재 대사의 카메라 커맨드가 OnDestroy에서 복원된 카메라 값을
+        // 덮어쓰지 않도록 세대 번호를 갱신하고 진행 중인 줌 큐를 취소한다.
+        DialogueCameraState.BeginRewindCleanup();
+
+        // 현재 대사의 시퀀스/타이핑이 되감기 연출과 겹치지 않도록 중단
+        StopAllTypewriters();
+        if (view.sequencer != null)
+        {
+            view.sequencer.Stop();
+        }
+
+        // Stop()은 액션 커맨드를 다음 프레임에 Destroy하므로, 그 전에 캐릭터 큐를 비워
+        // OnDestroy의 CancelOrSnapAction이 복원값을 덮어쓰지 않게 한다.
+        DialogueWorldState.CancelAllActions();
+
+        // 이전 대사의 시퀀스가 시작되기 직전 상태로 되돌린다.
+        // GotoState가 해당 시퀀스를 다시 재생하므로 원래 시작 위치에서 연출이 재현된다.
+        if (previousWorldState != null)
+        {
+            previousWorldState.Restore();
+        }
+
+        _isBacklogNavigating = true;
+        try
+        {
+            controller.GotoState(previousState);
+        }
+        finally
+        {
+            _isBacklogNavigating = false;
+        }
+
+        // 현재 대사(미래)를 기록에서 제거해야 버튼을 다시 누를 때 한 단계 더 과거로 간다.
+        if (_backlogEntries.Count >= 2)
+        {
+            int lastIndex = _backlogEntries.Count - 1;
+            _backlogEntries.RemoveAt(lastIndex);
+            if (lastIndex < _backlogWorldStates.Count)
+            {
+                _backlogWorldStates.RemoveAt(lastIndex);
+            }
+        }
+
+        UpdateTopButtonStates();
+    }
+
+    private void StopResponseMenuIfOpen(ConversationView view)
+    {
+        // 응답 메뉴가 없어도 안전하게 호출 가능
+        if (DialogueManager.dialogueUI != null)
+        {
+            DialogueManager.dialogueUI.HideResponses();
+        }
+
+        // PlayResponseMenuSequence()는 ConversationView의 FinishedSequenceHandler를 해제한다.
+        // StopResponseMenuSequence()가 private이라 리플렉션으로 호출해 핸들러를 복구한다.
+        // (현재 DB에는 응답이 없지만, 추후 응답 메뉴를 추가해도 되감기가 막히지 않도록 처리)
+        var method = typeof(ConversationView).GetMethod(
+            "StopResponseMenuSequence",
+            System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+
+        if (method == null) return;
+
+        try
+        {
+            method.Invoke(view, null);
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogWarning($"[CustomDialogueUI] Could not stop response menu sequence: {e.Message}");
+        }
+    }
+
+    private void StopAllTypewriters()
+    {
+        foreach (var state in _typewriterStates)
+        {
+            if (state == null) continue;
+
+            if (state.coroutine != null)
+            {
+                StopCoroutine(state.coroutine);
+                state.coroutine = null;
+            }
+
+            // 숨겨지는 패널에 반투명 꼬리가 남지 않도록 전체 텍스트로 복원
+            if (state.label != null && !string.IsNullOrEmpty(state.fullText))
+            {
+                state.label.text = state.fullText;
+            }
+
+            state.isTyping = false;
+        }
+    }
+
+    // ─────────────────────────────────────────────
     // Panel Selection Overrides
     // ─────────────────────────────────────────────
 
@@ -1134,11 +1777,38 @@ public class CustomDialogueUI : UIToolkitDialogueUI
 
     public override void ShowContinueButton(Subtitle subtitle)
     {
+        // 자동진행은 "컨티뉴 버튼이 떠 있는 상태"에서만 동작한다.
+        // (시퀀스가 아직 재생 중이면 IsConversationSequencerPlaying()에서 한 번 더 막는다.)
+        _continueButtonVisible = true;
+
         var panel = GetSubtitlePanel(subtitle);
         if (panel != null)
             panel.ShowContinueButton();
         else
             base.ShowContinueButton(subtitle);
+    }
+
+    public override void HideContinueButton(Subtitle subtitle)
+    {
+        _continueButtonVisible = false;
+
+        var panel = GetSubtitlePanel(subtitle);
+        if (panel != null)
+            panel.HideContinueButton();
+        else
+            base.HideContinueButton(subtitle);
+    }
+
+    public override void ShowResponses(Subtitle subtitle, Response[] responses, float timeout)
+    {
+        _responseMenuVisible = true;
+        base.ShowResponses(subtitle, responses, timeout);
+    }
+
+    public override void HideResponses()
+    {
+        _responseMenuVisible = false;
+        base.HideResponses();
     }
 
     public override void HideSubtitle(Subtitle subtitle)

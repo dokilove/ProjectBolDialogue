@@ -23,6 +23,11 @@ public class CinemachineZoomController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 컨트롤러가 이미 생성된 경우에만 반환합니다. (없으면 새로 만들지 않음)
+    /// </summary>
+    public static CinemachineZoomController InstanceOrNull => instance;
+
     private class ZoomTracker
     {
         public CinemachineCamera vcam;
@@ -269,6 +274,62 @@ public class CinemachineZoomController : MonoBehaviour
         }
 
         lastQueuedZoom = null;
+    }
+
+    /// <summary>
+    /// 진행 중인 줌과 대기 중인 줌을 최종 목표로 스냅하지 않고 모두 취소합니다.
+    /// 백로그 되감기 직전에 호출하여 이전 대사의 줌이 복원값을 덮어쓰지 않게 합니다.
+    /// </summary>
+    public void CancelAllZooms()
+    {
+        StopAllCoroutines();
+        activeZoomCoroutine = null;
+        zoomQueue.Clear();
+        isProcessingQueue = false;
+        lastQueuedZoom = null;
+    }
+
+    /// <summary>
+    /// 현재 카메라 Lens 값을 기준으로 내부 목표 half-width를 다시 맞춥니다.
+    /// 백로그 복원 후 다음 줌이 복원된 카메라 배율에서 시작하도록 보장합니다.
+    /// </summary>
+    public void SyncTargetHalfWidthsFromCameras()
+    {
+        var allVcams = GameObject.FindObjectsByType<CinemachineCamera>(
+            FindObjectsInactive.Include, FindObjectsSortMode.None);
+
+        var alive = new HashSet<CinemachineCamera>(allVcams);
+        var staleKeys = new List<CinemachineCamera>();
+
+        foreach (var key in cameraTargetHalfWidths.Keys)
+        {
+            if (key == null || !alive.Contains(key))
+            {
+                staleKeys.Add(key);
+            }
+        }
+
+        for (int i = 0; i < staleKeys.Count; i++)
+        {
+            cameraTargetHalfWidths.Remove(staleKeys[i]);
+        }
+
+        float aspect = GetCurrentAspectRatio();
+        for (int i = 0; i < allVcams.Length; i++)
+        {
+            var vcam = allVcams[i];
+            if (vcam == null) continue;
+            cameraTargetHalfWidths[vcam] = vcam.Lens.OrthographicSize * aspect;
+        }
+
+        if (Camera.main != null && Camera.main.orthographic)
+        {
+            mainCameraTargetHalfWidth = Camera.main.orthographicSize * aspect;
+        }
+        else
+        {
+            mainCameraTargetHalfWidth = null;
+        }
     }
 
     private List<ZoomTracker> GetTargetCameras(string vcamName)

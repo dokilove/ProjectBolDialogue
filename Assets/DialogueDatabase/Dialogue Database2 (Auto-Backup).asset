@@ -1311,11 +1311,14 @@ MonoBehaviour:
 
           SpineDepth(Fafnir, 1.2, -1.2, 0);
 
-          SpineOrder(Fafnir,
-          3);
+          SpineDepth(Vargr,
+          0.9, 0.9, 0);
+
+          SpineOrder(Fafnir, 3);
 
 
-          SpineFocus(Janghwa, keep);
+          SpineFocus(Janghwa,
+          keep);
 
 
           CinemachineFocus(Wide_Cam);
@@ -2961,7 +2964,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 943.44824
-        y: 212.38135
+        y: 210.64221
         width: 160
         height: 30
     - id: 21
@@ -3335,7 +3338,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 1174.9376
-        y: 132.64966
+        y: 130.78922
         width: 160
         height: 30
     - id: 25
@@ -3383,7 +3386,11 @@ MonoBehaviour:
       - title: Sequence
         value: 'SpineFocus(Janghwa);
 
-          CinemachineFocus(Janghwa_Cam);'
+
+          CinemachinePosition(Wide_Cam, -5,
+          4);
+
+          CinemachineZoom(3);'
         type: 0
         typeString: 
       - title: Menu Text ko
@@ -3474,7 +3481,10 @@ MonoBehaviour:
       - title: Sequence
         value: 'SpineFocus(none);
 
-          CinemachineFocus(Wide_Cam);'
+
+          CinemachinePosition(Wide_Cam, 1, 4);
+
+          CinemachineZoom(6);'
         type: 0
         typeString: CustomFieldType_Text
       - title: Menu Text ko
@@ -3565,7 +3575,19 @@ MonoBehaviour:
       - title: Sequence
         value: 'SpineFocus(Vargr);
 
-          CinemachineFocus(Vargr_Cam);'
+
+
+          CinemachinePosition(Wide_Cam, 12,
+          4);
+
+          CinemachineZoom(3);
+
+
+          SpineMoveTo(Vargr, 12, 0,
+          1.6, 0.2, true, 0.06, 0.5);
+
+
+'
         type: 0
         typeString: 
       - title: Menu Text ko
@@ -3585,9 +3607,9 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: CharsPerSecond
-        value: 
+        value: 0
         type: 1
-        typeString: 
+        typeString: CustomFieldType_Number
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -3609,8 +3631,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1174.9376
-        y: 383.11133
+        x: 1176.7981
+        y: 379.63293
         width: 160
         height: 30
     - id: 28
@@ -3838,7 +3860,11 @@ MonoBehaviour:
 
           SpineFocus(Fafnir);
 
-          CinemachineFocus(Fafnir_Cam);'
+          CinemachineFocus(Fafnir_Cam);
+
+
+          SpineFlip(Fafnir,
+          right, 0.1);'
         type: 0
         typeString: 
       - title: Menu Text ko
@@ -3973,7 +3999,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1399.9124
+        x: 1405.1299
         y: 290.24652
         width: 160
         height: 30
@@ -4298,10 +4324,13 @@ MonoBehaviour:
 
           SpineFocus(none);
 
-          CinemachineFocus(Chona_Cam);
+          CinemachineFocus(Chona_Cam,
+          0);
 
-          CinemachineZoom(2,
-          1.0);'
+          CinemachineZoom(2, 0);
+
+          CinemachinePosition(Chona_Cam,
+          2, 3);'
         type: 0
         typeString: 
       - title: Menu Text ko
@@ -4350,7 +4379,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 1595.3834
-        y: 225.36745
+        y: 223.62831
         width: 160
         height: 30
     - id: 36
@@ -4398,10 +4427,10 @@ MonoBehaviour:
 
           SpineFocus(Fafnir);
 
-          CinemachineFocus(Fafnir_Cam);
+          CinemachineFocus(Fafnir_Cam,
+          0);
 
-          CinemachineZoom(3.5,
-          1.0);'
+          CinemachineZoom(3.5, 0);'
         type: 0
         typeString: 
       - title: Menu Text ko
@@ -4589,10 +4618,13 @@ MonoBehaviour:
 
           SpineFocus(none);
 
-          CinemachineFocus(Chona_Cam);
+          CinemachineFocus(Chona_Cam,
+          0);
 
-          CinemachineZoom(2,
-          1.0);'
+          CinemachineZoom(2, 0);
+
+          CinemachinePosition(Chona_Cam,
+          2, 3);'
         type: 0
         typeString: 
       - title: Menu Text ko
@@ -4683,10 +4715,10 @@ MonoBehaviour:
       - title: Sequence
         value: 'SpineFocus(Fafnir);
 
-          CinemachineFocus(Fafnir_Cam);
+          CinemachineFocus(Fafnir_Cam, 0);
 
           CinemachineZoom(3.5,
-          1.0);'
+          0);'
         type: 0
         typeString: 
       - title: Menu Text ko
@@ -4876,10 +4908,13 @@ MonoBehaviour:
 
           SpineFocus(none);
 
-          CinemachineFocus(Chona_Cam);
+          CinemachineFocus(Chona_Cam,
+          0);
 
-          CinemachineZoom(2,
-          1.0);'
+          CinemachineZoom(2, 0);
+
+          CinemachinePosition(Chona_Cam,
+          2, 3);'
         type: 0
         typeString: 
       - title: Menu Text ko
@@ -4923,7 +4958,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1825.3699
+        x: 1827.1089
         y: 373.81857
         width: 160
         height: 30
@@ -4968,10 +5003,10 @@ MonoBehaviour:
       - title: Sequence
         value: 'SpineFocus(Fafnir);
 
-          CinemachineFocus(Fafnir_Cam);
+          CinemachineFocus(Fafnir_Cam, 0);
 
           CinemachineZoom(3.5,
-          1.0);'
+          0);'
         type: 0
         typeString: 
       - title: Menu Text ko
@@ -5062,7 +5097,36 @@ MonoBehaviour:
 
           SpineFocus(Vargr);
 
-          CinemachineFocus(Vargr_Cam);'
+          CinemachineFocus(Vargr_Cam,
+          0);
+
+
+          CinemachineZoom(2, 0);
+
+
+          SpineTRS(Vargr, 12,
+          0, 10, 0.1, "1, 1.2", "0.5, 0", "EaseInOut", "noflip");
+
+          SpineTRS(Vargr,
+          12, 0, 0, 0.1, "1, 0.8", "0.5, 0", "EaseInOut", "noflip");
+
+          SpineTRS(Vargr,
+          12, 0, -10, 0.1, "1, 1.2", "0.5, 0", "EaseInOut", "noflip");
+
+          SpineTRS(Vargr,
+          12, 0, 0, 0.1, "1, 0.8", "0.5, 0", "EaseInOut", "noflip");
+
+          SpineTRS(Vargr,
+          12, 0, 10, 0.1, "1, 1.2", "0.5, 0", "EaseInOut", "noflip");
+
+          SpineTRS(Vargr,
+          12, 0, 0, 0.1, "1, 0.8", "0.5, 0", "EaseInOut", "noflip");
+
+          SpineTRS(Vargr,
+          12, 0, -10, 0.1, "1, 1.2", "0.5, 0", "EaseInOut", "noflip");
+
+          SpineTRS(Vargr,
+          12, 0, 0, 0.1, 1, "0.5, 0", "EaseInOut", "noflip");'
         type: 0
         typeString: 
       - title: Menu Text ko
@@ -5160,10 +5224,16 @@ MonoBehaviour:
 
           SpineFocus(none);
 
-          CinemachineFocus(Chona_Cam);
+          CinemachineFocus(Chona_Cam,
+          0);
 
-          CinemachineZoom(2,
-          1.0);'
+          CinemachineZoom(2, 0);
+
+          CinemachinePosition(Chona_Cam,
+          2, 3);
+
+
+          SpineTrack(Fafnir, face, Expression_Embarrassed);'
         type: 0
         typeString: 
       - title: Menu Text ko
@@ -5208,7 +5278,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 2022.3191
-        y: 264.31033
+        y: 262.57123
         width: 160
         height: 30
     - id: 46
@@ -5252,10 +5322,12 @@ MonoBehaviour:
       - title: Sequence
         value: '
 
-          CinemachineFocus(Wide_Cam);
+          CinemachineFocus(Wide_Cam, 0);
 
-          CinemachineZoom(7,
-          3.0);'
+          CinemachinePosition(Wide_Cam,
+          7, 4);
+
+          CinemachineZoom(6);'
         type: 0
         typeString: 
       - title: Menu Text ko
@@ -5294,7 +5366,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 2022.0579
-        y: 350.91846
+        y: 352.6576
         width: 160
         height: 30
     - id: 47
@@ -5389,8 +5461,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 35.78662, y: 0}
-    canvasZoom: 0.43000004
+    canvasScrollPosition: {x: 490.4347, y: 0}
+    canvasZoom: 0.46000004
   - id: 3
     fields:
     - title: Title

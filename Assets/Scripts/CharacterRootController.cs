@@ -24,6 +24,18 @@ public class CharacterRootController : MonoBehaviour
         public bool targetFacing;
     }
 
+    public struct CharacterState
+    {
+        public Vector3 RootPosition;
+        public Quaternion RootRotation;
+        public Vector3 RootLocalScale;
+        public bool FacingRight;
+        public bool HasVisual;
+        public SpineVisualContainerController.VisualState Visual;
+        public bool HasModel;
+        public SpineDualLayerController.VisualState Model;
+    }
+
     private int actionIdCounter = 0;
     private QueuedAction currentRunningAction = null;
     private Queue<QueuedAction> actionQueue = new Queue<QueuedAction>();
@@ -379,6 +391,85 @@ public class CharacterRootController : MonoBehaviour
             }
             matchedWaiting.onComplete?.Invoke();
         }
+    }
+
+    /// <summary>
+    /// 현재 캐릭터의 위치/회전/방향/스파인 상태를 저장합니다.
+    /// 대사가 표시되기 직전(시퀀스 재생 전)에 호출하면 해당 대사의 시작 상태가 됩니다.
+    /// </summary>
+    public CharacterState CaptureState()
+    {
+        var visual = visualContainerController;
+        var model = (visual != null) ? visual.modelController : null;
+
+        return new CharacterState
+        {
+            RootPosition = transform.position,
+            RootRotation = transform.rotation,
+            RootLocalScale = transform.localScale,
+            FacingRight = IsFacingRight,
+            HasVisual = visual != null,
+            Visual = visual != null ? visual.CaptureState() : default,
+            HasModel = model != null,
+            Model = model != null ? model.CaptureState() : default
+        };
+    }
+
+    /// <summary>
+    /// 저장된 상태로 즉시 복원합니다. 진행 중인 이동/회전/플립 액션은 콜백 없이 취소합니다.
+    /// </summary>
+    public void RestoreState(CharacterState state)
+    {
+        CancelAllActions();
+
+        transform.position = state.RootPosition;
+        transform.rotation = state.RootRotation;
+        transform.localScale = state.RootLocalScale;
+
+        if (visualContainerController != null && state.HasVisual)
+        {
+            visualContainerController.RestoreState(state.Visual);
+        }
+
+        if (visualContainerController != null &&
+            visualContainerController.modelController != null &&
+            state.HasModel)
+        {
+            visualContainerController.modelController.RestoreState(state.Model);
+        }
+
+        SetFacing(state.FacingRight);
+    }
+
+    /// <summary>
+    /// 현재 실행 중이거나 큐에 대기 중인 모든 액션을 콜백 없이 취소합니다.
+    /// 백로그 복원 시 기존 액션의 Snap/콜백이 복원값을 덮어쓰지 않도록 사용합니다.
+    /// </summary>
+    public void CancelAllActions()
+    {
+        if (actionQueueCoroutine != null)
+        {
+            StopCoroutine(actionQueueCoroutine);
+            actionQueueCoroutine = null;
+        }
+
+        if (activeFlipCoroutine != null)
+        {
+            StopCoroutine(activeFlipCoroutine);
+            activeFlipCoroutine = null;
+        }
+
+        if (visualContainerController != null)
+        {
+            visualContainerController.StopDepthAnimation();
+        }
+
+        currentRunningAction = null;
+        actionQueue.Clear();
+        isProcessingActionQueue = false;
+        lastQueuedTarget = null;
+        lastQueuedRotate = null;
+        lastQueuedScale = null;
     }
 
     /// <summary>

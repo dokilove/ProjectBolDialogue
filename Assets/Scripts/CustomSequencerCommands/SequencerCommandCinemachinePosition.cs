@@ -34,6 +34,7 @@
 //
 // 스킵(Skip) 동작 특성:
 //   - 카메라 이동 도중 대사를 스킵하더라도 OnDestroy에서 최종 목표 좌표(targetX, targetY)로 즉시 칼같이 스냅(Snap)됩니다.
+//   - 단, 백로그 되감기로 취소된 이전 세대 커맨드는 복원된 카메라 상태를 덮어쓰지 않도록 스냅하지 않습니다.
 //   - 대상 카메라가 다른 오브젝트를 추적(Follow) 중이었다면 수동 위치 제어를 위해 추적을 자동으로 해제합니다.
 // =================================================================================================
 
@@ -54,9 +55,12 @@ public class SequencerCommandCinemachinePosition : SequencerCommand
     private bool isDone = false;
     private CinemachineCamera targetCam;
     private Vector3 finalTargetPos;
+    private int rewindGeneration;
 
     void Start()
     {
+        rewindGeneration = DialogueCameraState.RewindGeneration;
+
         string param0 = GetParameter(0);
         string param1 = GetParameter(1);
         string param2 = GetParameter(2);
@@ -161,7 +165,10 @@ public class SequencerCommandCinemachinePosition : SequencerCommand
 
     void OnDestroy()
     {
-        if (!isDone && targetCam != null)
+        // 백로그 되감기로 취소된 이전 세대 커맨드는 복원된 카메라를 덮어쓰지 않는다.
+        if (!isDone &&
+            targetCam != null &&
+            rewindGeneration == DialogueCameraState.RewindGeneration)
         {
             targetCam.transform.position = finalTargetPos;
         }
@@ -172,6 +179,12 @@ public class SequencerCommandCinemachinePosition : SequencerCommand
         float elapsed = 0f;
         while (elapsed < duration)
         {
+            // 되감기가 시작되면 이전 세대의 이동 루틴은 즉시 중단한다.
+            if (rewindGeneration != DialogueCameraState.RewindGeneration)
+            {
+                yield break;
+            }
+
             elapsed += Time.deltaTime;
             float ratio = Mathf.Clamp01(elapsed / duration);
             float easedRatio = CharacterRootController.EvaluateEase(easeType, ratio);
@@ -181,6 +194,11 @@ public class SequencerCommandCinemachinePosition : SequencerCommand
                 vcam.transform.position = Vector3.Lerp(startPos, targetPos, easedRatio);
             }
             yield return null;
+        }
+
+        if (rewindGeneration != DialogueCameraState.RewindGeneration)
+        {
+            yield break;
         }
 
         if (vcam != null)

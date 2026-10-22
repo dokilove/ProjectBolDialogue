@@ -33,6 +33,7 @@
 // 스킵(Skip) 동작 특성:
 //   - 대사를 스킵하거나 노드가 조기 파괴되더라도 OnDestroy에서 CinemachineZoomController.Instance.SkipAllZooms()를 호출하여
 //     최종 목표 줌 값으로 즉시 이동되므로 화면 배율이 어긋나지 않습니다.
+//   - 단, 백로그 되감기로 취소된 이전 세대 커맨드는 복원된 카메라 줌 상태를 덮어쓰지 않습니다.
 // =================================================================================================
 
 using System;
@@ -48,9 +49,12 @@ using PixelCrushers.DialogueSystem.SequencerCommands;
 public class SequencerCommandCinemachineZoom : SequencerCommand
 {
     private bool isDone = false;
+    private int rewindGeneration;
 
     void Start()
     {
+        rewindGeneration = DialogueCameraState.RewindGeneration;
+
         float targetOrthoSizeAt4x3 = GetParameterAsFloat(0, 5f);
         float duration = GetParameterAsFloat(1, 0f);
 
@@ -86,9 +90,16 @@ public class SequencerCommandCinemachineZoom : SequencerCommand
 
     void OnDestroy()
     {
-        if (!isDone && CinemachineZoomController.Instance != null)
+        // 되감기로 취소된 이전 세대 커맨드는 새로 시작된 대상 대사의 줌 큐를 건드리지 않는다.
+        if (isDone || rewindGeneration != DialogueCameraState.RewindGeneration)
         {
-            CinemachineZoomController.Instance.SkipAllZooms();
+            return;
+        }
+
+        var zoom = CinemachineZoomController.InstanceOrNull;
+        if (zoom != null)
+        {
+            zoom.SkipAllZooms();
         }
     }
 
