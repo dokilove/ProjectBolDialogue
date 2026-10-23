@@ -431,6 +431,11 @@ public class CustomDialogueUI : UIToolkitDialogueUI
 
     public override void Open()
     {
+        // 대화 시작 전에 동적 스테이지를 보장한다. 첫 대사/시퀀스보다 먼저 실행되어야 한다.
+        // (파괴된 빌더를 ?.로 호출하지 않도록 Unity의 null 비교를 사용한다.)
+        var stageBuilder = DialogueStageBuilder.Current;
+        if (stageBuilder != null) stageBuilder.EnsureBuilt();
+
         base.Open();
         // NPC 상호작용 등으로 대화가 시작될 때, 버튼을 떼는(Mouse UP) 순간 대화가 넘어가버리지 않도록 차단
         _lastBlockedTime = Time.time;
@@ -448,6 +453,10 @@ public class CustomDialogueUI : UIToolkitDialogueUI
         _responseMenuVisible = false;
         _continueButtonVisible = false;
         base.Close();
+
+        // 대화 경계에서만 스테이지를 정리한다. clearOnConversationEnd가 꺼져 있으면 유지된다.
+        var stageBuilder = DialogueStageBuilder.Current;
+        if (stageBuilder != null) stageBuilder.NotifyConversationEnd();
     }
 
     public override void Update()

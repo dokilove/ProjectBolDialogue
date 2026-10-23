@@ -1,0 +1,146 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe762acd77a1d8646a35e0ee56907a30, type: 3}
+  m_Name: Stage_SampleDialogue
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueStageDefinition
+  stageId: SampleDialogue
+  backgroundSprite: {fileID: 21300000, guid: 0c0a53f77945f2f43af80565088722b7, type: 3}
+  backgroundPrefab: {fileID: 0}
+  backgroundPosition: {x: 0, y: 5, z: 0}
+  backgroundScale: {x: 1.8, y: 1.8, z: 1.8}
+  backgroundSortingOrder: -10
+  backgroundSortingLayer: Default
+  defaultCameraName: Wide_Cam
+  cameras:
+  - cameraName: Chona_Cam
+    position: {x: 8.45, y: 4.09, z: -10}
+    rotation: {x: -0, y: -0, z: -0, w: 1}
+    orthographicSize: 3
+    fieldOfView: 60
+    priority: 0
+    followActorName: Chona
+    followOffset: {x: 0, y: 0, z: -10}
+    trackerSettings:
+      BindingMode: 4
+      PositionDamping: {x: 1, y: 1, z: 1}
+      AngularDampingMode: 0
+      RotationDamping: {x: 1, y: 1, z: 1}
+      QuaternionDamping: 1
+  - cameraName: Fafnir_Cam
+    position: {x: -2.48, y: 3.78, z: -10}
+    rotation: {x: -0, y: -0, z: -0, w: 1}
+    orthographicSize: 3
+    fieldOfView: 60
+    priority: 0
+    followActorName: Fafnir
+    followOffset: {x: 0, y: 0, z: -10}
+    trackerSettings:
+      BindingMode: 4
+      PositionDamping: {x: 1, y: 1, z: 1}
+      AngularDampingMode: 0
+      RotationDamping: {x: 1, y: 1, z: 1}
+      QuaternionDamping: 1
+  - cameraName: Janghwa_Cam
+    position: {x: -12.14, y: 3.58, z: -10}
+    rotation: {x: -0, y: -0, z: -0, w: 1}
+    orthographicSize: 3
+    fieldOfView: 60
+    priority: 0
+    followActorName: Janghwa
+    followOffset: {x: 0, y: 0, z: -10}
+    trackerSettings:
+      BindingMode: 4
+      PositionDamping: {x: 1, y: 1, z: 1}
+      AngularDampingMode: 0
+      RotationDamping: {x: 1, y: 1, z: 1}
+      QuaternionDamping: 1
+  - cameraName: Vargr_Cam
+    position: {x: 15.67, y: 3.19, z: -10}
+    rotation: {x: -0, y: -0, z: -0, w: 1}
+    orthographicSize: 3
+    fieldOfView: 60
+    priority: 0
+    followActorName: Vargr
+    followOffset: {x: 0, y: 0, z: -10}
+    trackerSettings:
+      BindingMode: 4
+      PositionDamping: {x: 1, y: 1, z: 1}
+      AngularDampingMode: 0
+      RotationDamping: {x: 1, y: 1, z: 1}
+      QuaternionDamping: 1
+  - cameraName: Wide_Cam
+    position: {x: 0.020845115, y: 3.14, z: -19.761602}
+    rotation: {x: -0, y: -0, z: -0, w: 1}
+    orthographicSize: 1.8
+    fieldOfView: 60
+    priority: 0
+    followActorName: 
+    followOffset: {x: 0, y: 0, z: -10}
+    trackerSettings:
+      BindingMode: 4
+      PositionDamping: {x: 1, y: 1, z: 1}
+      AngularDampingMode: 0
+      RotationDamping: {x: 1, y: 1, z: 1}
+      QuaternionDamping: 1
+  characters:
+  - actorName: Chona
+    prefab: {fileID: 5657587874188669457, guid: b4a15879fb263dc4996a471ba0dc47fc, type: 3}
+    position: {x: 9, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+    scale: {x: 1, y: 1, z: 1}
+    facingRight: 0
+    sortingOrder: 0
+    depthScale: 1
+    depthOffsetY: 0
+    bodyAnimation: 
+    faceAnimation: 
+    extraAnimation: 
+    beepData: {fileID: 11400000, guid: f96bdd804cb93d84f8d22674f73478ae, type: 2}
+  - actorName: Fafnir
+    prefab: {fileID: 2621055710511481078, guid: 0637eb0964cb4024c94ad11d5c3c0a35, type: 3}
+    position: {x: -2, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+    scale: {x: 1, y: 1, z: 1}
+    facingRight: 0
+    sortingOrder: 0
+    depthScale: 1
+    depthOffsetY: 0
+    bodyAnimation: 
+    faceAnimation: 
+    extraAnimation: 
+    beepData: {fileID: 11400000, guid: 0c1003daf14d43c4880543b1c9720d77, type: 2}
+  - actorName: Janghwa
+    prefab: {fileID: 3302711340195629206, guid: 68469603234a17242af418807f7359ad, type: 3}
+    position: {x: -12, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+    scale: {x: 1, y: 1, z: 1}
+    facingRight: 0
+    sortingOrder: 0
+    depthScale: 1
+    depthOffsetY: 0
+    bodyAnimation: 
+    faceAnimation: 
+    extraAnimation: 
+    beepData: {fileID: 11400000, guid: 49836e065feee8c4893c5f84588654fb, type: 2}
+  - actorName: Vargr
+    prefab: {fileID: 8989157463596572722, guid: 3d606bd8751d963459341d9d4f757474, type: 3}
+    position: {x: 16, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+    scale: {x: 1, y: 1, z: 1}
+    facingRight: 0
+    sortingOrder: 0
+    depthScale: 1
+    depthOffsetY: 0
+    bodyAnimation: 
+    faceAnimation: 
+    extraAnimation: 
+    beepData: {fileID: 11400000, guid: 59a281c6d47f03b48911373fea6cfa7e, type: 2}

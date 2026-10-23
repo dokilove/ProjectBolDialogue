@@ -56,6 +56,10 @@ public class CharacterRootController : MonoBehaviour
         {
             visualContainerController = GetComponentInChildren<SpineVisualContainerController>();
         }
+
+        // autoFlip은 "방향을 바꿀지" 여부이고, 실제 바라보는 방향은 lastQueuedAutoFlip이 담당한다.
+        // 초기값이 실제 방향과 어긋나면 noflip 액션을 정리할 때 반대로 flip될 수 있다.
+        lastQueuedAutoFlip = IsFacingRight;
     }
 
     // ===================== Flip Logic =====================
@@ -477,7 +481,10 @@ public class CharacterRootController : MonoBehaviour
     /// </summary>
     public void SkipAllActions()
     {
-        if (actionQueue.Count == 0 && !isProcessingActionQueue && currentRunningAction == null) return;
+        if (actionQueue.Count == 0 && !isProcessingActionQueue && currentRunningAction == null && activeFlipCoroutine == null)
+        {
+            return;
+        }
 
         if (actionQueueCoroutine != null) StopCoroutine(actionQueueCoroutine);
         if (activeFlipCoroutine != null) StopCoroutine(activeFlipCoroutine);
@@ -488,6 +495,9 @@ public class CharacterRootController : MonoBehaviour
         float finalAngle = lastQueuedRotate.HasValue ? lastQueuedRotate.Value.angle : (currentRunningAction != null ? currentRunningAction.targetAngle : TargetVisualTransform.eulerAngles.z);
         Vector2 finalPivot = lastQueuedRotate.HasValue ? lastQueuedRotate.Value.pivot : (currentRunningAction != null ? currentRunningAction.pivot : new Vector2(0.5f, 0.5f));
         Vector3? finalScale = lastQueuedScale ?? (currentRunningAction != null ? currentRunningAction.targetScale : (Vector3?)null);
+        // lastQueuedAutoFlip은 "최종적으로 바라볼 방향"이다.
+        // item.autoFlip은 "이동 방향에 따라 자동으로 돌지" 여부일 뿐이므로
+        // 이 값을 facing으로 사용하면 noflip 액션이 반대 방향으로 flip된다.
         bool finalAutoFlip = lastQueuedAutoFlip;
 
         var running = currentRunningAction;
@@ -497,11 +507,7 @@ public class CharacterRootController : MonoBehaviour
         while (actionQueue.Count > 0)
         {
             var item = actionQueue.Dequeue();
-            if (item.isFlipOnly)
-            {
-                finalAutoFlip = item.targetFacing;
-            }
-            else
+            if (!item.isFlipOnly)
             {
                 finalPos = item.targetPos;
                 if (!item.isMoveOnly)
@@ -510,8 +516,9 @@ public class CharacterRootController : MonoBehaviour
                     finalPivot = item.pivot;
                 }
                 if (item.targetScale.HasValue) finalScale = item.targetScale;
-                finalAutoFlip = item.autoFlip;
             }
+            // finalAutoFlip은 lastQueuedAutoFlip이 이미 큐 전체의 최종 방향을 담고 있으므로
+            // item.autoFlip(자동 반전 여부)으로 덮어쓰지 않는다.
             item.onComplete?.Invoke();
         }
 

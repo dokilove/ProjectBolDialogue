@@ -9,7 +9,7 @@ public class LanguageSelectController : MonoBehaviour
 {
     [Header("Next Scene Settings")]
     [Tooltip("언어 선택 후 전환될 메인 대화 씬 이름")]
-    [SerializeField] private string nextSceneName = "SampleDialogue";
+    [SerializeField] private string nextSceneName = "SampleDialogue_Dynamic";
 
     [Header("Element Names")]
     [SerializeField] private string koreanButtonName = "KoreanButton";

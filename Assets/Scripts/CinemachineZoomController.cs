@@ -107,6 +107,42 @@ public class CinemachineZoomController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 런타임에 생성된 가상 카메라를 추적 목록에 등록합니다.
+    /// InitializeCameraTracking은 Start에서 1회만 실행되므로 동적 카메라는 직접 등록해야 합니다.
+    /// </summary>
+    public void RegisterCamera(CinemachineCamera camera)
+    {
+        if (camera == null) return;
+
+        float aspect = GetCurrentAspectRatio();
+
+        if (!cameraTargetHalfWidths.ContainsKey(camera))
+        {
+            cameraTargetHalfWidths[camera] = camera.Lens.OrthographicSize * aspect;
+        }
+
+        if (lastScreenWidth < 0)
+        {
+            lastScreenWidth = Screen.width;
+            lastScreenHeight = Screen.height;
+        }
+
+        if (Camera.main != null && Camera.main.orthographic && !mainCameraTargetHalfWidth.HasValue)
+        {
+            mainCameraTargetHalfWidth = Camera.main.orthographicSize * aspect;
+        }
+    }
+
+    /// <summary>
+    /// 파괴된 가상 카메라를 추적 목록에서 제거합니다.
+    /// </summary>
+    public void UnregisterCamera(CinemachineCamera camera)
+    {
+        if (camera == null) return;
+        cameraTargetHalfWidths.Remove(camera);
+    }
+
     private void CheckScreenResolutionChange()
     {
         if (Screen.width != lastScreenWidth || Screen.height != lastScreenHeight)

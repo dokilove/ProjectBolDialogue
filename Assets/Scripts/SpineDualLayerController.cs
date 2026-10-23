@@ -20,6 +20,11 @@ public class SpineDualLayerController : MonoBehaviour
     private Color originalColor;
     private Vector3 originalScale;
 
+    // 스테이지 데이터 추출/스냅샷용 현재 애니메이션 조회
+    public string CurrentBodyAnimation => currentBodyAnim;
+    public string CurrentFaceAnimation => currentFaceAnim;
+    public string CurrentExtraAnimation => currentExtraAnim;
+
     // ---- 스케일 합성 관련 ----
     private float spinFactor = 1f;
     private float squashXFactor = 1f;
